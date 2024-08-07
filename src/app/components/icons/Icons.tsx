@@ -6,7 +6,6 @@ export const Logo = () => {
       x={0}
       y={0}
       viewBox="0 0 329 48"
-      style={{ enableBackground: "new 0 0 329 48" }}
       xmlSpace="preserve"
     >
       <path

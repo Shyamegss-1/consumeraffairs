@@ -26,8 +26,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       authorize: async (credentials) => {
         const { email, password } = credentials;
-        if (!email || !password) {
-          throw new CredentialsSignin("Please provide both email and password");
+        if (!email || typeof email !== "string" || !password || typeof password !== "string") {
+          throw new Error("Please provide both email and password");
         }
         const user = await prisma.users.findFirst({
           where: {
@@ -53,11 +53,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           throw new CredentialsSignin({
             cause: "Password does not match",
           });
-        else return { ...user, password: undefined };
+        else return { ...user, password: undefined, id: String(user.id) };
       },
     }),
   ],
-  pages: {
-    signIn: "/auth/signin",
-  },
+  // pages: {
+  //   signIn: "/auth/signin",
+  // },
 });
