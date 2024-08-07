@@ -19,7 +19,7 @@ export const signupHandler = async (formData) => {
     throw new Error("Password and confirm password do not match");
   }
 
-  const user = await prisma.user.findFirst({
+  const user = await prisma.users.findFirst({
     where: {
       email: email,
     },
