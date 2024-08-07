@@ -1,0 +1,142 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model admin {
+  aid      Int    @id @default(autoincrement())
+  username String @db.VarChar(200)
+  email    String @db.VarChar(50)
+  password String @db.VarChar(200)
+  role     Int
+  status   Int
+}
+
+model blog {
+  b_id             Int     @id @default(autoincrement())
+  b_title          String  @db.Text
+  b_slug           String  @db.Text
+  b_image          String  @db.VarChar(255)
+  tags             String? @db.Text
+  b_description    String  @db.Text
+  b_category       String  @db.VarChar(255)
+  listing_category Int?
+  image_alt        String? @db.VarChar(255)
+  date             String  @db.VarChar(255)
+  b_status         Int
+}
+
+model blog_category {
+  b_c_id         Int    @id @default(autoincrement())
+  b_c_name       String @db.VarChar(255)
+  bcategory_slug String @db.VarChar(255)
+  date           String @db.VarChar(255)
+  b__c_status    Int
+}
+
+model blog_comment {
+  id      Int    @id @default(autoincrement())
+  blog_id Int
+  user_id Int    @default(0)
+  name    String @db.VarChar(255)
+  email   String @db.VarChar(255)
+  comment String @db.Text
+  date    String @db.VarChar(50)
+  status  Int
+}
+
+model category {
+  cid           Int     @id @default(autoincrement())
+  category_name String  @db.VarChar(200)
+  category_slug String  @db.VarChar(200)
+  category_icon String? @db.VarChar(255)
+  popular       Int?
+  date          String  @db.VarChar(20)
+  status        Int
+}
+
+model faq {
+  id        Int    @id @default(autoincrement())
+  blog_id   Int
+  questions String @db.Text
+  answers   String @db.Text
+}
+
+model inner_seo {
+  page_id          Int    @id @default(autoincrement())
+  page             String @db.VarChar(200)
+  meta_title       String @db.VarChar(250)
+  meta_description String @db.Text
+  meta_keywords    String @db.Text
+  header           String @db.VarChar(1000)
+  footer           String @db.VarChar(1000)
+}
+
+model listing {
+  id           Int     @id @default(autoincrement())
+  userid       Int
+  name         String  @db.VarChar(255)
+  slug         String  @db.VarChar(255)
+  category_id  Int
+  logo         String  @db.VarChar(255)
+  website_link String  @db.VarChar(255)
+  about        String  @db.Text
+  email        String  @db.VarChar(255)
+  number       String  @db.VarChar(255)
+  address      String? @db.Text
+  city         String? @db.VarChar(255)
+  pincode      String? @db.VarChar(255)
+  country      String? @db.VarChar(255)
+  date         String  @db.VarChar(30)
+  verify_code  String? @db.VarChar(10)
+  claim        Int
+  status       Int
+}
+
+model review {
+  review_id          Int    @id @default(autoincrement())
+  review_user_id     Int
+  review_company_id  Int
+  review_title       String @db.Text
+  review_comment     String @db.Text
+  review_date        String @db.VarChar(20)
+  review_delete_date String @db.VarChar(20)
+  review_rating      Int
+  review_status      Int
+}
+
+model settings {
+  pid              Int    @id @default(autoincrement())
+  popular_searches String @db.Text
+  Date             String @db.VarChar(255)
+  Footer_content   String @db.Text
+}
+
+model top_search {
+  id      Int     @id @default(autoincrement())
+  heading Int?
+  content String? @db.Text
+  date    String? @db.VarChar(255)
+}
+
+model users {
+  id            Int     @id @default(autoincrement())
+  username      String  @db.VarChar(50)
+  email         String  @db.VarChar(50)
+  domain        String? @db.VarChar(255)
+  password      String  @db.VarChar(50)
+  cpassword     String  @db.VarChar(50)
+  image         String  @db.VarChar(255)
+  member_date   String  @db.VarChar(20)
+  verify        Int
+  status        Int
+  mobile_number String  @db.VarChar(15)
+  region        String  @db.VarChar(30)
+  active        Int
+  role          String  @db.VarChar(200)
+  top_reviewers String? @db.VarChar(10)
+}

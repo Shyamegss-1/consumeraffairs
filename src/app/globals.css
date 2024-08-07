@@ -11,23 +11,22 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background-start-rgb: 23, 88, 166;
+    --background-end-rgb: 33, 66, 114;
   }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  -webkit-font-smoothing: antialiased;
+  color: #060d17;
+  font-family: Graphik Web, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 1rem;
+  letter-spacing: .023em
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.banner {
+  background: linear-gradient(from left,
+      rgb(var(--background-start-rgb)),
+      to right,
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
