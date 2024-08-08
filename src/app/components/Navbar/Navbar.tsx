@@ -2,8 +2,28 @@ import React from "react";
 import { Logo, ProfileIcon, SearchIcon } from "../icons/Icons";
 import Link from "next/link";
 import TopNavNotification from "./TopNavNotification";
+import { url } from "inspector";
 
 const Navbar = () => {
+  const navLinks = [
+    {
+      label: "Trending",
+      url: "Trending",
+    },
+    {
+      label: "Buyers Guides",
+      url: "Trending",
+    },
+    {
+      label: "Home",
+      url: "Trending",
+    },
+    {
+      label: "Home",
+      url: "Trending",
+    },
+  ];
+
   return (
     <div className="sticky top-0 z-30 shadow-lg w-full ">
       <TopNavNotification />
