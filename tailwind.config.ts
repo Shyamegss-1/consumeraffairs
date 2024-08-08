@@ -32,6 +32,10 @@ const config: Config = {
         "heading-5": "400", // font-normal
         "heading-6": "400", // font-normal
       },
+      fontFamily: {
+        graphik: ['Graphik Web', 'Arial', 'sans-serif'],
+        publico: ["Publico Headline Web", "serif"],
+      },
     },
   },
   plugins: [],

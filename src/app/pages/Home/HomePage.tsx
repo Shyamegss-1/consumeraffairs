@@ -2,6 +2,9 @@ import { url } from "inspector";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import ServiceSection from "./ServiceSection";
+import RecentReviews from "./RecentReviews";
+import ProductInfo from "./ProductInfo";
 
 const HomePage = () => {
   const cardData = [
@@ -95,6 +98,9 @@ const HomePage = () => {
           ))}
         </div>
       </div>
+      <ServiceSection />
+      <RecentReviews />
+      <ProductInfo />
     </>
   );
 };

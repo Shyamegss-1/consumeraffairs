@@ -25,7 +25,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="sticky top-0 z-30 shadow-lg w-full ">
+    <div className="sticky top-0 z-30 shadow-lg w-full bg-white">
       <TopNavNotification />
       <div className="relative grid grid-cols-3 justify-between px-20 py-3 items-center">
         <div className="">Menu</div>
