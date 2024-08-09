@@ -5,6 +5,8 @@ import React from "react";
 import ServiceSection from "./ServiceSection";
 import RecentReviews from "./RecentReviews";
 import ProductInfo from "./ProductInfo";
+import Banner from "./Banner";
+import CategorySection from "./CategorySection";
 
 const HomePage = () => {
   const cardData = [
@@ -101,6 +103,8 @@ const HomePage = () => {
       <ServiceSection />
       <RecentReviews />
       <ProductInfo />
+      <Banner />
+      <CategorySection />
     </>
   );
 };
