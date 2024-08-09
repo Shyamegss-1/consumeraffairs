@@ -1231,7 +1231,7 @@ const Navmenu = () => {
                   role="searchbox"
                   aria-label="Search"
                 >
-                  <div className="ca-form__input-icon-wrapper ">
+                  <div className="ca-form__input-icon-wrapper">
                     <div
                       className={`choices ${
                         toggleSearch ? "is-open is-focused" : ""
@@ -1239,6 +1239,7 @@ const Navmenu = () => {
                       data-type="select-one"
                       tabIndex={-1}
                       role="combobox"
+                      aria-controls="combobox"
                       aria-autocomplete="list"
                       aria-haspopup="true"
                       aria-expanded={toggleSearch}
@@ -1247,8 +1248,8 @@ const Navmenu = () => {
                         <select
                           className="ca-autocomplete js-search js-ca-srch__inp choices__input"
                           data-source="https://www.consumeraffairs.com/api/site_search/?q="
-                          hidden=""
-                          label="Search"
+                          hidden
+                          aria-label="Search" // Changed 'label' to 'aria-label' for accessibility
                           tabIndex={-1}
                           data-choice="active"
                         />
@@ -1268,9 +1269,8 @@ const Navmenu = () => {
                           spellCheck="false"
                           role="textbox"
                           aria-autocomplete="list"
-                          aria-label="false"
-                          placeholder=""
-                          label="Search"
+                          placeholder="search..."
+                          aria-label="Search" // Changed 'label' to 'aria-label' for accessibility
                         />
                         <div className="choices__list" role="listbox">
                           <div className="choices__item choices__item--choice has-no-choices">
@@ -1280,8 +1280,8 @@ const Navmenu = () => {
                                 - Check the spelling or try alternate spelling
                               </p>
                               <p>
-                                - Try more general search, e.g. "home", instead
-                                of "room"
+                                - Try more general search, e.g. {"home"}, instead
+                                of {"room"}
                               </p>
                             </div>
                             <strong className="ca-srch__title">

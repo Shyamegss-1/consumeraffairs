@@ -18,7 +18,7 @@ const Carousel: React.FC<CarouselProps> = ({ children, interval = 3000, autoPlay
       startAutoPlay();
     }
     return () => stopAutoPlay();
-  }, [currentIndex, autoPlay]);
+  }, [currentIndex]);
 
   const startAutoPlay = () => {
     stopAutoPlay(); // Clear any existing intervals
