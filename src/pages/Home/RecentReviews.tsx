@@ -1,4 +1,4 @@
-import Carousel from "@/app/components/carousel/Carousel";
+import Carousel from "@/components/carousel/Carousel";
 import Link from "next/link";
 import React from "react";
 
