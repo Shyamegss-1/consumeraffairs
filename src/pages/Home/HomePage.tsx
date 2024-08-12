@@ -7,6 +7,7 @@ import RecentReviews from "./RecentReviews";
 import ProductInfo from "./ProductInfo";
 import Banner from "./Banner";
 import CategorySection from "./CategorySection";
+import InfiniteCarousel from "@/components/InfiniteCarousel/InfiniteCarousel";
 
 const HomePage = () => {
   const cardData = [
@@ -104,7 +105,9 @@ const HomePage = () => {
       <RecentReviews />
       <ProductInfo />
       <Banner />
-      <CategorySection />
+      
+
+      {/* <CategorySection /> */}
     </>
   );
 };

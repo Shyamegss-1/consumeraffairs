@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import InfiniteCarousel from "../../components/InfiniteCarousel/InfiniteCarousel";
 
 const Banner = () => {
   return (
@@ -38,6 +39,11 @@ const Banner = () => {
           </div>
         </div>
       </div>
+      
+{/* 
+      <InfiniteCarousel>
+        
+      </InfiniteCarousel> */}
     </div>
   );
 };

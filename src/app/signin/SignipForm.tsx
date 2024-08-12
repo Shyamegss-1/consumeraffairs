@@ -1,8 +1,15 @@
+"use client"
 import React from "react";
 
 const SigninForm = () => {
   return (
-    <form className="ca-form" method="post" action=".">
+    <form
+      className="ca-form"
+      method="post"
+      action={async (formData) => {
+        console.log(formData);
+      }}
+    >
       <input
         type="hidden"
         name="csrfmiddlewaretoken"
@@ -31,6 +38,29 @@ const SigninForm = () => {
         />
         <ul className="ca-form__error js-errorlist"></ul>
       </div>
+      <div
+        className="ca-form__group js-form-group js-floating-label-input"
+        data-sg-init="[true]"
+      >
+        <label className="ca-form__label ca-form__label--cr js-label">
+          Password
+        </label>
+        <input
+          className="ca-form__input ca-form__input--alt ca-form__input--lg js-first-name"
+          placeholder="Password"
+          type="password"
+          name="password"
+          style={{
+            backgroundImage: 'url("data:image/png',
+            backgroundRepeat: "no-repeat",
+            backgroundSize: 20,
+            backgroundPosition: "97% center",
+            cursor: "auto",
+          }}
+          data-temp-mail-org={0}
+        />
+        <ul className="ca-form__error js-errorlist"></ul>
+      </div>
       <input
         type="hidden"
         name="next"
@@ -40,10 +70,7 @@ const SigninForm = () => {
       <input type="hidden" name="is_authenticated_on_sp" defaultValue="" />
       <input type="hidden" name="from_login_flow_start" defaultValue={1} />
       <div className="login__btns">
-        <button
-          className="ca-btn ca-btn--thrd crd__btn"
-          type="submit"
-        >
+        <button className="ca-btn ca-btn--thrd crd__btn" type="submit">
           Continue
         </button>
         <p className="login__lnk-or">or login with </p>
@@ -51,7 +78,6 @@ const SigninForm = () => {
           type="button"
           className="ca-btn crd__btn login__btn login__btn--ggl ca-btn--wh-lght js-login-popup"
           data-url="/social-login/google-oauth2/?secondary_redirect=https%3A%2F%2Fwww.consumeraffairs.com%2F&in_popup=1"
-         
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 22">
             <g fill="none" fillRule="evenodd">
@@ -81,7 +107,6 @@ const SigninForm = () => {
             type="button"
             className="ca-a ca-btn--link ca-a--cr login__lnk--mrgn-bot js-tooltip"
             data-tooltip-options='{ "content": "\u003Cp\u003EWe’ve recently updated our accounts and no longer support Facebook, Twitter or Yahoo social logins.\u003C/p\u003E\u003Cp\u003ETo access your account, use our \u003Ca href\u003D\u0022/forgot\u002Dpassword/\u0022\u003Epassword reset form\u003C/a\u003E and enter the email address associated with your social login or \u003Ca href\u003D\u0022https://www.consumeraffairs.com/about/contact\u0022 target\u003D\u0022_blank\u0022\u003Econtact our Consumer Engagement Team\u003C/a\u003E for assistance.\u003C/p\u003E", "showOn": "click" }'
-         
           >
             Facebook, Twitter or Yahoo?
           </button>

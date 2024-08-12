@@ -5,7 +5,20 @@ import { prisma } from "../../prisma/prisma";
 import { ZodError } from "zod";
 import { signupSchema } from "../lib/zod";
 
-export const signupHandler = async (formData) => {
+interface formData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  address: string;
+  password: string;
+  confirmPassword: string;
+  country: String;
+  postalCode: number;
+  province: string;
+  city: string;
+}
+
+export const signupHandler = async (formData: formData) => {
   try {
     const {
       firstName,
@@ -33,11 +46,10 @@ export const signupHandler = async (formData) => {
     const hashedPassword = await hash(password, 12);
     const newUser = await prisma.users.create({
       data: {
-        name,
-        username,
+        username:"",
         email,
         password: hashedPassword,
-        roleId: "clznqlyt300003bzb7v4w625m",
+        role:"jdfjgjh"
       },
     });
 
@@ -48,7 +60,7 @@ export const signupHandler = async (formData) => {
     // Redirect to sign in after successful signup
     // redirect("/auth/signin");
     return;
-  } catch (error) {
+  } catch (error: any) {
     if (error instanceof ZodError) {
       console.error(error.errors[0].message);
       return error.errors[0].message;
@@ -59,7 +71,13 @@ export const signupHandler = async (formData) => {
   }
 };
 
-export const loginHandler = async ({ email, password }) => {
+export const loginHandler = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
   try {
     await signIn("credentials", {
       email,
@@ -67,7 +85,7 @@ export const loginHandler = async ({ email, password }) => {
       redirect: true,
       callbackUrl: "/",
     });
-  } catch (error) {
+  } catch (error: any) {
     const err = error.cause;
     return err;
   }

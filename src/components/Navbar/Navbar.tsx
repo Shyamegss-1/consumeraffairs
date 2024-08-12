@@ -3,9 +3,10 @@ import { Logo, ProfileIcon, SearchIcon } from "../icons/Icons";
 import Link from "next/link";
 import TopNavNotification from "./TopNavNotification";
 import { url } from "inspector";
-import Navmenu from "./Navmenu";
+import SearchComponent from './SearchComponent'
 
 const Navbar = () => {
+
   const navLinks = [
     {
       label: "Trending",
@@ -28,8 +29,7 @@ const Navbar = () => {
   return (
     <div className="sticky top-0 z-30 shadow-lg w-full bg-white">
       <TopNavNotification />
-      <div className="relative grid grid-cols-3 justify-between px-20 py-3 items-center">
-        <Navmenu />
+      <div className="relative grid grid-cols-2 justify-between px-20 py-3 items-center">
         <Link
           href={"/"}
           className="w-full lg:size-[40%] mx-auto flex justify-center items-center"
@@ -38,16 +38,12 @@ const Navbar = () => {
         </Link>
         <div className="hidden md:flex justify-end items-center">
           <Link
-            href={"/review/write"}
+            href={"/all-categories"}
             className="hover:bg-hover px-4 py-3 rounded-lg font-normal"
           >
-            Write a review
+            Read/Write a review
           </Link>
-          <div className="relative">
-            <button className="px-4 py-3 hover:bg-hover rounded-lg ">
-              <SearchIcon className="size-5 " />
-            </button>
-          </div>
+          <SearchComponent/>
           <Link href={""} className="px-4 py-3 hover:bg-hover rounded-lg ">
             <ProfileIcon className="size-5 fill-black" />
           </Link>

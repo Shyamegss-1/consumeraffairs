@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect } from "react";
+import './Module.css'
 
 const ProductInfo = () => {
   const data = [
@@ -164,7 +165,6 @@ const ProductInfo = () => {
             </li>
           ))}
         </ul>
-        <div className="flex flex-col items-start justify-center"></div>
       </div>
     </div>
   );

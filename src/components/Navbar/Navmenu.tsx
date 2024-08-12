@@ -1452,7 +1452,7 @@ const Navmenu = () => {
               </div>
               <Link
                 className="ca-hdr__login-link ca-hdr__fcsbl"
-                href="https://accounts.consumeraffairs.com/?next=https%3A//www.consumeraffairs.com/"
+                href="/signin"
                 data-uapi-link="header_login"
                 aria-label="Login"
               >

@@ -1,4 +1,5 @@
 import Carousel from "@/components/carousel/Carousel";
+import InfiniteCarousel from "@/components/InfiniteCarousel/InfiniteCarousel";
 import Link from "next/link";
 import React from "react";
 
@@ -89,9 +90,9 @@ const RecentReviews = () => {
           </ul>
         </div>
       </div>
-      <div className="relative max-w-7xl mx-auto mt-20 pb-10">
-        <div className="flex justify-between items-center gap-4">
-          <div className="ring-1 ring-gray-200 p-4 rounded-3xl">
+      <div className="max-w-7xl mx-auto flex justify-center items-center">
+        <InfiniteCarousel>
+          <div className="ring-1 ring-gray-200 p-4 rounded-3xl  mx-4 max-w-72">
             <div className="flex justify-start items-center gap-4">
               <p className="size-12 flex justify-center items-center bg-green-200 rounded-full">
                 C
@@ -114,20 +115,18 @@ const RecentReviews = () => {
               </span>
             </div>
             <div className="mt-2">
-              <div className="rvw__top-text">
-                <p className="line-clamp-3 text-sm font-normal">
-                  I have used Western Union to purchase money orders for many
-                  years. But in the last few I have had to return my money
-                  orders for refunds. When purchasing them at the store they had
-                  no problem taking my cash and...&nbsp;
-                  <Link href={"/"} className="font-medium underline">
-                    full review
-                  </Link>
-                </p>
-              </div>
+              <h6 className=" text-sm font-normal text-wrap">
+                I have used Western Union to purchase money orders for many
+                years. But in the last few I have had to return my money orders
+                for refunds. When purchasing them at the store they had no
+                problem taking my cash and....&nbsp;
+                <Link href={"/"} className="font-medium underline">
+                  full review
+                </Link>
+              </h6>
             </div>
           </div>
-          <div className="ring-1 ring-gray-200 p-4 rounded-3xl">
+          <div className="ring-1 ring-gray-200 p-4 rounded-3xl  mx-4 max-w-72 min-h-60">
             <div className="flex justify-start items-center gap-4">
               <p className="size-12 flex justify-center items-center bg-green-200 rounded-full">
                 C
@@ -150,20 +149,18 @@ const RecentReviews = () => {
               </span>
             </div>
             <div className="mt-2">
-              <div className="rvw__top-text">
-                <p className="line-clamp-3 text-sm font-normal">
-                  I have used Western Union to purchase money orders for many
-                  years. But in the last few I have had to return my money
-                  orders for refunds. When purchasing them at the store they had
-                  no problem taking my cash and...&nbsp;
-                  <Link href={"/"} className="font-medium underline">
-                    full review
-                  </Link>
-                </p>
-              </div>
+              <h6 className=" text-sm font-normal text-wrap">
+                I have used Western Union to purchase money orders for many
+                years. But in the last few I have had to return my money orders
+                for refunds. When purchasing them at the store they had no
+                problem taking my cash and....&nbsp;
+                <Link href={"/"} className="font-medium underline">
+                  full review
+                </Link>
+              </h6>
             </div>
           </div>
-          <div className="ring-1 ring-gray-200 p-4 rounded-3xl">
+          <div className="ring-1 ring-gray-200 p-4 rounded-3xl mx-4 max-w-72">
             <div className="flex justify-start items-center gap-4">
               <p className="size-12 flex justify-center items-center bg-green-200 rounded-full">
                 C
@@ -186,25 +183,170 @@ const RecentReviews = () => {
               </span>
             </div>
             <div className="mt-2">
-              <div className="rvw__top-text">
-                <p className="line-clamp-3 text-sm font-normal">
-                  I have used Western Union to purchase money orders for many
-                  years. But in the last few I have had to return my money
-                  orders for refunds. When purchasing them at the store they had
-                  no problem taking my cash and...&nbsp;
-                  <Link href={"/"} className="font-medium underline">
-                    full review
-                  </Link>
-                </p>
-              </div>
+              <h6 className=" text-sm font-normal text-wrap">
+                I have used Western Union to purchase money orders for many
+                years. But in the last few I have had to return my money orders
+                for refunds. When purchasing them at the store they had no
+                problem taking my cash and....&nbsp;
+                <Link href={"/"} className="font-medium underline">
+                  full review
+                </Link>
+              </h6>
             </div>
           </div>
-        </div>
-        {/* <Carousel autoPlay={true} interval={4000}>
-          <div style={{ background: "#ff6666", height: "200px" }}>Slide 1</div>
-          <div style={{ background: "#66ff66", height: "200px" }}>Slide 2</div>
-          <div style={{ background: "#6666ff", height: "200px" }}>Slide 3</div>
-        </Carousel> */}
+          {/* <section className="card">
+            <div className="ring-1 ring-gray-200 p-4 rounded-3xl card">
+              <div className="flex justify-start items-center gap-4">
+                <p className="size-12 flex justify-center items-center bg-green-200 rounded-full">
+                  C
+                </p>
+                <div className="">
+                  <p>C leanne</p>
+                  <p className="text-xs">Oklahoma City, OK</p>
+                </div>
+              </div>
+              <div className="mt-2">
+                <div className="rvw__hdr-stat">
+                  <div className="rvw__rtg rvw__rtg--sm-dsk stars-sprt stars-sprt--p-1" />
+                </div>
+                <span className="text-xs">
+                  Reviewed{" "}
+                  <Link href={"/"} className="underline">
+                    Western Union
+                  </Link>{" "}
+                  on Aug. 1, 2024
+                </span>
+              </div>
+              <div className="mt-2">
+                <div className="rvw__top-text">
+                  <p className="line-clamp-3 text-sm font-normal">
+                    I have used Western Union to purchase money orders for many
+                    years. But in the last few I have had to return my money
+                    orders for refunds. When purchasing them at the store they
+                    had no problem taking my cash and...&nbsp;
+                    <Link href={"/"} className="font-medium underline">
+                      full review
+                    </Link>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section className="card">
+            <div className="ring-1 ring-gray-200 p-4 rounded-3xl card">
+              <div className="flex justify-start items-center gap-4">
+                <p className="size-12 flex justify-center items-center bg-green-200 rounded-full">
+                  C
+                </p>
+                <div className="">
+                  <p>C leanne</p>
+                  <p className="text-xs">Oklahoma City, OK</p>
+                </div>
+              </div>
+              <div className="mt-2">
+                <div className="rvw__hdr-stat">
+                  <div className="rvw__rtg rvw__rtg--sm-dsk stars-sprt stars-sprt--p-1" />
+                </div>
+                <span className="text-xs">
+                  Reviewed{" "}
+                  <Link href={"/"} className="underline">
+                    Western Union
+                  </Link>{" "}
+                  on Aug. 1, 2024
+                </span>
+              </div>
+              <div className="mt-2">
+                <div className="rvw__top-text">
+                  <p className="line-clamp-3 text-sm font-normal">
+                    I have used Western Union to purchase money orders for many
+                    years. But in the last few I have had to return my money
+                    orders for refunds. When purchasing them at the store they
+                    had no problem taking my cash and...&nbsp;
+                    <Link href={"/"} className="font-medium underline">
+                      full review
+                    </Link>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section className="card">
+            <div className="ring-1 ring-gray-200 p-4 rounded-3xl card">
+              <div className="flex justify-start items-center gap-4">
+                <p className="size-12 flex justify-center items-center bg-green-200 rounded-full">
+                  C
+                </p>
+                <div className="">
+                  <p>C leanne</p>
+                  <p className="text-xs">Oklahoma City, OK</p>
+                </div>
+              </div>
+              <div className="mt-2">
+                <div className="rvw__hdr-stat">
+                  <div className="rvw__rtg rvw__rtg--sm-dsk stars-sprt stars-sprt--p-1" />
+                </div>
+                <span className="text-xs">
+                  Reviewed{" "}
+                  <Link href={"/"} className="underline">
+                    Western Union
+                  </Link>{" "}
+                  on Aug. 1, 2024
+                </span>
+              </div>
+              <div className="mt-2">
+                <div className="rvw__top-text">
+                  <p className="line-clamp-3 text-sm font-normal">
+                    I have used Western Union to purchase money orders for many
+                    years. But in the last few I have had to return my money
+                    orders for refunds. When purchasing them at the store they
+                    had no problem taking my cash and...&nbsp;
+                    <Link href={"/"} className="font-medium underline">
+                      full review
+                    </Link>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section className="card">
+            <div className="ring-1 ring-gray-200 p-4 rounded-3xl">
+              <div className="flex justify-start items-center gap-4">
+                <p className="size-12 flex justify-center items-center bg-green-200 rounded-full">
+                  C
+                </p>
+                <div className="">
+                  <p>C leanne</p>
+                  <p className="text-xs">Oklahoma City, OK</p>
+                </div>
+              </div>
+              <div className="mt-2">
+                <div className="rvw__hdr-stat">
+                  <div className="rvw__rtg rvw__rtg--sm-dsk stars-sprt stars-sprt--p-1" />
+                </div>
+                <span className="text-xs">
+                  Reviewed{" "}
+                  <Link href={"/"} className="underline">
+                    Western Union
+                  </Link>{" "}
+                  on Aug. 1, 2024
+                </span>
+              </div>
+              <div className="mt-2">
+                <div className="rvw__top-text">
+                  <p className="line-clamp-3 text-sm font-normal">
+                    I have used Western Union to purchase money orders for many
+                    years. But in the last few I have had to return my money
+                    orders for refunds. When purchasing them at the store they
+                    had no problem taking my cash and...&nbsp;
+                    <Link href={"/"} className="font-medium underline">
+                      full review
+                    </Link>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section> */}
+        </InfiniteCarousel>
       </div>
     </div>
   );

@@ -43,7 +43,7 @@ const ServiceSection = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-start justify-center my-20">
+      {/* <div className="flex flex-col items-start justify-center my-20">
         <h6 className="text-heading-6 font-semibold text-gray-900 font-graphik">
           As seen in
         </h6>
@@ -105,7 +105,7 @@ const ServiceSection = () => {
             </svg>
           </li>
         </ul>
-      </div>
+      </div> */}
     </div>
   );
 };
