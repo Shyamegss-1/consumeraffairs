@@ -18,57 +18,52 @@ interface formData {
   city: string;
 }
 
-export const signupHandler = async (formData: formData) => {
-  try {
-    const {
-      firstName,
-      lastName,
-      address,
-      country,
-      postalCode,
-      province,
-      city,
-      email,
-      password,
-      confirmPassword,
-    } = await signupSchema.parseAsync(formData);
-
-    const user = await prisma.users.findFirst({
-      where: {
-        email: email,
-      },
-    });
-
-    if (user) {
-      throw new Error("Email already exists");
-    }
-
-    const hashedPassword = await hash(password, 12);
-    const newUser = await prisma.users.create({
-      data: {
-        username:"",
-        email,
-        password: hashedPassword,
-        role:"jdfjgjh"
-      },
-    });
-
-    if (!newUser) {
-      throw new Error("Something went wrong, try again");
-    }
-
-    // Redirect to sign in after successful signup
-    // redirect("/auth/signin");
-    return;
-  } catch (error: any) {
-    if (error instanceof ZodError) {
-      console.error(error.errors[0].message);
-      return error.errors[0].message;
-    } else {
-      console.error(error.message || error);
-      return String(error.message || error);
-    }
-  }
+export const signupHandler = async (formData: FormData) => {
+  // try {
+  //   const {
+  //     firstName,
+  //     lastName,
+  //     address,
+  //     country,
+  //     postalCode,
+  //     province,
+  //     city,
+  //     email,
+  //     password,
+  //     confirmPassword,
+  //   } = await signupSchema.parseAsync(formData);
+  //   const user = await prisma.users.findFirst({
+  //     where: {
+  //       email: email,
+  //     },
+  //   });
+  //   if (user) {
+  //     throw new Error("Email already exists");
+  //   }
+  //   const hashedPassword = await hash(password, 12);
+  //   const newUser = await prisma.users.create({
+  //     data: {
+  //       username:"",
+  //       email,
+  //       password: hashedPassword,
+  //       role:"jdfjgjh"
+  //     },
+  //   });
+  //   if (!newUser) {
+  //     throw new Error("Something went wrong, try again");
+  //   }
+  //   // Redirect to sign in after successful signup
+  //   // redirect("/auth/signin");
+  //   return;
+  // } catch (error: any) {
+  //   if (error instanceof ZodError) {
+  //     console.error(error.errors[0].message);
+  //     return error.errors[0].message;
+  //   } else {
+  //     console.error(error.message || error);
+  //     return String(error.message || error);
+  //   }
+  // }
 };
 
 export const loginHandler = async ({
