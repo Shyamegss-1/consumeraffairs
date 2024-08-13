@@ -57,7 +57,10 @@ const CategorySection = (props: Props) => {
                   height={40}
                   alt=""
                 />
-                <Link href={""} className="font-semibold">
+                <Link
+                  href={`/${category.category_slug}`}
+                  className="font-semibold"
+                >
                   {category.category_name}
                 </Link>
               </li>
