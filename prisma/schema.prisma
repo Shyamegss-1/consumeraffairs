@@ -50,13 +50,14 @@ model blog_comment {
 }
 
 model category {
-  cid           Int     @id @default(autoincrement())
-  category_name String  @db.VarChar(200)
-  category_slug String  @db.VarChar(200)
-  category_icon String? @db.VarChar(255)
-  popular       Int?
-  date          String  @db.VarChar(20)
+  cid           Int       @id @default(autoincrement())
+  category_name String    @db.VarChar(200)
+  category_slug String    @db.VarChar(200)
+  category_icon String?   @db.VarChar(255)
+  popular       Int?      @default(0)
+  date          String    @db.VarChar(20)
   status        Int
+  listing       listing[]
 }
 
 model faq {
@@ -77,22 +78,23 @@ model inner_seo {
 }
 
 model listing {
-  id           Int     @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
   userid       Int
-  name         String  @db.VarChar(255)
-  slug         String  @db.VarChar(255)
+  name         String   @db.VarChar(255)
+  slug         String   @db.VarChar(255)
+  category     category @relation(fields: [category_id], references: [cid])
   category_id  Int
-  logo         String  @db.VarChar(255)
-  website_link String  @db.VarChar(255)
-  about        String  @db.Text
-  email        String  @db.VarChar(255)
-  number       String  @db.VarChar(255)
-  address      String? @db.Text
-  city         String? @db.VarChar(255)
-  pincode      String? @db.VarChar(255)
-  country      String? @db.VarChar(255)
-  date         String  @db.VarChar(30)
-  verify_code  String? @db.VarChar(10)
+  logo         String   @db.VarChar(255)
+  website_link String   @db.VarChar(255)
+  about        String   @db.Text
+  email        String   @db.VarChar(255)
+  number       String   @db.VarChar(255)
+  address      String?  @db.Text
+  city         String?  @db.VarChar(255)
+  pincode      String?  @db.VarChar(255)
+  country      String?  @db.VarChar(255)
+  date         String   @db.VarChar(30)
+  verify_code  String?  @db.VarChar(10)
   claim        Int
   status       Int
 }
