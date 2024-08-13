@@ -44,7 +44,7 @@ const HomePage = () => {
   ];
   return (
     <>
-      <div className="relative rounded-b-[3rem] bg-gradient-to-r from-[#1758A6]  to-[#214272] flex justify-center items-center pt-10">
+      <div className="relative rounded-b-[3rem] bg-gradient-to-r from-[#1758A6]  to-[#214272] flex justify-center items-center pt-24">
         <div className="mx-auto relative pb-32">
           <div className="grid grid-cols-2 justify-between items-center gap-10">
             <div className="mx-auto flex justify-end items-start">
@@ -61,6 +61,25 @@ const HomePage = () => {
                 >
                   See the winners
                 </Link>
+
+                <div className=" mt-14 relative w-full">
+                  <form action="">
+                    <input
+                      type="text"
+                      placeholder="Kindly enter your domain name Eg. consumeraffairs.com"
+                      className="py-3 pl-3 rounded-md pr-14 text-xl w-full focus:ring-2 focus:outline-none placeholder:text-base"
+                    />
+                    <button type="submit">
+                      <Image
+                        className="absolute z-20 top-3.5 right-4"
+                        src={"/next-solid-arrow.svg"}
+                        width={20}
+                        height={20}
+                        alt=""
+                      />
+                    </button>
+                  </form>
+                </div>
               </div>
             </div>
             <div className="mx-auto flex justify-center items-center">
@@ -105,7 +124,6 @@ const HomePage = () => {
       <RecentReviews />
       <ProductInfo />
       <Banner />
-      
 
       {/* <CategorySection /> */}
     </>

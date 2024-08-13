@@ -42,7 +42,11 @@ const Banner = () => {
       
 {/* 
       <InfiniteCarousel>
-        
+        freedom isn't just about the absence of restrictions; 
+        it's also about the presence of conditions that allow everyone to thrive. 
+        This includes access to healthcare, education, housing, and economic opportunities. 
+        A society that values social welfare ensures that freedom is not limited to those with wealth or power but is extended to all, 
+        recognizing that true freedom can only be achieved when everyone has the means to participate fully in society.
       </InfiniteCarousel> */}
     </div>
   );
