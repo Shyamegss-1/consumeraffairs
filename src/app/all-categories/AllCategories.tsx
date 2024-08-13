@@ -187,7 +187,7 @@ const AllCategories = () => {
                     <p className="min-h-8 animate-pulse rounded-md w-full bg-gray-200"></p>
                   </li>
                 ))
-              : categories.slice(0, 24).map(
+              : categories?.slice(0, 24)?.map(
                   (category: categories, i) =>
                     i !== 7 && (
                       <div

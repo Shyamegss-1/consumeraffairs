@@ -46,7 +46,7 @@ const CategorySection = (props: Props) => {
                 <p className="min-h-8 animate-pulse rounded-md w-full bg-gray-200"></p>
               </li>
             ))
-          : categories.map((category: categories) => (
+          : categories?.map((category: categories) => (
               <li
                 key={category.cid}
                 className="flex justify-start items-center ring-2 rounded-lg gap-4  p-4 bg-white"
