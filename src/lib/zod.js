@@ -1,4 +1,5 @@
-import { object, string } from "zod";
+import { comment } from "postcss";
+import { number, object, string } from "zod";
 
 export const signinSchema = object({
   username: string({
@@ -45,4 +46,13 @@ export const signupSchema = object({
     .min(1, "Confirm Password is required")
     .min(8, "Confirm Password must be more than 8 characters")
     .max(32, "Confirm Password must be less than 32 characters"),
-})
+});
+
+export const reviewFormSchema = object({
+  rating: number({
+    required_error: "Rating is required",
+  }).min(1, "Rating is required"),
+  comment: string({
+    required_error: "comment is required",
+  }).min(1, "comment is required"),
+});

@@ -1,3 +1,4 @@
+"use client";
 import { url } from "inspector";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,6 +9,11 @@ import ProductInfo from "./ProductInfo";
 import Banner from "./Banner";
 import CategorySection from "./CategorySection";
 import InfiniteCarousel from "@/components/InfiniteCarousel/InfiniteCarousel";
+import { redirect } from "next/navigation";
+import Swal from "sweetalert2";
+import { isUrlValid } from "@/lib/Hooks";
+import { listingDomain } from "@/server-actions/listingDomain";
+import { string } from "zod";
 
 const HomePage = () => {
   const cardData = [
@@ -44,7 +50,7 @@ const HomePage = () => {
   ];
   return (
     <>
-      <div className="relative rounded-b-[3rem] bg-gradient-to-r from-[#1758A6]  to-[#214272] flex justify-center items-center pt-24">
+      <div className="relative rounded-b-[3rem] bg-gradient-to-r from-primary_light  to-primary_dark flex justify-center items-center pt-24">
         <div className="mx-auto relative pb-32">
           <div className="grid grid-cols-2 justify-between items-center gap-10">
             <div className="mx-auto flex justify-end items-start">
@@ -63,9 +69,29 @@ const HomePage = () => {
                 </Link>
 
                 <div className=" mt-14 relative w-full">
-                  <form action="">
+                  <form
+                    action={async (formData) => {
+                      const domain = formData.get("domain");
+                      const res = await listingDomain(domain);
+                      console.log(res,"ggjhgds");
+                      
+                      if (!res.status) {
+                        Swal.fire({
+                          title: "Error",
+                          text: String(res.error),
+                          icon: "error",
+                        });
+                        return;
+                      } else {
+                        redirect(
+                          `/listing/${String(res.domain)?.replaceAll(".", "-")}`
+                        );
+                      }
+                    }}
+                  >
                     <input
                       type="text"
+                      name="domain"
                       placeholder="Kindly enter your domain name Eg. consumeraffairs.com"
                       className="py-3 pl-3 rounded-md pr-14 text-xl w-full focus:ring-2 focus:outline-none placeholder:text-base"
                     />

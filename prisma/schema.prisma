@@ -97,19 +97,34 @@ model listing {
   verify_code  String?  @db.VarChar(10)
   claim        Int
   status       Int
+  reviews      review[]
 }
 
 model review {
-  review_id          Int    @id @default(autoincrement())
+  review_id          Int           @id @default(autoincrement())
+  user               users         @relation(fields: [review_user_id], references: [id])
   review_user_id     Int
+  company            listing       @relation(fields: [review_company_id], references: [id])
   review_company_id  Int
-  review_title       String @db.Text
-  review_comment     String @db.Text
-  review_date        String @db.VarChar(20)
-  review_delete_date String @db.VarChar(20)
+  review_title       String        @db.Text
+  review_comment     String        @db.Text
+  review_date        String        @db.VarChar(20)
+  review_delete_date String        @db.VarChar(20)
   review_rating      Int
   review_status      Int
+  flag               Boolean?      @default(false)
+  // flagDetails        flagDetails[]
 }
+
+// model flagDetails {
+//   id          Int    @id @default(autoincrement())
+//   reviewId    Int
+//   reviews     review @relation(fields: [reviewId], references: [review_id])
+//   flag_reason String @db.Text
+//   flag_date   String @db.VarChar(20)
+//   userId      Int
+//   user        users  @relation(fields: [userId], references: [id])
+// }
 
 model settings {
   pid              Int    @id @default(autoincrement())
@@ -126,19 +141,21 @@ model top_search {
 }
 
 model users {
-  id            Int     @id @default(autoincrement())
-  username      String  @db.VarChar(50)
-  email         String  @db.VarChar(50)
-  domain        String? @db.VarChar(255)
-  password      String  @db.VarChar(50)
-  cpassword     String  @db.VarChar(50)
-  image         String  @db.VarChar(255)
-  member_date   String  @db.VarChar(20)
+  id            Int           @id @default(autoincrement())
+  username      String        @db.VarChar(50)
+  email         String        @db.VarChar(50)
+  domain        String?       @db.VarChar(255)
+  password      String        @db.VarChar(50)
+  cpassword     String        @db.VarChar(50)
+  image         String        @db.VarChar(255)
+  member_date   String        @db.VarChar(20)
   verify        Int
   status        Int
-  mobile_number String  @db.VarChar(15)
-  region        String  @db.VarChar(30)
+  mobile_number String        @db.VarChar(15)
+  region        String        @db.VarChar(30)
   active        Int
-  role          String  @db.VarChar(200)
-  top_reviewers String? @db.VarChar(10)
+  role          String        @db.VarChar(200)
+  top_reviewers String?       @db.VarChar(10)
+  reviews       review[]
+  // flagDetails   flagDetails[]
 }

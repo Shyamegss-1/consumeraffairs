@@ -27,7 +27,7 @@ const Banner = () => {
             </Link>
           </div>
         </div>
-        <div className="col-span-1 bg-[#143B68] rounded-r-3xl py-10">
+        <div className="col-span-1 bg-primary_dark rounded-r-3xl py-10">
           <div className="mx-auto flex justify-center items-center">
             <Image
               alt="banner"

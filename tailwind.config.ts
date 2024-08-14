@@ -15,6 +15,8 @@ const config: Config = {
       },
       colors: {
         hover: "#F6F8FB",
+        primary_light:"#6C946F",
+        primary_dark:"#6C946F",
       },
       fontSize: {
         "heading-1": ["2.25rem", { lineHeight: "2.5rem" }], // text-4xl
