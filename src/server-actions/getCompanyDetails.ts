@@ -1,18 +1,21 @@
 "use server";
 
+import { checkConnection } from "@/lib/Hooks";
 import { prisma } from "../../prisma/prisma";
 
-export const getCompanyDetails = async (domain: string) => {
+export const getCompanyDetails = async (domain: string, user: any) => {
   try {
-
-
-
+    await checkConnection();
     const company = await prisma.listing.findFirst({
       where: {
         website_link: domain.replaceAll("-", "."),
       },
       include: {
-        reviews: true,
+        reviews: {
+          include: {
+            user: true,
+          },
+        },
       },
     });
     if (company) {
@@ -20,8 +23,7 @@ export const getCompanyDetails = async (domain: string) => {
     } else {
       const newCompany = await prisma.listing.create({
         data: {
-          userid: 0,
-          category_id: 0,
+          userid: user ? Number(user?.id) : 0,
           about: "",
           email: "",
           number: "",
@@ -36,12 +38,18 @@ export const getCompanyDetails = async (domain: string) => {
           date: Date(),
         },
         include: {
-          reviews: true,
+          reviews: {
+            include: {
+              user: true,
+            },
+          },
         },
       });
       return newCompany;
     }
   } catch (error) {
     return String(error);
+  } finally {
+    await prisma.$disconnect();
   }
 };

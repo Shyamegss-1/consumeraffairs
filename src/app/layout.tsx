@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import UserLayout from "@/components/Layouts/userLayout/UserLayout";
+import { Toaster } from "sonner";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -10,11 +13,18 @@ export const metadata: Metadata = {
   description: "ConsumerAffairs®: Research. Review. Resolve.",
 };
 
-export default function RootLayout({
+export default  function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // const session = await auth();
+
+  // console.log(session?.user, "hfghfgf");
+
+  // if (!session?.user) {
+  //   return redirect("/signin");
+  // }
   return (
     <html lang="en">
       <head>
@@ -27,7 +37,10 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <main className="">
-          <UserLayout>{children}</UserLayout>
+          <UserLayout>
+            {children}
+            <Toaster />
+          </UserLayout>
         </main>
       </body>
     </html>

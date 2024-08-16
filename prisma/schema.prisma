@@ -78,53 +78,71 @@ model inner_seo {
 }
 
 model listing {
-  id           Int      @id @default(autoincrement())
-  userid       Int
-  name         String   @db.VarChar(255)
-  slug         String   @db.VarChar(255)
-  category     category @relation(fields: [category_id], references: [cid])
-  category_id  Int
-  logo         String   @db.VarChar(255)
-  website_link String   @db.VarChar(255)
-  about        String   @db.Text
-  email        String   @db.VarChar(255)
-  number       String   @db.VarChar(255)
-  address      String?  @db.Text
-  city         String?  @db.VarChar(255)
-  pincode      String?  @db.VarChar(255)
-  country      String?  @db.VarChar(255)
-  date         String   @db.VarChar(30)
-  verify_code  String?  @db.VarChar(10)
+  id           Int       @id @default(autoincrement())
+  userid       Int?
+  user         users?    @relation(fields: [userid], references: [id])
+  name         String    @db.VarChar(255)
+  slug         String    @db.VarChar(255)
+  category     category? @relation(fields: [category_id], references: [cid])
+  category_id  Int?
+  logo         String    @db.VarChar(255)
+  website_link String    @db.VarChar(255)
+  about        String    @db.Text
+  email        String    @db.VarChar(255)
+  number       String    @db.VarChar(255)
+  address      String?   @db.VarChar(255)
+  city         String?   @db.VarChar(255)
+  pincode      String?   @db.VarChar(255)
+  country      String?   @db.VarChar(255)
+  date         String    @db.VarChar(30)
+  verify_code  String?   @db.VarChar(10)
   claim        Int
   status       Int
   reviews      review[]
 }
 
 model review {
-  review_id          Int           @id @default(autoincrement())
-  user               users         @relation(fields: [review_user_id], references: [id])
-  review_user_id     Int
-  company            listing       @relation(fields: [review_company_id], references: [id])
-  review_company_id  Int
-  review_title       String        @db.Text
-  review_comment     String        @db.Text
-  review_date        String        @db.VarChar(20)
-  review_delete_date String        @db.VarChar(20)
-  review_rating      Int
-  review_status      Int
-  flag               Boolean?      @default(false)
-  // flagDetails        flagDetails[]
+  id               Int            @id @default(autoincrement())
+  user             users          @relation(fields: [user_id], references: [id])
+  user_id          Int
+  company          listing        @relation(fields: [company_id], references: [id])
+  company_id       Int
+  top_review       Boolean?       @default(false)
+  review_title     String         @db.VarChar(50)
+  review_comment   String         @db.VarChar(255)
+  dateOfExperience String?        
+  review_rating    Int
+  review_status    ReviewStatus?  @default(Moderation)
+  review_date      DateTime       @default(now())
+  flag             Boolean?       @default(false)
+  flagDetail       flagDetails?
+  reported         Boolean?       @default(false)
+  reportDetail     ReportDetails?
 }
 
-// model flagDetails {
-//   id          Int    @id @default(autoincrement())
-//   reviewId    Int
-//   reviews     review @relation(fields: [reviewId], references: [review_id])
-//   flag_reason String @db.Text
-//   flag_date   String @db.VarChar(20)
-//   userId      Int
-//   user        users  @relation(fields: [userId], references: [id])
-// }
+enum ReviewStatus {
+  Moderation
+  Active
+  Inactive
+  Reported
+  Flagged
+}
+
+model ReportDetails {
+  id            Int      @id @default(autoincrement())
+  review        review   @relation(fields: [review_id], references: [id])
+  review_id     Int      @unique
+  report_date   DateTime @default(now())
+  report_reason String   @db.Text
+}
+
+model flagDetails {
+  id          Int    @id @default(autoincrement())
+  review      review @relation(fields: [reviewId], references: [id])
+  reviewId    Int    @unique
+  flag_reason String @db.Text
+  flag_date   String @db.VarChar(20)
+}
 
 model settings {
   pid              Int    @id @default(autoincrement())
@@ -141,21 +159,29 @@ model top_search {
 }
 
 model users {
-  id            Int           @id @default(autoincrement())
-  username      String        @db.VarChar(50)
-  email         String        @db.VarChar(50)
-  domain        String?       @db.VarChar(255)
-  password      String        @db.VarChar(50)
-  cpassword     String        @db.VarChar(50)
-  image         String        @db.VarChar(255)
-  member_date   String        @db.VarChar(20)
-  verify        Int
-  status        Int
-  mobile_number String        @db.VarChar(15)
-  region        String        @db.VarChar(30)
-  active        Int
-  role          String        @db.VarChar(200)
-  top_reviewers String?       @db.VarChar(10)
+  id            Int       @id @default(autoincrement())
+  firstName     String    @db.VarChar(50)
+  lastName      String    @db.VarChar(50)
+  email         String    @db.VarChar(50)
+  domain        String?   @db.VarChar(255)
+  password      String    @db.VarChar(250)
+  cpassword     String    @db.VarChar(250)
+  image         String?   @db.VarChar(255)
+  member_date   DateTime  @default(now())
+  verify        Boolean   @default(false)
+  mobile_number String?   @db.VarChar(15)
+  active        Boolean   @default(false)
+  role          roles     @relation(fields: [role_id], references: [id])
+  role_id       Int
   reviews       review[]
-  // flagDetails   flagDetails[]
+  listing       listing[]
+}
+
+model roles {
+  id          Int       @id @default(autoincrement())
+  role_name   String    @db.VarChar(200)
+  role_status Boolean
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime? @updatedAt
+  users       users[]
 }

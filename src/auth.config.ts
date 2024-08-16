@@ -1,16 +1,15 @@
-import GitHub from "next-auth/providers/github";
-import { CredentialsSignin, type NextAuthConfig } from "next-auth";
+import { NextAuthOptions, User } from "next-auth";
+import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import CreadentialProvider from "next-auth/providers/credentials";
+import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
 import { prisma } from "../prisma/prisma";
 
-export default {
+const authOptions: NextAuthOptions = {
   providers: [
-    //   // hentication providers
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
       authorization: {
         params: {
           prompt: "consent",
@@ -19,48 +18,64 @@ export default {
         },
       },
     }),
-    CreadentialProvider({
+    CredentialsProvider({
       name: "credentials",
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        const { email, password } = credentials;
-        if (
-          !email ||
-          typeof email !== "string" ||
-          !password ||
-          typeof password !== "string"
-        ) {
+        if (!credentials?.email || !credentials?.password) {
           throw new Error("Please provide both email and password");
         }
+
         const user = await prisma.users.findFirst({
-          where: {
-            email: email,
-          },
+          where: { email: credentials.email },
         });
 
-        if (!user) {
-          throw new CredentialsSignin("Invalid email or password");
+        if (!user || !user.password) {
+          throw new Error("Invalid email or password");
         }
 
-        if (!user.password) {
-          throw new CredentialsSignin("Invalid email or password");
-        }
-
-        const isMatch = await compare(password, user.password);
-
+        const isMatch = await compare(credentials.password, user.password);
         if (!isMatch) {
-          throw new CredentialsSignin("Invalid email or password");
+          throw new Error("Invalid email or password");
         }
 
-        if (password !== "passcode")
-          throw new CredentialsSignin({
-            cause: "Password does not match",
-          });
-        else return { ...user, password: undefined, id: String(user.id) };
+        // Return a safe user object
+        const safeUser: Omit<User, "password"> = {
+          id: user.id,
+          name: user.name,
+          email: user.email,
+        };
+        console.log(user,"user");
+
+        return safeUser;
       },
     }),
   ],
-} satisfies NextAuthConfig;
+  callbacks: {
+    async session({ session, token }) {
+      if (token) {
+        session.user = {
+          ...session.user,
+          id: token.id as string,
+          name: token.name,
+        };
+      }
+      return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.name = user.name;
+      }
+      return token;
+    },
+  },
+  pages: {
+    signIn: "/auth/signin",
+  },
+};
+
+export default authOptions;

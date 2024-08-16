@@ -1,13 +1,47 @@
-"use client"
+"use client";
+import { loginHandler } from "@/server-actions/authActions";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
+import { toast } from "sonner";
 
 const SigninForm = () => {
+  const router: any = useRouter();
+  const error = router.query;
   return (
     <form
       className="ca-form"
-      method="post"
       action={async (formData) => {
-        console.log(formData);
+        const email = formData.get("email");
+        const password = formData.get("password");
+        const toastId = toast.loading("Logging In");
+        if (!email) {
+          return toast.error("Email Address is required", {
+            id: toastId,
+          });
+        }
+        if (!password) {
+          return toast.error("Password is required", {
+            id: toastId,
+          });
+        }
+
+        const error = await loginHandler({
+          email: email ? (email as string) : "",
+          password: password ? (password as string) : "",
+        });
+        console.log(error, "error");
+
+        if (!error) {
+          toast.success("Login successful", {
+            id: toastId,
+          });
+          router.refresh();
+        } else {
+          toast.error(error, {
+            id: toastId,
+          });
+        }
       }}
     >
       <input
@@ -26,7 +60,7 @@ const SigninForm = () => {
           className="ca-form__input ca-form__input--alt ca-form__input--lg js-first-name"
           placeholder="Email address"
           type="text"
-          name="username"
+          name="email"
           style={{
             backgroundImage: 'url("data:image/png',
             backgroundRepeat: "no-repeat",
@@ -111,34 +145,14 @@ const SigninForm = () => {
             Facebook, Twitter or Yahoo?
           </button>
         </p>
-        <a className="login__lnk ca-a--cr" href="/forgot-password/">
+        <Link className="login__lnk ca-a--cr" href="/forgot-password/">
           Forgot password
-        </a>
-        <a
-          className="login__lnk ca-a--cr"
-          href="/create/?next=https://www.consumeraffairs.com/"
-        >
-          Not a member yet? Create an account
-        </a>
+        </Link>
+        <Link className="login__lnk ca-a--cr" href="/signup">
+          Not a member yet?{" "}
+          <span className="text-blue-600 underline">Create an account</span>
+        </Link>
       </div>
-      <input
-        type="hidden"
-        name="xxTrustedFormCertUrl"
-        defaultValue="https://cert.trustedform.com/9e9d7d4c2d271df36eeb92af3e81bd294b651f75"
-        id="xxTrustedFormCertUrl_0"
-      />
-      <input
-        type="hidden"
-        name="xxTrustedFormToken"
-        defaultValue="https://cert.trustedform.com/9e9d7d4c2d271df36eeb92af3e81bd294b651f75"
-        id="xxTrustedFormToken_0"
-      />
-      <input
-        type="hidden"
-        name="xxTrustedFormPingUrl"
-        defaultValue="https://ping.trustedform.com/0.hb2uM8qQRRUg0DT2qLYZ4lR8Ypp06D4vx1Kz5qU0QzoIye6EhXTajEJLsM-1KDMGgjqwyr4.YYxOujqUS0g5xaZ16XdXPQ.XKHhLUgVdW8DX1dgFU0AbQ"
-        id="xxTrustedFormPingUrl_0"
-      />
     </form>
   );
 };

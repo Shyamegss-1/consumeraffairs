@@ -4,10 +4,13 @@ import React from "react";
 import CompanyDetailLayout from "./CompanyDetailLayout";
 import "./Module.css";
 import ReviewForm from "./ReviewForm";
+import { auth } from "@/auth";
 
 const page = async ({ params }: { params: { company: string } }) => {
+  const session = await auth();
+  const user: any = session?.user;
   // const companyDetail = async () => {
-  let companyDetail: any = await getCompanyDetails(params.company);
+  let companyDetail: any = await getCompanyDetails(params.company, user);
   //   return res;
   // };
 
@@ -64,7 +67,10 @@ const page = async ({ params }: { params: { company: string } }) => {
               height={1080}
             />
           </div>
-          <ReviewForm prevReviews={companyDetail.reviews}/>
+          <ReviewForm
+            companyId={companyDetail.id}
+            prevReviews={companyDetail.reviews}
+          />
         </div>
       </CompanyDetailLayout>
     </div>

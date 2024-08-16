@@ -1,5 +1,4 @@
 "use client";
-import { url } from "inspector";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -7,15 +6,12 @@ import ServiceSection from "./ServiceSection";
 import RecentReviews from "./RecentReviews";
 import ProductInfo from "./ProductInfo";
 import Banner from "./Banner";
-import CategorySection from "./CategorySection";
-import InfiniteCarousel from "@/components/InfiniteCarousel/InfiniteCarousel";
 import { redirect } from "next/navigation";
 import Swal from "sweetalert2";
-import { isUrlValid } from "@/lib/Hooks";
 import { listingDomain } from "@/server-actions/listingDomain";
-import { string } from "zod";
 
-const HomePage = () => {
+
+const HomePage = ({ user }: { user: any }) => {
   const cardData = [
     {
       icon: "/Frame.svg",
@@ -48,6 +44,7 @@ const HomePage = () => {
       title: "Moving",
     },
   ];
+
   return (
     <>
       <div className="relative rounded-b-[3rem] bg-gradient-to-r from-primary_light  to-primary_dark flex justify-center items-center pt-24">
@@ -73,8 +70,9 @@ const HomePage = () => {
                     action={async (formData) => {
                       const domain = formData.get("domain");
                       const res = await listingDomain(domain);
-                      console.log(res,"ggjhgds");
-                      
+
+                      // console.log(res, "ggjhgds");
+
                       if (!res.status) {
                         Swal.fire({
                           title: "Error",

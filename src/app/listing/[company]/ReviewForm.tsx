@@ -5,11 +5,13 @@ import { log } from "console";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 type Props = {
-  prevReviews: [];
+  prevReviews: any;
+  companyId: number;
 };
 
-const ReviewForm = ({ prevReviews }: Props) => {
-  const [reviews, setReviews] = useState(prevReviews || []);
+const ReviewForm = ({ prevReviews, companyId }: Props) => {
+  const [reviews, setReviews] = useState(prevReviews);
+  console.log(reviews, "jghfgh");
 
   return (
     <>
@@ -19,11 +21,82 @@ const ReviewForm = ({ prevReviews }: Props) => {
       >
         <h4 className="mb-3 title">Reviews</h4>
         <div className="underline" />
-        <h4 className="px-3 no-review">No Reviews yet</h4>{" "}
+        {reviews ? (
+          reviews?.map((item: any, index: number) => (
+            <div key={item.id} className="business-review-single-box mt-4">
+              <div className="business-review-profile-box">
+                <div className="business-review-profile-info flex items-center">
+                  <div className="business-review-logo">
+                    <p
+                      style={{
+                        height: 60,
+                        margin: "auto",
+                        fontSize: "26px !important",
+                        color: "#fff",
+                        width: 60,
+                        lineHeight: 60,
+                        textAlign: "center",
+                        borderRadius: "50%",
+                        backgroundColor: "green",
+                      }}
+                    >
+                      {`${item.user.firstName
+                        .charAt(0)
+                        .toUpperCase()} ${item.user.lastName
+                        .charAt(0)
+                        .toUpperCase()}`}
+                    </p>
+                  </div>
+                  <div className="business-user-name ms-2">
+                    <h4>{`${item.user.firstName} ${item.user.lastName}`}</h4>
+                    <p></p>
+                  </div>
+                </div>
+                <div className="business-review-rating-box">
+                  <div className="business-ratings-icons">
+                    <i className="fa fa-star me-1" />
+                    <i className="fa fa-star me-1" />
+                    <i className="fa fa-star me-1" />
+                    <i className="fa fa-star me-1" />
+                    <i className="fa fa-star me-1" />{" "}
+                    <span
+                      className="fa fa-flag-o ms-2 fs-3 text-dark report-button"
+                      data-id={210}
+                    />
+                  </div>
+                  <div className="business-review-added-on">
+                    <p>
+                      <span>Added On : </span>
+                      August 6, 2024{" "}
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="business-review-input-box mt-2">
+                <h5>Almost 100 bucks for a certificate nobody cares </h5>
+                <p>
+                  Almost 100 bucks for a certificate nobody cares about is way
+                  too much. The php-tutorial is bad. The questions are redundant
+                  and too easy.{" "}
+                </p>
+              </div>
+              <div className="business-review-date-of-experience mt-2">
+                <p className="m-0">
+                  <span>Date of Experience :</span>
+                  2024-07-28{" "}
+                </p>
+              </div>
+            </div>
+          ))
+        ) : (
+          <h4 className="px-3 no-review">No Reviews yet</h4>
+        )}
       </div>
       <div className="review-new-form-box mb-5" id="review-new-form-box">
         <div>
-          <h4 className="mb-3">Write A Review </h4>
+          <h4 className="mb-3 text-heading-3 font-heading-3">
+            Write A Review{" "}
+          </h4>
           <div className="underline" />
         </div>
         <div className="mt-4">
@@ -31,23 +104,39 @@ const ReviewForm = ({ prevReviews }: Props) => {
             className="row"
             action={async (formData) => {
               const rating = formData.get("rating");
-              const date = formData.get("date");
+              const dateOfExperience = formData.get("dateOfExperience");
               const title = formData.get("title");
               const comment = formData.get("comment");
-              const res = await postReviews({ rating, date, title, comment });
+              const data = {
+                rating: rating as any,
+                dateOfExperience: dateOfExperience
+                  ? (dateOfExperience as string)
+                  : "",
+                title: title ? (title as string) : "",
+                comment: comment ? (comment as string) : "",
+              };
+              const res: any = await postReviews({
+                ...data,
+                companyId,
+              });
               // log
               if (res.status) {
                 Swal.fire({
-                  toast: true,
                   title: "Success",
                   text: "Reviews posted successfully",
                   icon: "success",
+                  didClose() {
+                    console.log(res.reviews);
+                    if (res.reviews) {
+                      setReviews([res.reviews, ...reviews]);
+                    }
+                  },
                 });
               } else {
                 Swal.fire({
-                  toast: true,
                   title: "Error",
-                  text: "Failed to post reviews",
+                  text: res.error,
+                  icon: "error",
                 });
               }
             }}
@@ -119,7 +208,7 @@ const ReviewForm = ({ prevReviews }: Props) => {
                 <input
                   type="date"
                   id="date"
-                  name="date"
+                  name="dateOfExperience"
                   className="form-control"
                 />
               </div>

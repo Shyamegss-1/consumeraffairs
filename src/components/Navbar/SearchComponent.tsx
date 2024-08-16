@@ -46,7 +46,7 @@ const SearchComponent = (props: Props) => {
       }}
     >
       <div className="relative">
-        <button
+        <div
           className="px-4 py-3 hover:bg-hover rounded-lg "
           onClick={() => {
             setToggleRecentSearch(!toggleRecentSearch);
@@ -54,7 +54,7 @@ const SearchComponent = (props: Props) => {
           }}
         >
           <SearchIcon className="size-5 " />
-        </button>
+        </div>
         {toggleRecentSearch && (
           <div
             className={`absolute right-0 p-4 rounded-lg shadow-2xl bg-white`}

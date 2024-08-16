@@ -1,10 +1,19 @@
 import Link from "next/link";
 import React from "react";
 import "./Module.css";
-import SigninForm from "./SignipForm";
+import SigninForm from "./SigninForm";
 import AuthLayout from "../../components/Layouts/authLayout/AuthLayout";
+import { redirect } from "next/navigation";
+import { auth } from "@/auth";
 
-const page = () => {
+const page = async() => {
+  const session = await auth()
+
+  // console.log(session?.user, "hfghfgf");
+
+  if (session?.user) {
+    return redirect("/");
+  }
   return (
     <AuthLayout>
       <div className="bnr-cnt ca-bg-pttrn-hxgn ca-bg-pttrn-hxgn--bttm-rght ca-bg-pttrn-hxgn--lg">

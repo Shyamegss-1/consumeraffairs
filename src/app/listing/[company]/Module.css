@@ -37,7 +37,7 @@
     background-color: #fff;
     border-radius: 0px;
     height: auto;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .img-fluid {
@@ -285,4 +285,95 @@ textarea.form-control {
     text-decoration: none;
     display: block;
     padding: 12px 20px;
+}
+
+.business-review-single-box {
+    display: flex;
+    padding: 32px 32px 20px;
+    flex-direction: column;
+    /* align-items: flex-start; */
+    /* gap: 20px; */
+    /* align-self: stretch; */
+    border-radius: 20px;
+    background: var(--Faded-White, #f3f5f9);
+    width: 100%;
+}
+
+.business-review-profile-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.business-review-single-box .business-review-profile-info .business-user-name h4 {
+    color: var(--download-Black, #000);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 22.5px;
+    margin: 0px;
+    margin-bottom: 5px;
+}
+
+.business-review-single-box .business-review-profile-info .business-user-name p {
+    color: var(--download-Black, #000);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    opacity: 0.6;
+    margin: 0px;
+}
+
+.business-review-rating-box .business-ratings-icons {
+    display: flex;
+    justify-content: end;
+    margin-bottom: 8px;
+}
+
+.business-review-rating-box .business-ratings-icons i {
+    background-color: #5247a5;
+    height: 25px;
+    width: 25px;
+    border-radius: 4px;
+    display: flex;
+    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+    color: #ffbf00 !important;
+    margin: 0px 2px;
+}
+
+.business-review-added-on p {
+    color: var(--download-Black, #000);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    opacity: 0.6;
+    margin: 0px;
+}
+
+.business-review-input-box h5 {
+    color: #2c2c2c;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: normal;
+}
+
+.business-review-input-box p {
+    color: #2c2c2c;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 26.56px;
+}
+.business-review-date-of-experience p {
+    color: var(--download-Black, #000);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: normal;
+    opacity: 0.6;
+}
+
+.business-review-date-of-experience p span {
+    font-weight: 600;
 }
