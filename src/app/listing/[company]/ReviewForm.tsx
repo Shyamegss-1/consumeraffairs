@@ -21,7 +21,7 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
   // const [password, setPassword] = useState<string>("");
   const router = useRouter();
   const [reviews, setReviews] = useState(prevReviews);
-  console.log(reviews, "jghfgh");
+  console.log(reviews, "reviews");
 
   return (
     <>
@@ -31,7 +31,7 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
       >
         <h4 className="mb-3 title">Reviews</h4>
         <div className="underline" />
-        {reviews ? (
+        {reviews && reviews.length > 0 ? (
           reviews?.map((item: any, index: number) => (
             <div key={item.id} className="business-review-single-box mt-4">
               <div className="business-review-profile-box">
@@ -59,7 +59,6 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
                   </div>
                   <div className="business-user-name ms-2">
                     <h4>{`${item.user.firstName} ${item.user.lastName}`}</h4>
-                    <p></p>
                   </div>
                 </div>
                 <div className="business-review-rating-box">
@@ -76,24 +75,24 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
                   </div>
                   <div className="business-review-added-on">
                     <p>
-                      <span>Added On : </span>
-                      August 6, 2024{" "}
+                      <span className="font-bold">Added On : </span>
+                      {item.review_date
+                        .toString()
+                        .split(" ")
+                        .slice(1, 4)
+                        .join(" ")}{" "}
                     </p>
                   </div>
                 </div>
               </div>
               <div className="business-review-input-box mt-2">
-                <h5>Almost 100 bucks for a certificate nobody cares </h5>
-                <p>
-                  Almost 100 bucks for a certificate nobody cares about is way
-                  too much. The php-tutorial is bad. The questions are redundant
-                  and too easy.{" "}
-                </p>
+                <h5>{item.review_title} </h5>
+                <p>{item.review_comment}</p>
               </div>
               <div className="business-review-date-of-experience mt-2">
                 <p className="m-0">
-                  <span>Date of Experience :</span>
-                  2024-07-28{" "}
+                  <span className="font-bold">Date of Experience :</span>
+                  {item.dateOfExperience}{" "}
                 </p>
               </div>
             </div>
@@ -111,6 +110,7 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
         </div>
         <div className="mt-4">
           <form
+            id="#reviewForm"
             className="row"
             action={async (formData) => {
               const rating = formData.get("rating");
@@ -336,6 +336,10 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
                                     if (_res.reviews) {
                                       setReviews([_res.reviews, ...reviews]);
                                     }
+                                    const form = document.querySelector("form");
+                                    if (form) {
+                                      form.reset();
+                                    }
                                   },
                                 });
                               } else {
@@ -350,8 +354,6 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
                             }
                           }
                         } else {
-                          console.log(c_email, "c_email.value");
-
                           const _email: string = c_email.value;
                           const _password: string = createPassword.value;
                           const _confirmPassword: string =
@@ -401,8 +403,11 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
                                     // console.log(res.reviews);
                                     if (_res.reviews) {
                                       // console.log();
-
                                       setReviews([_res.reviews, ...reviews]);
+                                    }
+                                    const form = document.querySelector("form");
+                                    if (form) {
+                                      form.reset();
                                     }
                                   },
                                 });
@@ -541,6 +546,9 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
               <div className="form-field">
                 <button className="theme-btn1 w-100" type="submit">
                   SUBMIT
+                </button>
+                <button className="theme-btn1 w-100 hidden" type="reset">
+                  Reset
                 </button>
               </div>
             </div>
