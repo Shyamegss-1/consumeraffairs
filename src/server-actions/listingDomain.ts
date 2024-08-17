@@ -1,5 +1,3 @@
-"use server";
-
 import { isUrlValid } from "@/lib/Hooks";
 
 export const listingDomain = async (domain: any) => {

@@ -47,6 +47,9 @@ export const signupSchema = object({
     .min(1, "Confirm Password is required")
     .min(8, "Confirm Password must be more than 8 characters")
     .max(32, "Confirm Password must be less than 32 characters"),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Password is not matched with confirm password.",
+  path: "/signup",
 });
 
 export const reviewFormSchema = object({

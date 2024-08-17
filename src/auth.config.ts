@@ -1,11 +1,11 @@
-import { NextAuthOptions, User } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
 import { prisma } from "../prisma/prisma";
+import { NextAuthConfig } from "next-auth";
 
-const authOptions: NextAuthOptions = {
+const authOptions: NextAuthConfig = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -33,24 +33,19 @@ const authOptions: NextAuthOptions = {
           where: { email: credentials.email },
         });
 
-        if (!user || !user.password) {
+        if (!user || typeof user.password !== "string") {
           throw new Error("Invalid email or password");
+        }
+
+        if (typeof credentials.password !== "string") {
+          throw new Error("Invalid credentials");
         }
 
         const isMatch = await compare(credentials.password, user.password);
         if (!isMatch) {
           throw new Error("Invalid email or password");
         }
-
-        // Return a safe user object
-        const safeUser: Omit<User, "password"> = {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-        };
-        console.log(user,"user");
-
-        return safeUser;
+        return { ...user, id: user.id.toString() };
       },
     }),
   ],

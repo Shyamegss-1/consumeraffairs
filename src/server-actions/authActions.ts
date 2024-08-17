@@ -7,13 +7,13 @@ import { signupSchema } from "../lib/zod";
 
 interface formData {
   firstName: string;
-  last_name: string;
+  lastName: string;
   // address: string;
   // zip: string;
   // province: string;
   // city: string;
   email: string;
-  cpassword: string;
+  password: string;
   confirmPassword: string;
 }
 

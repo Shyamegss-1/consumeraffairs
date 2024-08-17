@@ -1,5 +1,3 @@
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
 import React, { ReactElement, ReactNode } from "react";
 
 interface AuthProps {
