@@ -26,19 +26,19 @@ const SigninForm = () => {
           });
         }
 
-        const error = await loginHandler({
+        const res = await loginHandler({
           email: email ? (email as string) : "",
           password: password ? (password as string) : "",
         });
-        console.log(error, "error");
+        console.log(res, "error");
 
-        if (!error) {
+        if (res.status) {
           toast.success("Login successful", {
             id: toastId,
           });
           router.refresh();
         } else {
-          toast.error(error, {
+          toast.error(res.message, {
             id: toastId,
           });
         }

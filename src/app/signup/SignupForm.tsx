@@ -43,11 +43,11 @@ const SignupForm: React.FC<SignupFormProps> = ({ countryList }) => {
       confirmPassword: password2 ? (password2 as string) : ("" as string),
     };
     const toastId = toast.loading("Logging In");
-    const error = await signupHandler({ ...data });
-    console.log(error, "error");
+    const res = await signupHandler({ ...data });
+    console.log(res, "error");
 
-    if (error) {
-      toast.error(error, {
+    if (!res.status) {
+      toast.error(res.message, {
         id: toastId,
       });
     } else {

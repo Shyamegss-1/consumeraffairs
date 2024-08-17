@@ -11,6 +11,7 @@ interface review {
   title: string;
   comment: string;
   companyId: number;
+  userId: number | null;
 }
 
 export const postReviews = async (data: review) => {
@@ -27,15 +28,14 @@ export const postReviews = async (data: review) => {
     // };
     // console.log(oldData, "hghfghfg");
 
-    const session = await auth();
-    const userId = Number(session?.user?.id);
     const { rating, comment } = await reviewFormSchema.parseAsync({
       title: data.title,
       rating: Number(data.rating),
       comment: data.comment,
     });
 
-    // console.log(data, userId);
+    const session = await auth();
+    const user = Number(session?.user?.id);
 
     const reviews = await prisma.review.create({
       data: {
@@ -44,10 +44,12 @@ export const postReviews = async (data: review) => {
         review_rating: Number(rating),
         review_title: data.title,
         company_id: data.companyId,
-        user_id: userId,
+        user_id: data.userId ? data.userId : user,
+      },
+      include: {
+        user: true,
       },
     });
-    console.log(reviews);
     return { status: true, reviews };
   } catch (error) {
     if (error instanceof ZodError) {

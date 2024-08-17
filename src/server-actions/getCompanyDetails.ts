@@ -23,7 +23,7 @@ export const getCompanyDetails = async (domain: string, user: any) => {
     } else {
       const newCompany = await prisma.listing.create({
         data: {
-          userid: user ? Number(user?.id) : 0,
+          userid: user ? Number(user?.id) : null,
           about: "",
           email: "",
           number: "",

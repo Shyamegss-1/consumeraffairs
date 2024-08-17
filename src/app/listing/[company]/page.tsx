@@ -70,6 +70,7 @@ const page = async ({ params }: { params: { company: string } }) => {
           <ReviewForm
             companyId={companyDetail.id}
             prevReviews={companyDetail.reviews}
+            userId={session?.user?.id ? Number(session.user.id) : null}
           />
         </div>
       </CompanyDetailLayout>

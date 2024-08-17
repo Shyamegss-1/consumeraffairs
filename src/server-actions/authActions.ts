@@ -1,9 +1,11 @@
 "use server";
-import { signIn } from "@/auth";
+import { auth, signIn } from "@/auth";
 import { compare, hash } from "bcryptjs";
 import { prisma } from "../../prisma/prisma";
-import { ZodError } from "zod";
+import { any, ZodError } from "zod";
 import { signupSchema } from "../lib/zod";
+import { getToken } from "next-auth/jwt";
+import { getSession } from "next-auth/react";
 
 interface formData {
   firstName: string;
@@ -58,14 +60,14 @@ export const signupHandler = async (formData: formData) => {
     }
     // Redirect to sign in after successful signup
     // redirect("/auth/signin");
-    return;
+    return { status: true, userId: newUser.id };
   } catch (error: any) {
     if (error instanceof ZodError) {
       // console.error(error.errors[0].message);
-      return error.errors[0].message;
+      return { status: false, message: error.errors[0].message };
     } else {
       // console.error(error.message || error);
-      return String(error.message || error);
+      return { status: false, message: String(error.message || error) };
     }
   }
 };
@@ -78,14 +80,25 @@ export const loginHandler = async ({
   password: string;
 }) => {
   try {
-    await signIn("credentials", {
+    const res = await signIn("credentials", {
       email,
       password,
-      redirect: true,
-      callbackUrl: "/",
+      redirect: false,
+      // callbackUrl: "/",
     });
+    
+    // const session = await getSession({ broadcast: true });
+    console.log(res, "loginres");
+
+    return {
+      status: true,
+      message: "Logged in successfully",
+      res
+    };
   } catch (error: any) {
     const err = error.cause;
-    return err;
+    // console.log(err, "errrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+
+    return { status: false, message: err };
   }
 };

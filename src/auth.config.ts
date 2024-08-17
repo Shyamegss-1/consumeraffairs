@@ -1,9 +1,10 @@
-import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
 import { prisma } from "../prisma/prisma";
-import { NextAuthConfig } from "next-auth";
+import { CredentialsSignin, NextAuthConfig } from "next-auth";
+import { ZodError } from "zod";
+import { signinSchema } from "./lib/zod";
 
 const authOptions: NextAuthConfig = {
   providers: [
@@ -25,27 +26,50 @@ const authOptions: NextAuthConfig = {
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error("Please provide both email and password");
-        }
+        try {
+          const { email, password } = await signinSchema.parseAsync(
+            credentials
+          );
 
-        const user = await prisma.users.findFirst({
-          where: { email: credentials.email },
-        });
+          // if (!username || !password) {
+          //   return;
+          // }
 
-        if (!user || typeof user.password !== "string") {
-          throw new Error("Invalid email or password");
-        }
+          const user = await prisma.users.findFirst({
+            where: {
+              email,
+            },
+          });
+          // console.log(user);
+          if (!user || !user.email) {
+            throw new CredentialsSignin({
+              cause: "Invalid email or password.",
+            });
+          }
 
-        if (typeof credentials.password !== "string") {
-          throw new Error("Invalid credentials");
-        }
+          const isMatch = await compare(password, user.password);
 
-        const isMatch = await compare(credentials.password, user.password);
-        if (!isMatch) {
-          throw new Error("Invalid email or password");
+          if (!isMatch) {
+            throw new CredentialsSignin({
+              cause: "Invalid email or password.",
+            });
+          }
+
+          return { ...user, id: String(user.id) };
+        } catch (error) {
+          console.log(error instanceof ZodError);
+
+          if (error instanceof ZodError) {
+            // Throw a custom error with the Zod validation error message
+            // throw new Error(error.errors[0].message);
+            throw new CredentialsSignin({
+              cause: error.errors[0].message,
+            });
+            // Only show the first Zod error message
+          } else {
+            throw error;
+          }
         }
-        return { ...user, id: user.id.toString() };
       },
     }),
   ],
@@ -67,9 +91,6 @@ const authOptions: NextAuthConfig = {
       }
       return token;
     },
-  },
-  pages: {
-    signIn: "/auth/signin",
   },
 };
 
