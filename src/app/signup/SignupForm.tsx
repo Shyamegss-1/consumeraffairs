@@ -14,7 +14,6 @@ interface SignupFormProps {
 }
 
 const SignupForm: React.FC<SignupFormProps> = ({ countryList }) => {
-
   const router = useRouter();
 
   const [toggleDropdown, setToggleDropdown] = useState<boolean>(false);
@@ -51,15 +50,20 @@ const SignupForm: React.FC<SignupFormProps> = ({ countryList }) => {
         id: toastId,
       });
     } else {
-      await loginHandler({
-        email: data.email,
-        password: data.password,
+      // await loginHandler({
+      //   email: data.email,
+      //   password: data.password,
+      // });
+      // toast.success("Signup successful", {
+      //   id: toastId,
+      // });
+      toast.dismiss();
+      Swal.fire({
+        title: "Success",
+        text: "Check your email to verify your account",
       });
-      toast.success("Signup successful", {
-        id: toastId,
-      });
-      router.refresh()
-      // redirect("/auth/signin");
+      // router.refresh()
+      redirect("/");
     }
     // await loginHandler({
     //   email: data.email,
