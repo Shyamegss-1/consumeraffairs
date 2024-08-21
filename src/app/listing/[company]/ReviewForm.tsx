@@ -106,12 +106,12 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
           <h4 className="mb-3 text-heading-3 font-heading-3">
             Write A Review{" "}
           </h4>
-          <div className="underline" />
+          <hr className="text-black h-2"/>
         </div>
-        <div className="mt-4">
+        <div className="mt-4 w-full">
           <form
-            id="#reviewForm"
-            className="row"
+            id="#review-new-form-box"
+            className="grid grid-cols-2 w-full"
             action={async (formData) => {
               const rating = formData.get("rating");
               const dateOfExperience = formData.get("dateOfExperience");
@@ -441,7 +441,7 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
               }
             }}
           >
-            <div className="col-lg-5">
+            <div className="md:col-span-1 lg:col-span-1">
               <div className="form-field">
                 <label htmlFor="">Ratings*</label>
                 <div className="listing-ratings-stars">
@@ -502,7 +502,7 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
                 </div>
               </div>
             </div>
-            <div className="col-lg-7">
+            <div className="md:col-span-1 lg:col-span-1">
               <div className="form-field">
                 <label htmlFor="">Date Of Experience</label>
                 <input
@@ -513,7 +513,7 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
                 />
               </div>
             </div>
-            <div className="col-lg-12 mt-4">
+            <div className="md:col-span-1 lg:col-span-2 mt-4">
               <div className="form-field">
                 <label htmlFor="">Review Title</label>
                 <input
@@ -525,7 +525,7 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
                 />
               </div>
             </div>
-            <div className="col-lg-12 mt-4">
+            <div className="md:col-span-1 lg:col-span-2 mt-4">
               <div className="form-field">
                 <label htmlFor="">
                   Please let us know about your experience with the
@@ -542,7 +542,7 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
                 />
               </div>
             </div>
-            <div className="col-lg-12 mt-4">
+            <div className="md:col-span-1 lg:col-span-2 mt-4">
               <div className="form-field">
                 <button className="theme-btn1 w-100" type="submit">
                   SUBMIT

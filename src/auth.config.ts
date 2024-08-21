@@ -20,6 +20,64 @@ const authOptions: NextAuthConfig = {
       },
     }),
     CredentialsProvider({
+      id: "business-owner-login",
+      name: "Business Owner Login",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        try {
+          const { email, password } = await signinSchema.parseAsync(
+            credentials
+          );
+
+          // if (!username || !password) {
+          //   return;
+          // }
+
+          const user = await prisma.users.findFirst({
+            where: {
+              email,
+            },
+          });
+          // console.log(user);
+          if (!user || !user.email) {
+            throw new CredentialsSignin({
+              cause: "Invalid email or password.",
+            });
+          }
+
+          const isMatch = await compare(password, user.password);
+
+          if (!isMatch) {
+            throw new CredentialsSignin({
+              cause: "Invalid email or password.",
+            });
+          }
+          if (user.role_id === 2) {
+            return { ...user, id: String(user.id) };
+          }
+          throw new CredentialsSignin({
+            cause: "Invalid email or password.",
+          });
+        } catch (error) {
+          console.log(error instanceof ZodError);
+
+          if (error instanceof ZodError) {
+            // Throw a custom error with the Zod validation error message
+            // throw new Error(error.errors[0].message);
+            throw new CredentialsSignin({
+              cause: error.errors[0].message,
+            });
+            // Only show the first Zod error message
+          } else {
+            throw error;
+          }
+        }
+      },
+    }),
+    CredentialsProvider({
       name: "credentials",
       credentials: {
         email: { label: "Email", type: "email" },
@@ -54,8 +112,12 @@ const authOptions: NextAuthConfig = {
               cause: "Invalid email or password.",
             });
           }
-
-          return { ...user, id: String(user.id) };
+          if (user.role_id === 1) {
+            return { ...user, id: String(user.id) };
+          }
+          throw new CredentialsSignin({
+            cause: "Invalid email or password.",
+          });
         } catch (error) {
           console.log(error instanceof ZodError);
 

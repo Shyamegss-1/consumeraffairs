@@ -3,8 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import UserLayout from "@/components/Layouts/userLayout/UserLayout";
 import { Toaster } from "sonner";
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
+import BusinessLayout from "@/components/Layouts/businessAdminLayout/BusinessLayout";
+import MainLayout from "./MainLayout";
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
   description: "ConsumerAffairs®: Research. Review. Resolve.",
 };
 
-export default  function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -37,11 +38,17 @@ export default  function RootLayout({
       </head>
       <body className={inter.className}>
         <main className="">
-          <UserLayout>
-            {children}
-            <Toaster />
-          </UserLayout>
+          <SessionProvider>
+            <MainLayout>{children}</MainLayout>
+          </SessionProvider>
+          {/* {isBusinessRoute ? (
+            <BusinessLayout>{children}</BusinessLayout>
+          ) : (
+            <UserLayout>{children}</UserLayout>
+          )} */}
+          {/* <UserLayout>{children}</UserLayout> */}
         </main>
+        <Toaster />
       </body>
     </html>
   );

@@ -14,7 +14,7 @@ const page = async ({ params }: { params: { company: string } }) => {
   //   return res;
   // };
 
-  console.log(companyDetail);
+  // console.log(companyDetail,"ghjhjgjg");
 
   return (
     <div className="main-business-profile-section">
@@ -50,7 +50,7 @@ const page = async ({ params }: { params: { company: string } }) => {
           </div>
         </div>
       </div>
-      <CompanyDetailLayout>
+      <CompanyDetailLayout websiteName={companyDetail.website_link}>
         <div className="col-span-8">
           <div className="business-profile-about-content">
             <h4 className="mb-3">About Business</h4>

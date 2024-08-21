@@ -4,6 +4,7 @@ import { prisma } from "../../prisma/prisma";
 import { ZodError } from "zod";
 import { auth } from "@/auth";
 import { title } from "process";
+import { sendEmail } from "@/lib/mailer";
 
 interface review {
   rating: string;
@@ -50,13 +51,16 @@ export const postReviews = async (data: review) => {
         user: true,
       },
     });
+    await sendEmail(reviews.user.email, {
+      subject: "New Review Listed",
+      text: `Your review has been added successfully`,
+    });
     return { status: true, reviews };
   } catch (error) {
     if (error instanceof ZodError) {
       return { status: false, error: error.errors[0].message };
     } else {
       console.log(error);
-
       return { status: false, error: String(error) };
     }
   }

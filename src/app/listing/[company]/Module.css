@@ -17,10 +17,10 @@
     -moz-appearance: none;
     appearance: none;
     border-radius: var(--bs-border-radius);
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-  }
-  
-  .theme-btn1 {
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.theme-btn1 {
     min-width: 64px !important;
     padding: 8px 24px !important;
     border-radius: 68px !important;
@@ -31,7 +31,7 @@
     color: var(--white, #fff) !important;
     border: 2px var(--Violet) solid !important;
     letter-spacing: 1px;
-  }
+}
 
 .main-business-profile-section {
     background-color: #fff;
@@ -202,10 +202,13 @@ textarea.form-control {
     margin-right: 0px;
 }
 
-.review-new-form-box .rating label:hover, .review-new-form-box .rating input[type="radio"]:hover ~ label {
+.review-new-form-box .rating label:hover,
+.review-new-form-box .rating input[type="radio"]:hover~label {
     color: #fff;
 }
-.review-new-form-box .rating input[type="radio"]:hover ~ label, .review-new-form-box .rating input[type="radio"]:checked ~ label {
+
+.review-new-form-box .rating input[type="radio"]:hover~label,
+.review-new-form-box .rating input[type="radio"]:checked~label {
     color: #ffbf00 !important;
     background-color: #5247a5;
 }
@@ -366,6 +369,7 @@ textarea.form-control {
     font-weight: 500;
     line-height: 26.56px;
 }
+
 .business-review-date-of-experience p {
     color: var(--download-Black, #000);
     font-size: 14px;
@@ -376,4 +380,28 @@ textarea.form-control {
 
 .business-review-date-of-experience p span {
     font-weight: 600;
+}
+
+
+.main-business-profile-section .business-profile-btns button {
+    display: inline-flex;
+    min-width: 64px;
+    padding: 10px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex: 1 0 0;
+    border-radius: 68px;
+    border: 2px solid var(--Violet, #5247a5);
+    color: #5247a5;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: normal;
+    background-color: transparent;
+    letter-spacing: 0.5px;
+}
+
+.main-business-profile-section .business-profile-btns button.fill {
+    background-color: #5247a5;
+    color: #fff;
 }

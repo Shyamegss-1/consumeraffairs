@@ -4,7 +4,7 @@ interface AuthProps {
   children: ReactNode;
 }
 
-const AuthLayout: React.FC<AuthProps> = async({ children }) => {
+const AuthLayout: React.FC<AuthProps> = ({ children }) => {
 
   return (
     <div className="flex">
