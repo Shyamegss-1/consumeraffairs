@@ -1,6 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import PhoneNumber from "./PhoneNumber";
+import { businessRegister } from "@/server-actions/businessRegister";
+import { string } from "zod";
+import { toast } from "sonner";
+import Swal from "sweetalert2";
+import { redirect } from "next/navigation";
 
 type Props = {
   claimUrl: string;
@@ -8,6 +13,7 @@ type Props = {
 
 const BusinessSignupForm: React.FC<Props> = ({ claimUrl }) => {
   const [number, setMobNumber] = useState<string>("");
+  const [numberCode, setMobNumberCode] = useState<string>("");
   const [websiteUrl, setWebsiteUrl] = useState<string>(
     `www.${claimUrl?.toLowerCase()}`
   );
@@ -15,12 +21,52 @@ const BusinessSignupForm: React.FC<Props> = ({ claimUrl }) => {
     `@${claimUrl?.toLowerCase()}`
   );
   const onchange = (value: string) => {
-    console.log(value);
     let number = value.split("-")[1];
     if (number.length > 15) {
       return;
     }
     setMobNumber(number ? number : "");
+    setMobNumberCode(value.split("-")[0]);
+  };
+
+  const handleSubmit = async (formData: FormData) => {
+    const name = formData.get("fullname");
+    const jobTitle = formData.get("jobTitle");
+    const email = formData.get("email");
+    const website = formData.get("website");
+    const businessName = formData.get("company");
+    const data = {
+      name: name as string,
+      jobTitle: jobTitle as string,
+      email: email ? ((email + emailAddressDomain) as string) : "",
+      website: websiteUrl ? (websiteUrl as string) : (website as string),
+      businessName: businessName as string,
+      phoneNumber: number ? (`${"+" + numberCode}-${number}` as string) : "",
+    };
+    const toastId = toast.loading("loading...");
+    const res = await businessRegister(data);
+    if (!res.status) {
+      toast.error(res.message, {
+        id: toastId,
+      });
+    } else {
+      // await loginHandler({
+      //   email: data.email,
+      //   password: data.password,
+      // });
+      // toast.success("Signup successful", {
+      //   id: toastId,
+      // });
+      toast.dismiss();
+      Swal.fire({
+        title: "Success",
+        text: "Check your email to verify your account",
+      });
+      // router.refresh()
+      redirect("/business/change-password");
+    }
+
+    // const res = await businessRegister(formData)
   };
 
   return (
@@ -36,7 +82,7 @@ const BusinessSignupForm: React.FC<Props> = ({ claimUrl }) => {
             <br /> with other folks....
           </p>
         </div>
-        <form method="post">
+        <form action={handleSubmit}>
           <div className="grid grid-cols-2 gap-x-4">
             <div className="col-lg-6">
               <div className="form-field">
@@ -56,8 +102,8 @@ const BusinessSignupForm: React.FC<Props> = ({ claimUrl }) => {
                 <input
                   type="text"
                   placeholder="Job Title..."
-                  name="job"
-                  id="job"
+                  name="jobTitle"
+                  id="jobTitle"
                   className="form-control"
                 />
               </div>
@@ -75,7 +121,7 @@ const BusinessSignupForm: React.FC<Props> = ({ claimUrl }) => {
                 <input
                   type="text"
                   placeholder="www.website.com"
-                  name="url"
+                  name="website"
                   value={websiteUrl}
                   onChange={(e) => {
                     const validUrl = e.target.value.replace(/^www\./, "");
@@ -106,7 +152,6 @@ const BusinessSignupForm: React.FC<Props> = ({ claimUrl }) => {
                       backgroundPosition: "97% center",
                       cursor: "auto",
                     }}
-                    data-temp-mail-org={0}
                   />
                   <span className="domain-email" id="domain">
                     {emailAddressDomain}
@@ -134,7 +179,7 @@ const BusinessSignupForm: React.FC<Props> = ({ claimUrl }) => {
                           </div> */}
           </div>
           <div className="form-field">
-            <button className="theme-btn1 px-5" id="register" type="button">
+            <button className="theme-btn1 px-5" type="submit">
               Sign Up
             </button>
             <p className="mt-2">

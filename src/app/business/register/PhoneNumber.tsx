@@ -15,9 +15,9 @@ export const PhoneNumber: React.FC<Props> = ({ value, onchange }) => {
 
   return (
     <div className="relative flex">
-      <div className="flex justify-start items-center gap-3 w-full ">
+      <div className="flex justify-start items-center gap-4 w-full ">
         {/* <PhoneCode phone={phone} setPhone={setPhone} /> */}
-        <div className="absolute z-20 flex items-center left-4">
+        <div className="absolute z-20 flex items-center left-3">
           <CountrySelector
             buttonStyle={{ border: "none" }}
             selectedCountry={country}
