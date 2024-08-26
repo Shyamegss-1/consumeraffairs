@@ -2,6 +2,8 @@
 
 import { ZodError } from "zod";
 import { prisma } from "../../prisma/prisma";
+import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 export const businessRegister = async (formData: {
   name: string;
@@ -36,6 +38,16 @@ export const businessRegister = async (formData: {
         accountType: "normail",
       },
     });
+
+    const token = await signToken(business);
+    cookies().set("business-token", token, {
+      path: "/business",
+      domain: process.env.domain,
+      maxAge: 300,
+      httpOnly: true,
+      secure: false,
+    });
+
     if (!business) {
       throw new Error("Something went wrong, try again");
     }
@@ -51,4 +63,12 @@ export const businessRegister = async (formData: {
       return { status: false, message: String(error.message || error) };
     }
   }
+};
+
+const secret = process.env.JWT_SECRET as string;
+
+export const signToken = (data: any) => {
+  return jwt.sign({ ...data }, secret, {
+    expiresIn: "1d",
+  });
 };

@@ -15,6 +15,7 @@
     "axios": "^1.7.4",
     "bcryptjs": "^2.4.3",
     "ioredis": "^5.4.1",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.2",
     "next": "14.2.5",
     "next-auth": "^5.0.0-beta.20",
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^20.14.14",
     "@types/nodemailer": "^6.4.15",
     "@types/nprogress": "^0.2.3",

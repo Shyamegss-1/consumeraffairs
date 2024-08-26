@@ -10,6 +10,10 @@ const Page = ({
     claim?: string;
   };
 }) => {
+
+  
+
+
   return (
     <div className="grid grid-cols-3 login-new-page">
       <div className="col-span-1 bg-primary_dark min-h-[100vh]">

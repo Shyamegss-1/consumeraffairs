@@ -1,0 +1,107 @@
+.login-new-page {
+    height: 100vh;
+}
+
+.login-new-page .advertisement-side {
+    background-color: #5247a5;
+    height: 100%;
+    text-align: center;
+    padding: 12% 0px;
+}
+
+.login-new-page .advertisement-side .logo img {
+    width: 85%;
+    height: auto;
+}
+
+.login-form-main {
+    width: 75%;
+    margin: 0 auto;
+    padding: 5% 0px;
+}
+
+.theme-btn1 {
+    min-width: 64px !important;
+    padding: 1% 2.5% !important;
+    border-radius: 30px !important;
+    background: var(--Violet, #5247a5) !important;
+    border: none !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: var(--white, #fff) !important;
+    border: 2px var(--Violet) solid !important;
+}
+
+.login-form-inner {
+    margin-top: 5%;
+}
+
+.sec-headings h1 {
+    font-size: 3vw;
+    font-weight: 700;
+}
+
+.sec-headings p {
+    font-weight: 600;
+}
+
+.login-form-inner form {
+    margin-top: 5vh;
+    width: 95%;
+}
+
+.login-form-inner form .form-field {
+    margin-bottom: 2.5vh;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.login-form-inner form input {
+    /* font-size: 0.9vw; */
+    font-weight: 500;
+    padding: 1vh 1vw;
+    border-radius: 8px;
+    border: 1px #bdbdbd solid;
+}
+
+.login-form-inner form label {
+    font-weight: 600;
+    color: #000;
+    /* font-size: 0.9vw; */
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.theme-btn1 {
+    min-width: 64px !important;
+    padding: 1% 2.5% !important;
+    border-radius: 30px !important;
+    background: var(--Violet, #5247a5) !important;
+    border: none !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: var(--white, #fff) !important;
+    border: 2px var(--Violet) solid !important;
+}
+
+.form-field a {
+    text-decoration: none;
+    color: #423984;
+    font-weight: 600;
+}

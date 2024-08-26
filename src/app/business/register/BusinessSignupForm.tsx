@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import { redirect } from "next/navigation";
 
 type Props = {
-  claimUrl: string;
+  claimUrl: string | undefined;
 };
 
 const BusinessSignupForm: React.FC<Props> = ({ claimUrl }) => {
