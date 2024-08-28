@@ -1,10 +1,34 @@
+"use client";
+import { loginHandler } from "@/server-actions/authActions";
+import { redirect } from "next/navigation";
 import React from "react";
+import { toast } from "sonner";
 
 type Props = {};
 
 const LoginForm = (props: Props) => {
+  const handleBusinessLogin = async (formData: FormData) => {
+    const toastId = toast.loading("Logging...");
+    const email = (formData.get("email") as string) || "";
+    const password = (formData.get("password") as string) || "";
+    const userType = "BUSINESS_USER";
+    // console.log({ email, password, userType });
+
+    const res = await loginHandler({ email, password, userType });
+    if (res.status) {
+      toast.success("Logged in successfully", {
+        id: toastId,
+      });
+      redirect('/business');
+    } else {
+      toast.error(res.message, {
+        id: toastId,
+      });
+    }
+  };
+
   return (
-    <form action="action/businesscontroller" method="post" className="mt-5">
+    <form action={handleBusinessLogin} method="post" className="mt-5">
       <div className="form-field">
         <label>Email Address*</label>
         <input
@@ -48,7 +72,8 @@ const LoginForm = (props: Props) => {
           Sign In
         </button>
         <p className="mt-2">
-         {" Don't have an account? "}<a href="register">Create a free account</a>
+          {" Don't have an account? "}
+          <a href="register">Create a free account</a>
         </p>
       </div>
     </form>

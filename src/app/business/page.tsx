@@ -7,8 +7,10 @@ type Props = {};
 const page = async (props: Props) => {
   // const session =  getSession()
   const session = await auth();
-  if(session===null){
-    redirect("/business/register")
+  console.log(session);
+
+  if (session?.user?.userType !== "BUSINESS_USER") {
+    redirect("/business/login");
   }
 
   return <div>page</div>;

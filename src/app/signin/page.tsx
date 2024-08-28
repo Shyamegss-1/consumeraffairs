@@ -12,7 +12,7 @@ const page = async () => {
 
   // console.log(session?.user, "hfghfgf");
 
-  if (session?.user) {
+  if (session?.user?.userType === "USER") {
     return redirect("/");
   }
   return (
@@ -54,7 +54,9 @@ const page = async () => {
             data-login_uri="/complete/google-onetap/"
             data-secondary_redirect="https://www.consumeraffairs.com/"
           >
-             <h4 className="create__ttl text-heading-2 font-heading-2">Sign In</h4>
+            <h4 className="create__ttl text-heading-2 font-heading-2">
+              Sign In
+            </h4>
           </div>
           <SigninForm />
         </div>

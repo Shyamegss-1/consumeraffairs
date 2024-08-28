@@ -2,7 +2,7 @@ import { text } from "node:stream/consumers";
 import nodemailer from "nodemailer";
 import SMTPTransport from "nodemailer/lib/smtp-transport";
 
-export const sendEmail = async (email: string, options: any) => {
+export const sendEmail = async (options: any) => {
   try {
     // create a hased token
     // const hashedToken = await bcryptjs.hash(userId.toString(), 10)
@@ -40,7 +40,7 @@ export const sendEmail = async (email: string, options: any) => {
     } as SMTPTransport.Options);
     const mailOptions = {
       from: process.env.MAIL_FROM_ADDRESS,
-      to: email,
+      to: options.email,
       subject: options.subject,
       html: options.html || null,
       text: options.text || null,
@@ -52,5 +52,20 @@ export const sendEmail = async (email: string, options: any) => {
   } catch (error: any) {
     console.log(error);
     throw new Error(error.message);
+  }
+};
+
+export const sendMultipleEmails = async (...args:any[]) => {
+  try {
+    const promises = [
+      args.forEach((arg, index) => {
+        return sendEmail({ ...arg });
+      }),
+    ];
+    console.log(promises, "promises");
+
+    await Promise.all(promises);
+  } catch (error) {
+    return error;
   }
 };

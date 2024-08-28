@@ -2,7 +2,6 @@
 import { auth, signIn } from "@/auth";
 import { loginHandler, signupHandler } from "@/server-actions/authActions";
 import { postReviews } from "@/server-actions/postReviews";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
@@ -315,6 +314,7 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
                             const res = await loginHandler({
                               email: email ? (email as string) : "",
                               password: password ? (password as string) : "",
+                              userType: "USER"
                             });
                             console.log(res);
 
@@ -387,6 +387,7 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
                               await loginHandler({
                                 email: _email,
                                 password: _password,
+                                userType:"USER"
                               });
                               const _res: any = await postReviews({
                                 ...data,

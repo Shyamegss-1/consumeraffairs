@@ -7,7 +7,7 @@ import { signupSchema } from "../lib/zod";
 import { getToken } from "next-auth/jwt";
 import { getSession } from "next-auth/react";
 import bcryptjs from "bcryptjs";
-import { sendEmail } from "@/lib/mailer";
+import { sendEmail, sendMultipleEmails } from "@/lib/mailer";
 import { emailVerificationTemplate } from "@/emails/emailTemplates";
 
 interface formData {
@@ -22,7 +22,7 @@ interface formData {
   confirmPassword: string;
 }
 
-const SendVerification = async (userId: number) => {
+export const SendVerification = async (userId: number) => {
   try {
     const verificationToken = await bcryptjs.hash(userId.toString(), 10);
     const user = await prisma.users.update({
@@ -39,7 +39,8 @@ const SendVerification = async (userId: number) => {
       },
     });
 
-    await sendEmail(user.email, {
+    sendMultipleEmails({
+      email: user.email,
       subject: "Verify your email",
       // text:"Verify your email"
       html: emailVerificationTemplate
@@ -49,7 +50,7 @@ const SendVerification = async (userId: number) => {
           `${process.env.DOMAIN}/verifyemail?token=${verificationToken}`
         ),
     });
-  } catch (error:any) {
+  } catch (error: any) {
     throw new Error(error.message);
   }
 };
@@ -71,6 +72,7 @@ export const signupHandler = async (formData: formData) => {
     const user = await prisma.users.findFirst({
       where: {
         email: email,
+        userType: "USER",
       },
     });
     if (user) {
@@ -112,20 +114,27 @@ export const signupHandler = async (formData: formData) => {
 export const loginHandler = async ({
   email,
   password,
+  userType,
 }: {
   email: string;
   password: string;
+  userType: string;
 }) => {
   try {
     const res = await signIn("credentials", {
       email,
       password,
+      userType,
       redirect: false,
-      // callbackUrl: "/",
     });
 
+    if (res?.ok) {
+      // Manually update the session
+      const session = await getSession({ broadcast: true });
+      console.log("Session after login:", session);
+    }
     // const session = await getSession({ broadcast: true });
-    console.log(res, "loginres");
+    // console.log(res, "loginres");
 
     return {
       status: true,
@@ -134,8 +143,6 @@ export const loginHandler = async ({
     };
   } catch (error: any) {
     const err = error.cause;
-    // console.log(err, "errrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-
     return { status: false, message: err };
   }
 };

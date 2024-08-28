@@ -1,11 +1,12 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PhoneNumber from "./PhoneNumber";
 import { businessRegister } from "@/server-actions/businessRegister";
 import { string } from "zod";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
 import { redirect } from "next/navigation";
+import { $Enums, Prisma } from "@prisma/client";
 
 type Props = {
   claimUrl: string | undefined;
@@ -14,11 +15,15 @@ type Props = {
 const BusinessSignupForm: React.FC<Props> = ({ claimUrl }) => {
   const [number, setMobNumber] = useState<string>("");
   const [numberCode, setMobNumberCode] = useState<string>("");
-  const [websiteUrl, setWebsiteUrl] = useState<string>(
-    `www.${claimUrl?.toLowerCase()}`
+  const [websiteUrl, setWebsiteUrl] = useState<string>(() =>
+    claimUrl !== undefined && claimUrl !== ""
+      ? `www.${claimUrl?.toLowerCase()}`
+      : ""
   );
-  const [emailAddressDomain, setEmailAddressDomain] = useState<string>(
-    `@${claimUrl?.toLowerCase()}`
+  const [emailAddressDomain, setEmailAddressDomain] = useState<string>(() =>
+    claimUrl !== undefined && claimUrl !== ""
+      ? `@${claimUrl?.toLowerCase()}`
+      : "@"
   );
   const onchange = (value: string) => {
     let number = value.split("-")[1];
@@ -42,6 +47,7 @@ const BusinessSignupForm: React.FC<Props> = ({ claimUrl }) => {
       website: websiteUrl ? (websiteUrl as string) : (website as string),
       businessName: businessName as string,
       phoneNumber: number ? (`${"+" + numberCode}-${number}` as string) : "",
+      userType: "BUSINESS_USER" as $Enums.UserType | Prisma.EnumUserTypeFilter<"users"> | undefined,
     };
     const toastId = toast.loading("loading...");
     const res = await businessRegister(data);
@@ -63,7 +69,7 @@ const BusinessSignupForm: React.FC<Props> = ({ claimUrl }) => {
         text: "Check your email to verify your account",
       });
       // router.refresh()
-      redirect("/business/change-password");
+      // redirect("/business/change-password");
     }
 
     // const res = await businessRegister(formData)
@@ -128,8 +134,7 @@ const BusinessSignupForm: React.FC<Props> = ({ claimUrl }) => {
                     setEmailAddressDomain("@" + validUrl);
                     setWebsiteUrl(e.target.value);
                   }}
-                  pattern=""
-                  disabled={claimUrl !== ""}
+                  disabled={claimUrl !== undefined && claimUrl !== ""}
                   id="website"
                   className="form-control disabled:bg-[#E9E9E9]"
                 />

@@ -10,6 +10,9 @@ export const signinSchema = object({
     .min(1, "Password is required")
     .min(8, "Password must be more than 8 characters")
     .max(32, "Password must be less than 32 characters"),
+  userType: string({
+    required_error: "User Type is required",
+  }).min(1, "User Type is required"),
 });
 
 export const signupSchema = object({
@@ -62,4 +65,28 @@ export const reviewFormSchema = object({
   comment: string({
     required_error: "comment is required",
   }).min(1, "comment is required"),
+});
+
+export const businessUserSchema = object({
+  name: string({
+    required_error: "Name is required",
+  }).min(1, "Name is required"),
+  jobTitle: string({
+    required_error: "Job Title is required",
+  }).min(1, "Job Title is required"),
+  email:string({
+    required_error: "Email is required",
+    }).email("Invalid email"),
+  website:string({
+    required_error: "Website is required",
+  }),
+  businessName:string({
+    required_error: "Business Name is required",
+    }).min(1, "Business Name is required"),
+  phoneNumber:string({
+    required_error: "Phone Number is required",
+    }).min(1, "Phone Number is required"),
+  userType:string({
+    required_error: "User Type is required",
+    })
 });

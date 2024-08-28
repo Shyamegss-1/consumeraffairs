@@ -1,19 +1,21 @@
 "use client";
 import { loginHandler } from "@/server-actions/authActions";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
 
 const SigninForm = () => {
-  const router: any = useRouter();
-  const error = router.query;
+  const router = useRouter();
+  const { data: session, update } = useSession();
   return (
     <form
       className="ca-form"
       action={async (formData) => {
         const email = formData.get("email");
         const password = formData.get("password");
+        const userType = "USER";
         const toastId = toast.loading("Logging In");
         if (!email) {
           return toast.error("Email Address is required", {
@@ -29,14 +31,18 @@ const SigninForm = () => {
         const res = await loginHandler({
           email: email ? (email as string) : "",
           password: password ? (password as string) : "",
+          userType: userType,
         });
-        console.log(res, "error");
+        // console.log(res, "error");
 
         if (res.status) {
           toast.success("Login successful", {
             id: toastId,
           });
           router.refresh();
+          await update();
+          // console.log(res,"hjgdshhdf");
+          
         } else {
           toast.error(res.message, {
             id: toastId,

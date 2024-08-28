@@ -5,6 +5,7 @@ import { prisma } from "../prisma/prisma";
 import { CredentialsSignin, NextAuthConfig } from "next-auth";
 import { ZodError } from "zod";
 import { signinSchema } from "./lib/zod";
+import { UserType } from "@prisma/client";
 
 const authOptions: NextAuthConfig = {
   providers: [
@@ -85,7 +86,7 @@ const authOptions: NextAuthConfig = {
       },
       authorize: async (credentials) => {
         try {
-          const { email, password } = await signinSchema.parseAsync(
+          const { email, password, userType } = await signinSchema.parseAsync(
             credentials
           );
 
@@ -96,10 +97,11 @@ const authOptions: NextAuthConfig = {
           const user = await prisma.users.findFirst({
             where: {
               email,
+              userType: userType as UserType | undefined
             },
           });
           // console.log(user);
-          if (!user || !user.email) {
+          if (!user || !user.email || !user.password) {
             throw new CredentialsSignin({
               cause: "Invalid email or password.",
             });
@@ -122,12 +124,9 @@ const authOptions: NextAuthConfig = {
           console.log(error instanceof ZodError);
 
           if (error instanceof ZodError) {
-            // Throw a custom error with the Zod validation error message
-            // throw new Error(error.errors[0].message);
             throw new CredentialsSignin({
               cause: error.errors[0].message,
             });
-            // Only show the first Zod error message
           } else {
             throw error;
           }
@@ -142,6 +141,7 @@ const authOptions: NextAuthConfig = {
           ...session.user,
           id: token.id as string,
           name: token.name,
+          userType: token.userType as UserType | undefined,
         };
       }
       return session;
@@ -150,6 +150,7 @@ const authOptions: NextAuthConfig = {
       if (user) {
         token.id = user.id;
         token.name = user.name;
+        token.userType = user.userType as UserType | undefined;
       }
       return token;
     },

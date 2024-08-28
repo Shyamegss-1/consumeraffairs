@@ -45,6 +45,12 @@ const Navbar = () => {
           </Link>
           <SearchComponent />
           <ProfileSection />
+          <Link
+            href={"/business"}
+            className="hover:bg-hover ml-2 px-4 py-3 rounded-lg font-semibold ring-2 ring-primary_dark text-primary_dark"
+          >
+            For Business
+          </Link>
         </div>
       </div>
     </div>

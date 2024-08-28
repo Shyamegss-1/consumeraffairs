@@ -5,6 +5,7 @@ import { ZodError } from "zod";
 import { auth } from "@/auth";
 import { title } from "process";
 import { sendEmail } from "@/lib/mailer";
+import email from "next-auth/providers/email";
 
 interface review {
   rating: string;
@@ -51,7 +52,8 @@ export const postReviews = async (data: review) => {
         user: true,
       },
     });
-    await sendEmail(reviews.user.email, {
+    await sendEmail({
+      email: reviews.user.email,
       subject: "New Review Listed",
       text: `Your review has been added successfully`,
     });
