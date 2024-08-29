@@ -28,7 +28,7 @@ const LoginForm = (props: Props) => {
   };
 
   return (
-    <form action={handleBusinessLogin} method="post" className="mt-5">
+    <form action={handleBusinessLogin} className="mt-5">
       <div className="form-field">
         <label>Email Address*</label>
         <input
@@ -44,7 +44,6 @@ const LoginForm = (props: Props) => {
             backgroundPosition: "97% center",
             cursor: "auto",
           }}
-          data-temp-mail-org={0}
         />
       </div>
       <div className="form-field">

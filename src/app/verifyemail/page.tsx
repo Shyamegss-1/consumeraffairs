@@ -11,7 +11,7 @@ export default function VerifyEmailPage() {
   const [verified, setVerified] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [userType, setUserTpe] = useState("");
+  const [user, setUser] = useState<any>(null);
 
   const verifyUserEmail = async () => {
     try {
@@ -21,9 +21,8 @@ export default function VerifyEmailPage() {
       // if (res.data.user.userType === "BUSINESS_USER") {
       //   await redirect("/business/change-password");
       // }
-      setUserTpe(res.data.user.userType);
+      setUser(res.data.user);
       console.log(res);
-      
     } catch (error: any) {
       setError(true);
       console.log(error.reponse.data);
@@ -58,9 +57,9 @@ export default function VerifyEmailPage() {
         <Link
           className="ring-2 py-4 px-8 hover:bg-primary_dark hover:text-white hover:font-bold text-primary_dark font-bold transition rounded ring-primary_dark"
           href={
-            userType === "BUSINESS_USER"
-              ? "/business/change-password"
-              : userType === "ADMIN"
+            user?.userType === "BUSINESS_USER"
+              ? `/business/change-password?id=${user.id}`
+              : user?.userType === "ADMIN"
               ? "/admin/login"
               : "/signin"
           }

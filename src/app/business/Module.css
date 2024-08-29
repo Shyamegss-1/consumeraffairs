@@ -1,0 +1,122 @@
+.header-section {
+    opacity: 0.95;
+    background: var(--forums-html-1903-x-911-default-nero, #fff);
+    box-shadow: 0px 0px 2px 0px rgba(145, 158, 171, 0.2),
+        0px 12px 24px -4px rgba(145, 158, 171, 0.12);
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0px;
+}
+
+.nav-links ul {
+    padding: 0px;
+    margin: 0px;
+}
+
+.nav-links ul li a {
+    color: #000;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.nav-links ul li {
+    list-style: none;
+    display: inline-block;
+    margin: 0px 20px;
+}
+
+.nav-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-actions .logout button {
+    display: flex;
+    height: 40px;
+    min-width: 64px;
+    padding: 12px 24px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 68px;
+    border: 2px solid var(--Violet, #6C946F);
+}
+
+.user-img img {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
+
+.fix-navbar {
+    position: fixed;
+    bottom: 1%;
+    left: 0px;
+    right: 0px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+}
+
+.fix-navbar .navbar-container {
+    width: 862px;
+    /* height: 64px; */
+    padding: 8px 12px;
+    background: #6C946F;
+    border-radius: 150px;
+    overflow: hidden;
+    display: inline-flex;
+    justify-content: space-evenly;
+    margin: 0 auto;
+}
+
+.fix-navbar .nav-item {
+    align-self: stretch;
+    padding: 12px 16px;
+    border-radius: 66px;
+    overflow: hidden;
+    display: flex;
+    gap: 10px;
+    position: relative;
+    transition: 0.6s;
+}
+
+.fix-navbar .nav-item.active {
+    background-color: #506650;
+}
+
+.fix-navbar .icon-container {
+    width: 28px;
+    height: 28px;
+    position: relative;
+}
+
+.fix-navbar .label {
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+    word-wrap: break-word;
+}
+
+
+.user-name-sec {
+    margin-top: 30px;
+}
+.user-name-sec h2 {
+    color: var(--Black, #141414);
+    font-size: 40px;
+    font-weight: 800;
+    font-style: normal;
+    line-height: normal;
+}
+.user-name-sec h2 span {
+    color: #506650;
+    font-size: 40px;
+    font-weight: 800;
+    font-style: normal;
+    line-height: normal;
+}

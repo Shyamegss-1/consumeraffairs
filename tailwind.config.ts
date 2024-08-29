@@ -15,8 +15,9 @@ const config: Config = {
       },
       colors: {
         hover: "#F6F8FB",
-        primary_light:"#6C946F",
-        primary_dark:"#6C946F",
+        primary_light: "#6C946F",
+        primary_dark: "#6C946F",
+        active_dark: "#506650",
       },
       fontSize: {
         "heading-1": ["2.25rem", { lineHeight: "2.5rem" }], // text-4xl
@@ -35,7 +36,7 @@ const config: Config = {
         "heading-6": "400", // font-normal
       },
       fontFamily: {
-        graphik: ['Graphik Web', 'Arial', 'sans-serif'],
+        graphik: ["Graphik Web", "Arial", "sans-serif"],
         publico: ["Publico Headline Web", "serif"],
       },
     },

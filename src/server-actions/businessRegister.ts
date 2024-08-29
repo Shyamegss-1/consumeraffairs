@@ -7,6 +7,8 @@ import { cookies } from "next/headers";
 import { SendVerification } from "./authActions";
 import { $Enums, Prisma } from "@prisma/client";
 import { businessUserSchema } from "@/lib/zod";
+import { hash } from "bcryptjs";
+import { status } from "nprogress";
 
 export const businessRegister = async (formData: {
   name: string;
@@ -104,4 +106,30 @@ export const signToken = (data: any) => {
   return jwt.sign({ ...data }, secret, {
     expiresIn: "1d",
   });
+};
+
+export const changeBusinessPassword = async (data: any) => {
+  try {
+    const { password, userId } = data;
+    const hashedPassword = await hash(password, 12);
+    console.log(hashedPassword, userId);
+
+    const business = await prisma.users.update({
+      where: {
+        id: Number(userId),
+        verify: true,
+        userType: "BUSINESS_USER",
+      },
+      data: {
+        password: hashedPassword,
+        cpassword: hashedPassword,
+      },
+    });
+    if (!business) {
+      return { status: false, message: "Something went wrong, try again" };
+    }
+    return { status: true, message: "Your password have been changed" };
+  } catch (error) {
+    return { status: false, message: String(error) };
+  }
 };

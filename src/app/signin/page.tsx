@@ -8,7 +8,7 @@ import { auth } from "@/auth";
 import { Logo } from "@/components/icons/Icons";
 
 const page = async () => {
-  const session = await auth();
+  const session: any = await auth();
 
   // console.log(session?.user, "hfghfgf");
 

@@ -19,15 +19,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid token" }, { status: 400 });
     }
     console.log(user);
-
-    user.verify = true;
-    user.verificationToken = null;
     // user.verifyTokenExpiry = undefined;
     let updatedUser = await prisma.users.update({
       where: { id: user.id },
       data: {
         verify: true,
-        verificationToken: null,
+        verificationToken:
+          user.userType === "USER" ? null : user.verificationToken,
       },
     });
 
