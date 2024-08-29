@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import "./Module.css";
 import Image from "next/image";
 import ChangePasswordForm from "./ChangePasswordForm";
@@ -23,7 +23,9 @@ const page = (props: Props) => {
               <div className="horizontal-info-container">
                 <h2 className="horizontal-heading">Set your password</h2>
               </div>
-              <ChangePasswordForm />
+              <Suspense fallback={<>Loading...</>}>
+                <ChangePasswordForm />
+              </Suspense>
             </div>
           </div>
         </div>
