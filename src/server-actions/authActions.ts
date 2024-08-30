@@ -1,5 +1,5 @@
 "use server";
-import { auth, signIn } from "@/auth";
+import { auth, signIn, signOut } from "@/auth";
 import { compare, hash } from "bcryptjs";
 import { prisma } from "../../prisma/prisma";
 import { any, ZodError } from "zod";
@@ -22,7 +22,10 @@ interface formData {
   confirmPassword: string;
 }
 
-export const SendVerification = async (userId: number) => {
+export const SendVerification = async (
+  userId: number,
+  claimUrl: string | null
+) => {
   try {
     const verificationToken = await bcryptjs.hash(userId.toString(), 10);
     const user = await prisma.users.update({
@@ -39,7 +42,7 @@ export const SendVerification = async (userId: number) => {
       },
     });
 
-    sendMultipleEmails({
+    await sendMultipleEmails({
       email: user.email,
       subject: "Verify your email",
       // text:"Verify your email"
@@ -47,7 +50,9 @@ export const SendVerification = async (userId: number) => {
         .replaceAll("{{userName}}", user.firstName)
         .replaceAll(
           "{{verification_link}}",
-          `${process.env.DOMAIN}/verifyemail?token=${verificationToken}`
+          claimUrl
+            ? `${process.env.DOMAIN}/verifyemail?token=${verificationToken}&claimUrl=${claimUrl}`
+            : `${process.env.DOMAIN}/verifyemail?token=${verificationToken}`
         ),
     });
   } catch (error: any) {
@@ -96,7 +101,7 @@ export const signupHandler = async (formData: formData) => {
       throw new Error("Something went wrong, try again");
     }
 
-    await SendVerification(newUser.id);
+    await SendVerification(newUser.id, null);
     // Redirect to sign in after successful signup
     // redirect("/auth/signin");
     return { status: true, userId: newUser.id };
@@ -128,11 +133,11 @@ export const loginHandler = async ({
       redirect: false,
     });
 
-    if (res?.ok) {
-      // Manually update the session
-      const session = await getSession({ broadcast: true });
-      console.log("Session after login:", session);
-    }
+    // if (res?.ok) {
+    //   // Manually update the session
+    //   const session = await getSession({ broadcast: true });
+    //   console.log("Session after login:", session);
+    // }
     // const session = await getSession({ broadcast: true });
     // console.log(res, "loginres");
 
@@ -144,5 +149,17 @@ export const loginHandler = async ({
   } catch (error: any) {
     const err = error.cause;
     return { status: false, message: err };
+  }
+};
+
+export const logoutHandler = async () => {
+  try {
+    const res = await signOut();
+    return {
+      status: true,
+      message: "Logout Successfully",
+    };
+  } catch (error) {
+    console.log(error);
   }
 };

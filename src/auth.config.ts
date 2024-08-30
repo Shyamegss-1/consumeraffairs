@@ -70,6 +70,13 @@ const authOptions: NextAuthConfig = {
     }),
   ],
   callbacks: {
+    authorized({ auth, request: { nextUrl } }) {
+      const isLoggedIn = !!auth?.user;
+      
+      console.log(isLoggedIn, nextUrl.origin, "isLoggedin");
+
+      return true;
+    },
     async session({ session, token }) {
       if (token) {
         session.user = {

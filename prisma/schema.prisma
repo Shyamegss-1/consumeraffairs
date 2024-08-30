@@ -96,7 +96,7 @@ model listing {
   country      String?   @db.VarChar(255)
   date         String    @db.VarChar(30)
   verify_code  String?   @db.VarChar(10)
-  claim        Int
+  claim        Boolean   @default(false)
   status       Int
   reviews      review[]
 }

@@ -24,12 +24,12 @@
     min-width: 64px !important;
     padding: 8px 24px !important;
     border-radius: 68px !important;
-    background: var(--Violet, #5247a5) !important;
+    background: #6C946F !important;
     border: none !important;
     font-size: 16px !important;
     font-weight: 700 !important;
     color: var(--white, #fff) !important;
-    border: 2px var(--Violet) solid !important;
+    border: 2px #6C946F solid !important;
     letter-spacing: 1px;
 }
 
@@ -334,7 +334,7 @@ textarea.form-control {
 }
 
 .business-review-rating-box .business-ratings-icons i {
-    background-color: #5247a5;
+    background-color: #6C946F;
     height: 25px;
     width: 25px;
     border-radius: 4px;
@@ -392,8 +392,8 @@ textarea.form-control {
     gap: 8px;
     flex: 1 0 0;
     border-radius: 68px;
-    border: 2px solid var(--Violet, #5247a5);
-    color: #5247a5;
+    border: 2px solid #506650;
+    color: #506650;
     font-size: 16px;
     font-weight: 700;
     line-height: normal;
@@ -402,6 +402,6 @@ textarea.form-control {
 }
 
 .main-business-profile-section .business-profile-btns button.fill {
-    background-color: #5247a5;
+    background-color: #506650;
     color: #fff;
 }

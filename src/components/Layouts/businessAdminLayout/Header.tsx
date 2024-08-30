@@ -1,12 +1,24 @@
 import { Logo } from "@/components/icons/Icons";
+import { logoutHandler } from "@/server-actions/authActions";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { toast } from "sonner";
 
 type Props = {};
 
 const Header = (props: Props) => {
+  const handleLogout = async () => {
+    // const res = await logoutHandler();
+    // if (res?.status) {
+      await signOut({ callbackUrl: "/business/login" });
+      // toast.success(res.message)
+    // }else{
+    //   toast.error("Something went wrong.")
+    // }
+  };
+
   return (
     <div className="sticky top-0 z-30 shadow-lg w-full bg-white">
       {/* <TopNavNotification /> */}
@@ -40,10 +52,7 @@ const Header = (props: Props) => {
                       <i class="bi bi-bell text-dark fs-2"></i>
                   </div> */}
             <div className="logout mx-4">
-              <button
-                onClick={() => signOut({ callbackUrl: '/business' })}
-                className="logout-btn"
-              >
+              <button onClick={handleLogout} className="logout-btn">
                 Logout
               </button>
             </div>

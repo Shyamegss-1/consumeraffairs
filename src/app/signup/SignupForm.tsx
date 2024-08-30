@@ -22,10 +22,6 @@ const SignupForm: React.FC<SignupFormProps> = ({ countryList }) => {
   const handleSubmit = async (formData: FormData) => {
     const first_name = formData.get("first_name");
     const last_name = formData.get("last_name");
-    // const address = formData.get("address");
-    // const zip = formData.get("zip");
-    // const province = formData.get("province");
-    // const city = formData.get("city");
     const email = formData.get("email");
     const password = formData.get("password1");
     const password2 = formData.get("password2");
@@ -33,10 +29,6 @@ const SignupForm: React.FC<SignupFormProps> = ({ countryList }) => {
     const data = {
       firstName: first_name ? (first_name as string) : ("" as string),
       lastName: last_name ? (last_name as string) : ("" as string),
-      // address: address ? address as string: ("" as string),
-      // zip: zip ? zip as string: ("" as string),
-      // province: province ? province as string: ("" as string),
-      // city: city ? city as string: ("" as string),
       email: email ? (email as string) : ("" as string),
       password: password ? (password as string) : ("" as string),
       confirmPassword: password2 ? (password2 as string) : ("" as string),

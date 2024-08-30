@@ -8,10 +8,13 @@ type Props = {};
 
 const ChangePasswordForm = (props: Props) => {
   const [userId, setUserId] = useState<string | null>(null);
+  const [claimUrl, setClaimUrl] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const router = useRouter();
   useEffect(() => {
     const id = searchParams?.get("id") as string | null;
+    const _claimUrl = searchParams?.get('claimUrl') as string | null;
+    setClaimUrl(_claimUrl);
     setUserId(id);
   }, [searchParams]);
 
@@ -33,7 +36,7 @@ const ChangePasswordForm = (props: Props) => {
         password,
         cpassword,
         userId,
-      });
+      },claimUrl);
       if (res.status) {
         toast.success("Password changed successfully", {
           id: toastId,

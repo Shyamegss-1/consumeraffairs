@@ -23,6 +23,7 @@ const CompanyDetails = async (props: Props) => {
           width={1920}
           height={1080}
           alt=""
+          priority
         />{" "}
         <div className="banner-profile-content">
           <div className="banner-profile-logo">
@@ -31,6 +32,7 @@ const CompanyDetails = async (props: Props) => {
               alt=""
               width={40}
               height={40}
+              priority
             />
           </div>
           <div className="banner-profile-info ml-2">
@@ -48,10 +50,10 @@ const CompanyDetails = async (props: Props) => {
           </div>
         </div>
       </div>
-      <CompanyDetailLayout websiteName={companyDetail.website_link}>
+      <CompanyDetailLayout websiteName={companyDetail.website_link} claimStatus={companyDetail.claim}>
         <div className="col-span-8">
           <div className="business-profile-about-content">
-            <h4 className="mb-3">About Business</h4>
+            <h4 className="mb-3 text-2xl font-bold">About Business</h4>
             <div className="underline" />
             <p className="mt-4"></p>
           </div>
@@ -63,6 +65,7 @@ const CompanyDetails = async (props: Props) => {
               alt=""
               width={1920}
               height={1080}
+              priority
             />
           </div>
           <ReviewForm

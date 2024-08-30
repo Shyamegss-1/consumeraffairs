@@ -7,12 +7,12 @@ import ReviewForm from "./ReviewForm";
 import { auth } from "@/auth";
 import CompanyDetails from "./CompanyDetails";
 import LoadingUi from "./LoadingUi";
+import dynamic from "next/dynamic";
+// const CompanyDetails = dynamic(() => import("./CompanyDetails"), {
+//   ssr: true,
+// });
 
 const page = ({ params }: { params: { company: string } }) => {
-  //   return res;
-  // };
-
-  // console.log(companyDetail,"ghjhjgjg");
 
   return (
     <Suspense fallback={<LoadingUi />}>

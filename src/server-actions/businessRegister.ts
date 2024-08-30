@@ -1,24 +1,25 @@
 "use server";
-
 import { ZodError } from "zod";
 import { prisma } from "../../prisma/prisma";
 import jwt from "jsonwebtoken";
-import { cookies } from "next/headers";
 import { SendVerification } from "./authActions";
 import { $Enums, Prisma } from "@prisma/client";
 import { businessUserSchema } from "@/lib/zod";
 import { hash } from "bcryptjs";
-import { status } from "nprogress";
+import { sendMultipleEmails } from "@/lib/mailer";
 
-export const businessRegister = async (formData: {
-  name: string;
-  jobTitle: string;
-  email: string;
-  website: string;
-  businessName: string;
-  phoneNumber: string;
-  userType: $Enums.UserType | Prisma.EnumUserTypeFilter<"users"> | undefined;
-}) => {
+export const businessRegister = async (
+  formData: {
+    name: string;
+    jobTitle: string;
+    email: string;
+    website: string;
+    businessName: string;
+    phoneNumber: string;
+    userType: $Enums.UserType | Prisma.EnumUserTypeFilter<"users"> | undefined;
+  },
+  claimUrl: string | null
+) => {
   try {
     const {
       name,
@@ -40,8 +41,6 @@ export const businessRegister = async (formData: {
         : {
             email: email,
           };
-
-    console.log(whereClause, userType);
 
     const existingBusiness = await prisma.users.findFirst({
       where: whereClause,
@@ -71,30 +70,17 @@ export const businessRegister = async (formData: {
       },
     });
 
-    // const token = await signToken(business);
-    // cookies().set("business-token", token, {
-    //   path: "/business",
-    //   domain: process.env.domain,
-    //   maxAge: 300,
-    //   httpOnly: true,
-    //   secure: false,
-    // });
-
     if (!business) {
       throw new Error("Something went wrong, try again");
     }
 
-    await SendVerification(business.id);
+    await SendVerification(business.id, claimUrl);
 
-    console.log(business);
     return { status: true, userId: business.id };
   } catch (error: any) {
-    console.error(error);
     if (error instanceof ZodError) {
-      // console.error(error.errors[0].message);
       return { status: false, message: error.errors[0].message };
     } else {
-      // console.error(error.message || error);
       return { status: false, message: String(error.message || error) };
     }
   }
@@ -108,11 +94,14 @@ export const signToken = (data: any) => {
   });
 };
 
-export const changeBusinessPassword = async (data: any) => {
+export const changeBusinessPassword = async (
+  data: any,
+  claimUrl: string | null
+) => {
   try {
     const { password, userId } = data;
     const hashedPassword = await hash(password, 12);
-    console.log(hashedPassword, userId);
+    // console.log(hashedPassword, userId);
 
     const business = await prisma.users.update({
       where: {
@@ -125,10 +114,67 @@ export const changeBusinessPassword = async (data: any) => {
         cpassword: hashedPassword,
       },
     });
+
     if (!business) {
       return { status: false, message: "Something went wrong, try again" };
     }
-    return { status: true, message: "Your password have been changed" };
+
+    console.log(claimUrl,"claimUrl");
+    
+
+    if (claimUrl) {
+      const existListing = await prisma.listing.findFirst({
+        where: {
+          website_link: claimUrl,
+        },
+      });
+
+      const listing = await prisma.listing.update({
+        where: { id: existListing?.id, website_link: claimUrl },
+        data: {
+          userid: business.id,
+          claim: true,
+        },
+      });
+
+      if (listing) {
+        sendMultipleEmails(
+          {
+            email: business.email,
+            subject: `Business Claim For [${claimUrl}] : Consumer Affairs`,
+            text: `Your claim for [${claimUrl}] has been successfully done on consumer affairs.`,
+          },
+          {
+            email: "Sonitegss@gmail.com",
+            subject: `New Business Claim Added For [${claimUrl}]`,
+            text: `New Business Claim Added Added successfully with consumer affairs.`,
+          }
+        );
+      }
+      return {
+        status: true,
+        userId: business.id,
+        listing: listing,
+        message: `You have successfully claimed [${claimUrl}]`,
+      };
+    } else {
+      sendMultipleEmails(
+        {
+          email: business.email,
+          subject: "Account Verification : Consumer Affairs",
+          text: `Your account has been created successfully with consumer affairs.`,
+        },
+        {
+          email: "Sonitegss@gmail.com",
+          subject: "New Business User Added",
+          text: `New Business User Added successfully with consumer affairs.`,
+        }
+      );
+      return {
+        status: true,
+        message: "Your account has been created successfully.",
+      };
+    }
   } catch (error) {
     return { status: false, message: String(error) };
   }

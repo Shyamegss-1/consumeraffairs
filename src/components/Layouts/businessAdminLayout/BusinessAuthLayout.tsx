@@ -1,28 +1,23 @@
+"use client";
 import React from "react";
+import { useSession } from "next-auth/react";
+import LoadingScreen from "@/components/ui/LoadingScreen";
+import { redirect } from "next/navigation";
 import Header from "./Header";
 import Footer from "./Footer";
-import { auth } from "@/auth";
-import { useSession } from "next-auth/react";
 
 type Props = {
   children: React.ReactNode;
 };
 
 const BusinessAuthLayout = ({ children }: Props) => {
-  const { data, status, update } = useSession();
-  // console.log();
-
-  
-
-  return data?.user.userType === "BUSINESS_USER" ? (
+ 
+  return (
     <>
       <Header />
-      {/* <Navbar /> */}
       {children}
       <Footer />
     </>
-  ) : (
-    children
   );
 };
 

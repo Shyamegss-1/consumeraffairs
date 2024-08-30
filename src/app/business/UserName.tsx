@@ -1,13 +1,18 @@
 import React from "react";
 
-type Props = {};
+type Props = {
+  name:string
+};
 
-const UserName = (props: Props) => {
+const UserName = async(props: Props) => {
+
+  const { name } = props;
+
   return (
     <section className="user-name-sec">
       <div className="text-center">
         <h2>
-          Hi, <span>Skyler Reeves!</span>
+          Hi, <span>{name}</span>
         </h2>
         <p className="text-active_dark">See what’s going on today!</p>
       </div>

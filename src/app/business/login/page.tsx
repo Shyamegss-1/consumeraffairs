@@ -1,12 +1,26 @@
 import Image from "next/image";
 import React from "react";
-
 import "./module.css";
 import LoginForm from "./LoginForm";
+import { auth } from "@/auth";
+import { redirect, } from "next/navigation";
 
 type Props = {};
+export const metadata = {
+  title: 'Business Login | consumer affairs',
+  description: 'Business login page',
+};
 
-const page = (props: Props) => {
+const page = async (props: Props) => {
+  const session = await auth();
+  console.log(session, "session ");
+
+  if (session) {
+    session.user.userType === "BUSINESS_USER"
+      ? redirect("/business")
+      : redirect("/business/login");
+  }
+
   return (
     <section className="login-new-page">
       <div className="grid grid-cols-12 h-full gx-0">
@@ -51,4 +65,4 @@ const page = (props: Props) => {
   );
 };
 
-export default page;
+export default page

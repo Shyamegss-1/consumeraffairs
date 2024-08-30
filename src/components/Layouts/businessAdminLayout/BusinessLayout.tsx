@@ -5,9 +5,10 @@ import BusinessAuthLayout from "./BusinessAuthLayout";
 
 const BusinessLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <BusinessAuthLayout>
-      <div className="relative w-full">{children}</div>
-    </BusinessAuthLayout>
+    // <BusinessAuthLayout>
+    //   <div className="relative w-full">{children}</div>
+    // </BusinessAuthLayout>
+    children
   );
 };
 

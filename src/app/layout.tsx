@@ -12,6 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "ConsumerAffairs®: Research. Review. Resolve.",
   description: "ConsumerAffairs®: Research. Review. Resolve.",
+  keywords: "ConsumerAffairs, Research, Review, Resolve, Reviews, business reviews",
 };
 
 export default function RootLayout({
@@ -19,13 +20,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const session = await auth();
-
-  // console.log(session?.user, "hfghfgf");
-
-  // if (!session?.user) {
-  //   return redirect("/signin");
-  // }
+ 
   return (
     <html lang="en">
       <head>
@@ -41,12 +36,6 @@ export default function RootLayout({
           <SessionProvider>
             <MainLayout>{children}</MainLayout>
           </SessionProvider>
-          {/* {isBusinessRoute ? (
-            <BusinessLayout>{children}</BusinessLayout>
-          ) : (
-            <UserLayout>{children}</UserLayout>
-          )} */}
-          {/* <UserLayout>{children}</UserLayout> */}
         </main>
         <Toaster />
       </body>

@@ -1,28 +1,37 @@
-import { auth } from "@/auth";
-import BusinessLayout from "@/components/Layouts/businessAdminLayout/BusinessLayout";
-import { redirect } from "next/navigation";
-import React from "react";
+import React, { Suspense } from "react";
 import "./Module.css";
 import UserName from "./UserName";
-import MainDashboardLayout from "./MainDashboardLayout";
+import MainDashboardLayout, { LoadingUi } from "./MainDashboardLayout";
+import BusinessAuthLayout from "@/components/Layouts/businessAdminLayout/BusinessAuthLayout";
+import { getSession, useSession } from "next-auth/react";
+import LoadingScreen from "@/components/ui/LoadingScreen";
+import { redirect } from "next/navigation";
+import { auth } from "@/auth";
+import { metadata } from "../layout";
+import Head from "next/head";
 
 type Props = {};
 
-const page = async (props: Props) => {
-  // const session =  getSession()
+const BusinessPage = async (props: Props) => {
   const session = await auth();
-  console.log(session);
-
-  if (session?.user?.userType !== "BUSINESS_USER") {
+  if (!session) {
     redirect("/business/login");
   }
 
   return (
     <>
-      <UserName />
-      <MainDashboardLayout />
+      <Head>
+        <title>Dashboard : Business User | Consumer Affairs</title>
+      </Head>
+      <BusinessAuthLayout>
+        {/* <UserName /> */}
+        {/* <LoadingUi /> */}
+        <Suspense fallback={<LoadingUi />}>
+          <MainDashboardLayout user={session?.user} />
+        </Suspense>
+      </BusinessAuthLayout>
     </>
   );
 };
 
-export default page;
+export default BusinessPage;

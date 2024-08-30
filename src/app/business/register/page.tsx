@@ -8,12 +8,10 @@ const Page = ({
   searchParams,
 }: {
   searchParams?: {
-    claim?: string;
+    claim?: string | null;
   };
 }) => {
   // console.log(searchParams?.claim);
-
- 
 
   // useEffect(() => {
   if (searchParams?.claim) {
@@ -27,7 +25,7 @@ const Page = ({
       redirect("/business/register");
     }
   }
-  
+
   // }, []);
 
   return (
@@ -36,7 +34,9 @@ const Page = ({
         <SideSection />
       </div>
       <div className="col-span-2">
-        <BusinessSignupForm claimUrl={searchParams?.claim} />
+        <BusinessSignupForm
+          claimUrl={searchParams?.claim ? searchParams?.claim : null}
+        />
       </div>
     </div>
   );
