@@ -1,9 +1,11 @@
 import React from "react";
 import "./LoadingScreen.Module.css";
 
-type Props = {};
+type Props = {
+  text: string | undefined;
+};
 
-const LoadingScreen = (props: Props) => {
+const LoadingScreen = ({ text }: Props) => {
   return (
     /* From Uiverse.io by mobinkakei */
     <div id="wifi-loader">
@@ -20,7 +22,7 @@ const LoadingScreen = (props: Props) => {
         <circle className="back" cx="17" cy="17" r="14"></circle>
         <circle className="front" cx="17" cy="17" r="14"></circle>
       </svg>
-      <div className="text" data-text="Loading..."></div>
+      <div className="text" data-text={text ? text : "Loading..."}></div>
     </div>
   );
 };

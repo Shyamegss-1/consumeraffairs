@@ -14,7 +14,7 @@ export const PhoneNumber: React.FC<Props> = ({ value, onchange }) => {
   const [country, setCountry] = useState("us");
 
   return (
-    <div className="relative flex">
+    <div className="relative flex w-full">
       <div className="flex justify-start items-center gap-4 w-full ">
         {/* <PhoneCode phone={phone} setPhone={setPhone} /> */}
         <div className="absolute z-20 flex items-center left-3">

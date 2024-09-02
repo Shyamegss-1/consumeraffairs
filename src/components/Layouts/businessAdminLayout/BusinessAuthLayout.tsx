@@ -15,7 +15,8 @@ const BusinessAuthLayout = ({ children }: Props) => {
   return (
     <>
       <Header />
-      {children}
+      <main className="max-h-[80vh] overflow-auto py-10">{children}</main>
+      {/* {children} */}
       <Footer />
     </>
   );

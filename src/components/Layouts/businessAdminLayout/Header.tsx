@@ -1,10 +1,8 @@
 import { Logo } from "@/components/icons/Icons";
-import { logoutHandler } from "@/server-actions/authActions";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { toast } from "sonner";
 
 type Props = {};
 

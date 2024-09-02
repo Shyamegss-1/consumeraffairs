@@ -6,7 +6,6 @@ import { toast } from "sonner";
 import Swal from "sweetalert2";
 import { $Enums, Prisma } from "@prisma/client";
 import LoadingScreen from "@/components/ui/LoadingScreen";
-import { string } from "zod";
 
 type Props = {
   claimUrl: string | null;
@@ -189,7 +188,7 @@ const BusinessSignupForm: React.FC<Props> = ({ claimUrl }) => {
       </div>
       {loading && (
         <div className="min-h-screen z-20 w-full backdrop-blur-sm bg-transparent absolute top-0 left-0 flex justify-center items-center">
-          <LoadingScreen />
+          <LoadingScreen text="Loading..." />
         </div>
       )}
     </>

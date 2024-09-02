@@ -1,6 +1,7 @@
 "use client";
 
 import ErrorPage from "@/components/errorpage/ErrorPage";
+import LoadingScreen from "@/components/ui/LoadingScreen";
 import axios from "axios";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -27,7 +28,7 @@ export default function VerifyEmailPage() {
     } catch (error: any) {
       setError(true);
       console.log(error.reponse.data);
-    }finally{
+    } finally {
       setLoading(false);
     }
   };
@@ -37,9 +38,12 @@ export default function VerifyEmailPage() {
     const _claimUrl = window.location.search.split("&")[1]?.split("=")[1];
 
     console.log(urlToken, _claimUrl);
-    setClaimUrl(_claimUrl ? claimUrl : null);
+    setClaimUrl(_claimUrl ? _claimUrl : null);
     setToken(urlToken || "");
   }, []);
+
+  console.log(claimUrl);
+  
 
   useEffect(() => {
     if (token.length > 0) {
@@ -49,6 +53,14 @@ export default function VerifyEmailPage() {
 
   if (error) {
     return <ErrorPage message="Invalid token" />;
+  }
+
+  if (loading) {
+    return (
+      <div className="loading-overlay min-h-screen flex justify-center items-center">
+        <LoadingScreen text={"authenticating..."}/>
+      </div>
+    );
   }
 
   return (

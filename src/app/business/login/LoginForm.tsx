@@ -90,7 +90,7 @@ const LoginForm = (props: Props) => {
       </form>
       {loading && (
         <div className="loading-overlay">
-          <LoadingScreen/>
+          <LoadingScreen text="Please wait..."/>
         </div>
       )}
     </>
