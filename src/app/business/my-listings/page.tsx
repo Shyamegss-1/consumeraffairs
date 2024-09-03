@@ -18,8 +18,8 @@ const page = (props: Props) => {
     <>
       <BusinessAuthLayout>
         <div className="max-w-screen-xl mx-auto ">
-          <h3 className="text-center font-bold text-4xl mt-10">My Listing</h3>
-          <div className="shadow-md rounded-lg p-8">
+          <h3 className="text-center font-bold text-4xl my-10">My Listing</h3>
+          <div className="shadow-md rounded-lg p-8 bg-white border">
             {/* <ResponsiveTable data={data} /> */}
             <Suspense fallback={<>Loading...</>}>
               <Listing />

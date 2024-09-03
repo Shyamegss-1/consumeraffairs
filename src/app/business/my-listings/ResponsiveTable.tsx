@@ -21,7 +21,7 @@ const ResponsiveTable = ({ data }: any) => {
   const currentData: any[] = data.slice(startIndex, startIndex + pageSize);
 
   return (
-    <div className="overflow-x-auto mt-10 p-2">
+    <div className="overflow-x-auto mt-10 p-2 ">
       <div className="flex justify-between items-center mb-10">
         <div className="flex justify-start items-center gap-4">
           <p>show</p>
@@ -139,51 +139,51 @@ const ResponsiveTable = ({ data }: any) => {
                   </svg>
                 )}
               </td>
-              <td className="py-2 px-4 border-b border-x border-gray-300">
-
-              </td>
+              <td className="py-2 px-4 border-b border-x border-gray-300"></td>
             </tr>
           ))}
         </tbody>
       </table>
-      <div className="mt-4 flex justify-between items-center">
-        <div>
-          Showing {startIndex + 1} to{" "}
-          {Math.min(startIndex + pageSize, data.length)} of {data.length}{" "}
-          entries
-        </div>
-        <div className="flex space-x-2">
-          <button
-            className={`p-2 border ${
-              currentPage === 1 ? "bg-gray-300" : "bg-white"
-            } border-gray-300 rounded`}
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            Prev
-          </button>
-          {[...Array(totalPages)].map((_, i) => (
+      {data.length > 0 && (
+        <div className="mt-4 flex justify-between items-center">
+          <div>
+            Showing {startIndex + 1} to{" "}
+            {Math.min(startIndex + pageSize, data.length)} of {data.length}{" "}
+            entries
+          </div>
+          <div className="flex space-x-2">
             <button
-              key={i}
-              className={`py-2 px-4 border  ${
-                currentPage === i + 1 ? "bg-blue-500 text-white" : "bg-white"
+              className={`p-2 border ${
+                currentPage === 1 ? "bg-gray-300" : "bg-white"
               } border-gray-300 rounded`}
-              onClick={() => handlePageChange(i + 1)}
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
             >
-              {i + 1}
+              Prev
             </button>
-          ))}
-          <button
-            className={`p-2 border ${
-              currentPage === totalPages ? "bg-gray-300" : "bg-white"
-            } border-gray-300 rounded`}
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
+            {[...Array(totalPages)].map((_, i) => (
+              <button
+                key={i}
+                className={`py-2 px-4 border  ${
+                  currentPage === i + 1 ? "bg-blue-500 text-white" : "bg-white"
+                } border-gray-300 rounded`}
+                onClick={() => handlePageChange(i + 1)}
+              >
+                {i + 1}
+              </button>
+            ))}
+            <button
+              className={`p-2 border ${
+                currentPage === totalPages ? "bg-gray-300" : "bg-white"
+              } border-gray-300 rounded`}
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
