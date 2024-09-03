@@ -1,5 +1,5 @@
 import BusinessAuthLayout from "@/components/Layouts/businessAdminLayout/BusinessAuthLayout";
-import React from "react";
+import React, { Suspense } from "react";
 import BusinessRatingCard from "./BusinessRatingCard";
 import StatusNotationCard from "./StatusNotationCard";
 import Pagination from "@/components/pagination/Pagination";
@@ -64,7 +64,15 @@ const page = (props: Props) => {
               </table>
               {/* Pagination */}
             </div>
-              <Pagination currentPage={1} pageSize={10} startIndex={0} totalCount={0} totalPages={1}/>
+            <Suspense fallback={<>Loading...</>}>
+              <Pagination
+                currentPage={1}
+                pageSize={10}
+                startIndex={0}
+                totalCount={0}
+                totalPages={1}
+              />
+            </Suspense>
           </div>
         </div>
       </div>
