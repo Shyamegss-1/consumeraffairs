@@ -5,15 +5,39 @@ import { prisma } from "../../../../prisma/prisma";
 import { auth } from "@/auth";
 import Listing from "./Listing";
 
-type Props = {};
 
-const page = (props: Props) => {
+
+interface ItemsPageProps {
+  params: {
+    page: string;
+  };
+  searchParams: {
+    page?:string;
+    search?: string;
+    pageSize?: string;
+  };
+}
+
+
+
+const page = ({
+  params,
+  searchParams,
+}: ItemsPageProps) => {
   // const data = [
   //   { name: "John Doe", age: 28, email: "john@example.com" },
   //   { name: "Jane Doe", age: 26, email: "jane@example.com" },
   //   { name: "Sam Smith", age: 22, email: "sam@example.com" },
   //   { name: "Sara Connor", age: 30, email: "sara@example.com" },
   // ];
+
+  const page = Number(searchParams.page) || 1;
+  const pageSize = Number(searchParams.pageSize) || 10;
+  const search = searchParams.search || "";
+
+  console.log(search,"search");
+  
+
   return (
     <>
       <BusinessAuthLayout>
@@ -22,7 +46,7 @@ const page = (props: Props) => {
           <div className="shadow-md rounded-lg p-8 bg-white border">
             {/* <ResponsiveTable data={data} /> */}
             <Suspense fallback={<>Loading...</>}>
-              <Listing />
+              <Listing page={page} pageSize={pageSize} search={search}/>
             </Suspense>
           </div>
         </div>

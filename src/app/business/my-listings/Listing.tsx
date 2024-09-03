@@ -4,27 +4,31 @@ import { auth } from "@/auth";
 import ResponsiveTable from "./ResponsiveTable";
 import Image from "next/image";
 
-type Props = {};
+type Props = {
+  page: number;
+  pageSize: number;
+  search: string;
+};
 
 const Listing = async (props: Props) => {
   const session = await auth();
+  const skip = (props.page - 1) * props.pageSize;
   const data = await prisma.listing.findMany({
     where: {
       userid: Number(session?.user.id),
+      name: {
+        contains: props.search,
+      },
+    },
+    skip,
+    take: props.pageSize,
+    orderBy: {
+      createdAt: "desc",
     },
   });
 
   // console.log(data, "data", session?.user.id);
-  return data.length ? (
-    <ResponsiveTable data={data} />
-  ) : (
-    <div className="w-full min-h-96">
-      <div className="flex justify-between gap-10 items-center flex-col h-full">
-        <Image src={"/delete.png"} width={200} height={200} alt="not found"/>
-        <p className="text-3xl font-bold text-gray-400">No Record Found</p>
-      </div>
-    </div>
-  );
+  return <ResponsiveTable data={data} />;
 };
 
 export default Listing;

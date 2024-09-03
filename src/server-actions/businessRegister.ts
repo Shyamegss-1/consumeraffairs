@@ -102,7 +102,15 @@ export const changeBusinessPassword = async (
     const { password, userId } = data;
     const hashedPassword = await hash(password, 12);
     // console.log(hashedPassword, userId);
+    const user = await prisma.users.findFirst({
+      where: {
+        id: Number(userId),
+      },
+    });
 
+    if (!user) {
+      throw { status: false, message: "Business user not found" }
+    }
     const business = await prisma.users.update({
       where: {
         id: Number(userId),
@@ -112,6 +120,7 @@ export const changeBusinessPassword = async (
       data: {
         password: hashedPassword,
         cpassword: hashedPassword,
+        domain: claimUrl,
       },
     });
 
@@ -119,8 +128,7 @@ export const changeBusinessPassword = async (
       return { status: false, message: "Something went wrong, try again" };
     }
 
-    console.log(claimUrl,"claimUrl");
-    
+    console.log(claimUrl, "claimUrl");
 
     if (claimUrl) {
       const existListing = await prisma.listing.findFirst({
