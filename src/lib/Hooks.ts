@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { prisma } from "../../prisma/prisma";
+import { Callback } from "ioredis";
 
 function removeHttpsAndWww(url: string) {
   let cleanedUrl = url?.replace(/^https:\/\//, "");
@@ -36,4 +37,13 @@ export async function checkConnection() {
   } finally {
     await prisma.$disconnect();
   }
+}
+
+
+export function debounce(fn:Callback, delay:number) {
+  let timeoutId:any;
+  return (...args:any) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => fn(...args), delay);
+  };
 }

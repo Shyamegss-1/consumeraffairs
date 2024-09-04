@@ -1,8 +1,9 @@
 "use client";
 import Pagination from "@/components/pagination/Pagination";
+import useDebounce from "@/lib/client-hooks/useDebounce";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const ResponsiveTable = ({ data }: any) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,6 +32,19 @@ const ResponsiveTable = ({ data }: any) => {
   const startIndex = (currentPage - 1) * pageSize;
   const currentData: any[] = data.slice(startIndex, startIndex + pageSize);
 
+  const searchQueryValue: string = useDebounce(searchQuery, 500);
+  // console.log(searchQueryValue, "searchQueryValue");
+
+  useEffect(() => {
+    let params = new URLSearchParams(searchParams);
+    if (searchQueryValue !== "") {
+      params.set("search", searchQueryValue);
+    } else {
+      params.delete("search");
+    }
+    router.push(`${pathname}?${params.toString()}`);
+  }, [searchQueryValue]);
+
   return (
     <>
       <div className="lg:col-span-3">
@@ -40,7 +54,7 @@ const ResponsiveTable = ({ data }: any) => {
             <label className="mr-2">Show</label>
             <select
               name="pagesize"
-              id=""
+              id="listingSearch"
               value={searchParams?.get("pageSize") || 10}
               onChange={(e) => {
                 let params = new URLSearchParams(searchParams);
@@ -65,14 +79,7 @@ const ResponsiveTable = ({ data }: any) => {
               id="search"
               value={searchQuery}
               onChange={(e) => {
-                let params = new URLSearchParams(searchParams);
                 setSearchQuery(e.target.value);
-                if (e.target.value) {
-                  params.set("search", e.target.value);
-                } else {
-                  params.delete("search");
-                }
-                router.push(`${pathname}?${params.toString()}`);
               }}
             />
           </div>
@@ -186,11 +193,11 @@ const ResponsiveTable = ({ data }: any) => {
           {/* Pagination */}
         </div>
         <Pagination
-          currentPage={1}
-          pageSize={10}
-          startIndex={0}
-          totalCount={0}
-          totalPages={1}
+          currentPage={currentPage}
+          pageSize={pageSize}
+          startIndex={startIndex}
+          totalCount={data.length}
+          totalPages={totalPages}
         />
       </div>
     </>

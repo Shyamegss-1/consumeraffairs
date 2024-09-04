@@ -94,7 +94,6 @@ export const signupHandler = async (formData: formData) => {
         email,
         password: hashedPassword,
         cpassword: hashedPassword,
-        role_id: 1,
       },
     });
     if (!newUser) {

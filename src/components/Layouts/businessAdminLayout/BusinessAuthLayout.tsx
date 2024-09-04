@@ -1,8 +1,5 @@
 "use client";
 import React from "react";
-import { useSession } from "next-auth/react";
-import LoadingScreen from "@/components/ui/LoadingScreen";
-import { redirect } from "next/navigation";
 import Header from "./Header";
 import Footer from "./Footer";
 
@@ -15,7 +12,7 @@ const BusinessAuthLayout = ({ children }: Props) => {
   return (
     <>
       <Header />
-      <main className="max-h-[80vh] overflow-auto py-10">{children}</main>
+      <main className="min-h-[80vh] overflow-auto py-10 bg-gray-50">{children}</main>
       {/* {children} */}
       <Footer />
     </>
