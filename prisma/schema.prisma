@@ -8,51 +8,51 @@ datasource db {
 }
 
 model admin {
-  aid      Int    @id @default(autoincrement())
-  username String @db.VarChar(200)
-  email    String @db.VarChar(50)
-  password String @db.VarChar(200)
-  role     Int
-  status   Int
+  aid       Int      @id @default(autoincrement())
+  username  String   @db.VarChar(200)
+  email     String   @db.VarChar(50)
+  password  String   @db.VarChar(200)
+  role      Int
+  status    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model blog {
-  b_id             Int     @id @default(autoincrement())
-  b_title          String  @db.Text
-  b_slug           String  @db.Text
-  b_image          String  @db.VarChar(255)
-  tags             String? @db.Text
-  b_description    String  @db.Text
-  b_category       String  @db.VarChar(255)
+  b_id             Int      @id @default(autoincrement())
+  b_title          String   @db.Text
+  b_slug           String   @db.Text
+  b_image          String   @db.VarChar(255)
+  tags             String?  @db.Text
+  b_description    String   @db.Text
+  b_category       String   @db.VarChar(255)
   listing_category Int?
-  image_alt        String? @db.VarChar(255)
-  date             String  @db.VarChar(255)
+  image_alt        String?  @db.VarChar(255)
+  date             String   @db.VarChar(255)
   b_status         Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }
 
 model blog_category {
-  b_c_id         Int    @id @default(autoincrement())
-  b_c_name       String @db.VarChar(255)
-  bcategory_slug String @db.VarChar(255)
-  date           String @db.VarChar(255)
+  b_c_id         Int      @id @default(autoincrement())
+  b_c_name       String   @db.VarChar(255)
+  bcategory_slug String   @db.VarChar(255)
+  date           String   @db.VarChar(255)
   b__c_status    Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model blog_comment {
-  id      Int    @id @default(autoincrement())
-  blog_id Int
-  user_id Int    @default(0)
-  name    String @db.VarChar(255)
-  email   String @db.VarChar(255)
-  comment String @db.Text
-  date    String @db.VarChar(50)
-  status  Int
+  id        Int      @id @default(autoincrement())
+  blog_id   Int
+  user_id   Int      @default(0)
+  name      String   @db.VarChar(255)
+  email     String   @db.VarChar(255)
+  comment   String   @db.Text
+  date      String   @db.VarChar(50)
+  status    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -65,56 +65,74 @@ model category {
   popular       Int?      @default(0)
   date          String    @db.VarChar(20)
   status        Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   listing       listing[]
 }
 
 model faq {
-  id        Int    @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   blog_id   Int
-  questions String @db.Text
-  answers   String @db.Text
+  questions String   @db.Text
+  answers   String   @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model inner_seo {
-  page_id          Int    @id @default(autoincrement())
-  page             String @db.VarChar(200)
-  meta_title       String @db.VarChar(250)
-  meta_description String @db.Text
-  meta_keywords    String @db.Text
-  header           String @db.VarChar(1000)
-  footer           String @db.VarChar(1000)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  page_id          Int      @id @default(autoincrement())
+  page             String   @db.VarChar(200)
+  meta_title       String   @db.VarChar(250)
+  meta_description String   @db.Text
+  meta_keywords    String   @db.Text
+  header           String   @db.VarChar(1000)
+  footer           String   @db.VarChar(1000)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }
 
 model listing {
-  id           Int       @id @default(autoincrement())
-  userid       Int?
-  user         users?    @relation(fields: [userid], references: [id])
-  name         String    @db.VarChar(255)
-  slug         String    @db.VarChar(255)
-  category     category? @relation(fields: [category_id], references: [cid])
-  category_id  Int?
-  logo         String    @db.VarChar(255)
-  website_link String    @db.VarChar(255)
-  about        String    @db.Text
-  email        String    @db.VarChar(255)
-  number       String    @db.VarChar(255)
-  address      String?   @db.VarChar(255)
-  city         String?   @db.VarChar(255)
-  pincode      String?   @db.VarChar(255)
-  country      String?   @db.VarChar(255)
-  date         String    @db.VarChar(30)
-  verify_code  String?   @db.VarChar(10)
-  claim        Boolean   @default(false)
-  status       Int
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  reviews      review[]
+  id                Int           @id @default(autoincrement())
+  userid            Int?
+  user              users?        @relation(fields: [userid], references: [id])
+  name              String        @db.VarChar(255)
+  slug              String        @db.VarChar(255)
+  category          category?     @relation(fields: [category_id], references: [cid])
+  category_id       Int?
+  logo              String?       @default("/logo.png")
+  website_link      String        @db.VarChar(255)
+  about             String        @db.Text
+  email             String        @db.VarChar(255)
+  number            String        @db.VarChar(255)
+  address           String?       @db.VarChar(255)
+  city              String?       @db.VarChar(255)
+  pincode           String?       @db.VarChar(255)
+  country           String?       @db.VarChar(255)
+  date              String        @db.VarChar(30)
+  verify_code       String?       @db.VarChar(10)
+  claim             Boolean       @default(false)
+  status            Int
+  companyName       String?
+  jobTitle          String?
+  phone             String?
+  image             String?
+  emailID_1         String?
+  emailID_1_purpose String?
+  emailID_2         String?
+  emailID_2_purpose String?
+  emailID_3         String?
+  emailID_3_purpose String?
+  countryCode       String?       @default("1")
+  companyNumber     String?
+  businessCategory  String?
+  metaTitle         String?
+  metaKeywords      String?
+  metaDescription   String?
+  banner            String?       @default("/banner.png")
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  reviews           review[]
+  social_links      social_links?
 }
 
 model review {
@@ -134,8 +152,8 @@ model review {
   flagDetail       flagDetails?
   reported         Boolean?       @default(false)
   reportDetail     ReportDetails?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
 }
 
 enum ReviewStatus {
@@ -152,34 +170,34 @@ model ReportDetails {
   review_id     Int      @unique
   report_date   DateTime @default(now())
   report_reason String   @db.Text
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model flagDetails {
-  id          Int    @id @default(autoincrement())
-  review      review @relation(fields: [reviewId], references: [id])
-  reviewId    Int    @unique
-  flag_reason String @db.Text
-  flag_date   String @db.VarChar(20)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int      @id @default(autoincrement())
+  review      review   @relation(fields: [reviewId], references: [id])
+  reviewId    Int      @unique
+  flag_reason String   @db.Text
+  flag_date   String   @db.VarChar(20)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model settings {
-  pid              Int    @id @default(autoincrement())
-  popular_searches String @db.Text
-  Date             String @db.VarChar(255)
-  Footer_content   String @db.Text
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  pid              Int      @id @default(autoincrement())
+  popular_searches String   @db.Text
+  Date             String   @db.VarChar(255)
+  Footer_content   String   @db.Text
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }
 
 model top_search {
-  id      Int     @id @default(autoincrement())
-  heading Int?
-  content String? @db.Text
-  date    String? @db.VarChar(255)
+  id        Int      @id @default(autoincrement())
+  heading   Int?
+  content   String?  @db.Text
+  date      String?  @db.VarChar(255)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -199,8 +217,8 @@ model users {
   mobile_number     String?      @db.VarChar(15)
   userType          UserType     @default(USER)
   active            Boolean      @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
   role              roles?       @relation(fields: [role_id], references: [id])
   role_id           Int?
   reviews           review[]
@@ -215,9 +233,9 @@ enum UserType {
 }
 
 model UserDetails {
-  id          Int     @id @default(autoincrement())
-  user        users?  @relation(fields: [user_id], references: [id])
-  user_id     Int?    @unique
+  id          Int      @id @default(autoincrement())
+  user        users?   @relation(fields: [user_id], references: [id])
+  user_id     Int?     @unique
   website     String?
   companyName String?
   address     String?
@@ -225,8 +243,8 @@ model UserDetails {
   jobTitle    String?
   phone       String?
   image       String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model business_users {
@@ -258,4 +276,16 @@ model roles {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime? @updatedAt
   users       users[]
+}
+
+model social_links {
+  id        Int      @id @default(autoincrement())
+  listingId Int?     @unique
+  listing   listing? @relation(fields: [listingId], references: [id])
+  facebooke String?  @default("https://www.facebook.com/")
+  linkedin  String?  @default("https://www.instagram.com/")
+  twitter   String?  @default("https://twitter.com/i/flow/login?lang=en")
+  instagram String?  @default("https://www.linkedin.com/login")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

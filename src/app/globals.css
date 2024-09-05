@@ -551,410 +551,135 @@ textarea {
 
 /* about business style */
 
-.main-business-profile-section .banner-profile-box {
-    position: relative;
-}
-
-.form-control {
-    display: block;
-    width: 100%;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    color: var(--bs-body-color);
-    background-color: var(--bs-body-bg);
-    background-clip: padding-box;
-    border: var(--bs-border-width) solid var(--bs-border-color);
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border-radius: var(--bs-border-radius);
-    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-}
-
-.theme-btn1 {
-    min-width: 64px !important;
-    padding: 8px 24px !important;
-    border-radius: 68px !important;
-    background: #6C946F !important;
-    border: none !important;
-    font-size: 16px !important;
-    font-weight: 700 !important;
-    color: var(--white, #fff) !important;
-    border: 2px #6C946F solid !important;
-    letter-spacing: 1px;
-}
-
 .main-business-profile-section {
-    background-color: #fff;
-    border-radius: 0px;
-    height: auto;
-    overflow-y: auto;
+  background-color: #fff;
+  height: 500px;
+  overflow-y: auto;
 }
 
-.img-fluid {
-    max-width: 100%;
-    height: auto;
-}
-
-.w-100 {
-    width: 100% !important;
+.main-business-profile-section .banner-profile-box {
+  position: relative;
 }
 
 .main-business-profile-section .banner-profile-box .banner-img {
-    height: 300px;
-    width: 100%;
-    object-fit: cover;
-    border-radius: 0px 0px 0px 0px;
+  height: 300px;
+  width: 100%;
+  object-fit: cover;
 }
 
 .main-business-profile-section .banner-profile-content {
-    position: absolute;
-    bottom: 12%;
-    left: 15%;
-    z-index: 9;
-    display: flex;
-    align-items: center;
+  position: absolute;
+  bottom: 12%;
+  left: 10%;
+  z-index: 999;
+  display: flex;
+  align-items: center;
 }
 
-.main-business-profile-section .banner-profile-content .banner-profile-logo {
-    background: #b7b7b7;
-    border-radius: 14px;
-    padding: 4px 10px;
+.main-business-profile-section .banner-profile-logo img {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
 }
 
-.main-business-profile-section .banner-profile-info h1 {
-    color: var(--White, #fff);
-    font-size: 40px;
-    font-weight: 700;
-    line-height: normal;
+.main-business-profile-section .banner-profile-info h4 {
+  color: var(--White, #fff);
+  font-size: 40px;
+  font-weight: 700;
+  line-height: normal;
 }
 
 .main-business-profile-section .banner-ratings {
-    display: flex;
-    align-items: center;
-    color: #fff;
-}
-
-.main-business-profile-section .banner-ratings .banner-rating-icons i {
-    background-color: #b1b1b1;
-    height: 20px;
-    width: 20px;
-    border-radius: 6px;
-    display: flex;
-    font-size: 12px;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
+  display: flex;
+  align-items: center;
+  color: #fff;
 }
 
 .main-business-profile-section .banner-profile-box:after {
-    content: "";
-    background-color: #0000007c;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    border-radius: 0px 0px 0px 0px;
+  content: "";
+  background-color: #0000007c;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  border-radius: 16px 16px 0px 0px;
 }
-
-.business-profile-about-content {
-    margin-top: 30px;
-}
-
-.advertisement {
-    margin-top: 30px;
-}
-
-.advertisement img {
-    /* height: 320px; */
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 16px;
-}
-
-.business-profile-review-section {
-    margin-top: 40px;
-}
-
-.business-profile-review-section .title {
-    color: var(--download-Black, #000);
-    font-size: 25px;
-    font-weight: 700;
-    line-height: normal;
-}
-
-.no-review {
-    padding: 8px;
-    border-radius: 8px;
-    margin-top: 20px;
-    background-color: #e7e7e7;
-    font-size: 20px;
-}
-
-.review-new-form-box {
-    display: flex;
-    padding: 24px 40px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-    align-self: stretch;
-    border-radius: 24px;
-    background: #FFF;
-    box-shadow: 0px 0px 2px 0px rgba(145, 158, 171, 0.20), 0px 12px 24px 0px rgba(145, 158, 171, 0.12);
-}
-
-.review-new-form-box label {
-    color: var(--download-Oxford-Blue, #374151);
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    margin-bottom: 8px;
-}
-
-.review-new-form-box .rating {
-    display: inline-block;
-}
-
-.review-new-form-box .form-control {
-    color: var(--download-Oxford-Blue, #374151);
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 26.56px;
-}
-
-textarea.form-control {
-    min-height: calc(1.5em + .75rem + calc(var(--bs-border-width) * 2));
-}
-
-.review-new-form-box .rating input[type="radio"] {
-    display: none;
-}
-
-.review-new-form-box .rating label {
-    float: right;
-    color: #fff;
-    cursor: pointer;
-    background: #b1b1b1;
-    margin: 0px 8px 0px 0px;
-    padding: 0px 5px 0px 7px;
-    height: 33px;
-    width: 33px;
-    border-radius: 4px;
-}
-
-.review-new-form-box .rating label:before {
-    content: "\2605";
-    font-size: 22px !important;
-    margin-right: 0px;
-}
-
-.review-new-form-box .rating label:hover,
-.review-new-form-box .rating input[type="radio"]:hover~label {
-    color: #fff;
-}
-
-.review-new-form-box .rating input[type="radio"]:hover~label,
-.review-new-form-box .rating input[type="radio"]:checked~label {
-    color: #ffbf00 !important;
-    background-color: #5247a5;
-}
-
-.business-review-right-side .business-social-links {
-    display: flex;
-    padding: 24px 30px 30px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-    align-self: stretch;
-    border-radius: 24px;
-    background: var(--White, #fff);
-    box-shadow: 0px 0px 2px 0px rgba(145, 158, 171, 0.2), 0px 12px 24px 0px rgba(145, 158, 171, 0.12);
-}
-
-.business-review-right-side .social-media-icons {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.business-review-right-side .business-top-categories {
-    display: flex;
-    padding: 24px 20px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-    align-self: stretch;
-    border-radius: 24px;
-    background: var(--White, #fff);
-    box-shadow: 0px 0px 2px 0px rgba(145, 158, 171, 0.2),
-        0px 12px 24px 0px rgba(145, 158, 171, 0.12);
-}
-
-.business-review-right-side .top-categories-list {
-    background-color: #f3f5f9;
-    border-radius: 16px;
-    width: 100%;
-    height: 320px;
-    overflow-y: scroll;
-    scrollbar-width: thin;
-}
-
-
-.business-review-right-side .top-categories-list::-webkit-scrollbar {
-    width: 16px;
-}
-
-.business-review-right-side .top-categories-list::-webkit-scrollbar-track {
-    background-color: #e4e4e4;
-    border-radius: 100px;
-    padding: 1px;
-}
-
-.business-review-right-side .top-categories-list::-webkit-scrollbar-thumb {
-    background-color: #d4aa70;
-    border-radius: 100px;
-}
-
-.business-review-right-side .top-categories-list ul {
-    padding: 0px;
-    margin: 0px;
-}
-
-.business-review-right-side .top-categories-list ul li {
-    border-bottom: 1px lightgrey solid;
-    list-style: none;
-}
-
-.business-review-right-side .top-categories-list ul li a {
-    color: #2c2c2c;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 26.56px;
-    text-decoration: none;
-    display: block;
-    padding: 12px 20px;
-}
-
-.business-review-single-box {
-    display: flex;
-    padding: 32px 32px 20px;
-    flex-direction: column;
-    /* align-items: flex-start; */
-    /* gap: 20px; */
-    /* align-self: stretch; */
-    border-radius: 20px;
-    background: var(--Faded-White, #f3f5f9);
-    width: 100%;
-}
-
-.business-review-profile-box {
-    display: flex;
-    justify-content: space-between;
-}
-
-.business-review-single-box .business-review-profile-info .business-user-name h4 {
-    color: var(--download-Black, #000);
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: 22.5px;
-    margin: 0px;
-    margin-bottom: 5px;
-}
-
-.business-review-single-box .business-review-profile-info .business-user-name p {
-    color: var(--download-Black, #000);
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    opacity: 0.6;
-    margin: 0px;
-}
-
-.business-review-rating-box .business-ratings-icons {
-    display: flex;
-    justify-content: end;
-    margin-bottom: 8px;
-}
-
-.business-review-rating-box .business-ratings-icons i {
-    background-color: #6C946F;
-    height: 25px;
-    width: 25px;
-    border-radius: 4px;
-    display: flex;
-    font-size: 12px;
-    align-items: center;
-    justify-content: center;
-    color: #ffbf00 !important;
-    margin: 0px 2px;
-}
-
-.business-review-added-on p {
-    color: var(--download-Black, #000);
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    opacity: 0.6;
-    margin: 0px;
-}
-
-.business-review-input-box h5 {
-    color: #2c2c2c;
-    font-size: 20px;
-    font-weight: 800;
-    line-height: normal;
-}
-
-.business-review-input-box p {
-    color: #2c2c2c;
-    font-size: 16px;
-    font-weight: 500;
-    line-height: 26.56px;
-}
-
-.business-review-date-of-experience p {
-    color: var(--download-Black, #000);
-    font-size: 14px;
-    font-weight: 400;
-    line-height: normal;
-    opacity: 0.6;
-}
-
-.business-review-date-of-experience p span {
-    font-weight: 600;
-}
-
 
 .main-business-profile-section .business-profile-btns button {
-    display: inline-flex;
-    min-width: 64px;
-    padding: 10px 24px;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    flex: 1 0 0;
-    border-radius: 68px;
-    border: 2px solid #506650;
-    color: #506650;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: normal;
-    background-color: transparent;
-    letter-spacing: 0.5px;
+  display: inline-flex;
+  min-width: 64px;
+  padding: 10px 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex: 1 0 0;
+  border-radius: 68px;
+  border: 2px solid #506650;
+  color: #506650;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: normal;
+  background-color: transparent;
+  letter-spacing: 0.5px;
 }
 
 .main-business-profile-section .business-profile-btns button.fill {
-    background-color: #506650;
-    color: #fff;
+  background-color: #506650;
+  color: #fff;
+}
+
+.business-review-right-side .business-social-links {
+  display: flex;
+  padding: 24px 30px 30px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
+  border-radius: 24px;
+  background: var(--White, #fff);
+  box-shadow: 0px 0px 2px 0px rgba(145, 158, 171, 0.2), 0px 12px 24px 0px rgba(145, 158, 171, 0.12);
+}
+
+.business-review-right-side .social-media-icons {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+
+/* scrollbar style */
+.custom-scroll::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 8px;
+  background-color: #f5f5f5;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #555;
+}
+
+@layer utilities {
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
 }

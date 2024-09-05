@@ -22,7 +22,7 @@ const LoadingScreen = ({ text }: Props) => {
         <circle className="back" cx="17" cy="17" r="14"></circle>
         <circle className="front" cx="17" cy="17" r="14"></circle>
       </svg>
-      <div className="text" data-text={text ? text : "Loading..."}></div>
+      <div className="text text-nowrap" data-text={text ? text : "Loading..."}></div>
     </div>
   );
 };

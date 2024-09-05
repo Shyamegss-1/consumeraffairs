@@ -12,7 +12,7 @@ import Head from "next/head";
 
 type Props = {};
 
-const BusinessPage = async (props: Props) => {
+const BusinessPage = async ({}: Props) => {
   const session = await auth();
   if (!session) {
     redirect("/business/login");

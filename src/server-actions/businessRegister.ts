@@ -7,6 +7,7 @@ import { $Enums, Prisma } from "@prisma/client";
 import { businessUserSchema } from "@/lib/zod";
 import { hash } from "bcryptjs";
 import { sendMultipleEmails } from "@/lib/mailer";
+import { auth } from "@/auth";
 
 export const businessRegister = async (
   formData: {
@@ -109,7 +110,7 @@ export const changeBusinessPassword = async (
     });
 
     if (!user) {
-      throw { status: false, message: "Business user not found" }
+      throw { status: false, message: "Business user not found" };
     }
     const business = await prisma.users.update({
       where: {
@@ -186,4 +187,54 @@ export const changeBusinessPassword = async (
   } catch (error) {
     return { status: false, message: String(error) };
   }
+};
+
+export const handleUpdateBusinessProfile = async (formData: any) => {
+  try {
+    const session = await auth();
+    if (!session) {
+      return { status: false, message: "Session Expired!." };
+    }
+
+    const businessUser = await prisma.users.update({
+      where: {
+        id: Number(session.user.id),
+      },
+      data: {
+        listing: {
+          update: {
+            where: {
+              id: Number(formData.id),
+            },
+            data: {
+              about: formData.about,
+              address: formData.address,
+              banner: formData.banner,
+              businessCategory: formData.businessCategory,
+              category_id: formData.businessCategory,
+              city: formData.city,
+              country: formData.country,
+              companyName: formData.businessName,
+              countryCode: formData.countryCode,
+              emailID_1: formData.emailID_1,
+              emailID_2: formData.emailID_2,
+              emailID_3: formData.emailID_3,
+              emailID_1_purpose: formData.emailID_1_purpose,
+              emailID_2_purpose: formData.emailID_2_purpose,
+              emailID_3_purpose: formData.emailID_3_purpose,
+              companyNumber: formData.companyNumber,
+              logo: formData.logo,
+              jobTitle: formData.jobRole,
+            },
+          },
+        },
+      },
+      select: {
+        listing: true,
+      },
+    });
+    if (!businessUser) {
+      return { status: false, message: "Business Profile updation failed!" };
+    }
+  } catch (error) {}
 };

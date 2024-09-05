@@ -1,199 +1,216 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { CategoryOptions } from "../add-business/CategoryOptions";
+import Image from "next/image";
+import PhoneNumber from "../add-business/PhoneNumber";
 
-type Props = {};
+type Props = {
+  formData: any;
+  setFormData: any;
+};
 
-const UpdateBusinessProfile = (props: Props) => {
+const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
   const [options, setOptins] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [logo, setLogo] = useState<string | null>(null);
+
+  const handleFileChange = (event: any, key: string) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setFormData({
+        ...formData,
+        [key]: URL.createObjectURL(event.target.files[0]),
+      });
+    }
+  };
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
   useEffect(() => {
     const options = async () => {
       let res = await CategoryOptions();
-      console.log(res,"ressssssssssss");
-      
+      console.log(res, "ressssssssssss");
+
       setOptins(res);
     };
     options();
   }, []);
   return (
-    <form
-      method="post"
-      className="relative"
-    >
-      <div className="edit-profile-main-box">
-        <div className="edit-profile-logo-box flex items-center">
-          {/* <div className="logo-box">
-            <label htmlFor="" className="w-full">
-              Logo
-            </label>
-            <img src="assets/img/aaaa.png" width="180px" alt="" id="prevlogo">
-            <img
-              src="../admin/upload/1725271347images.jpg"
-              width="180px"
-              alt=""
-              id="prevlogo"
-            />{" "}
-          </div> */}
-          <div className="upload-btn-box ml-1">
-            <p className="m-0">
-              <b>Recommended size - </b> 200px x 200px.
-            </p>
-            <p className="m-0">
-              <b>Maximum file size - </b> 2MB.
-            </p>
-            <label htmlFor="logo" className="edit-logo-field mt-2">
-              <button className="upload-btn">Upload</button>
+    <form className="w-full relative max-h-80 p-4 overflow-y-scroll  no-scrollbar">
+      <div className="relative flex flex-col justify-">
+        <div className="profile-section">
+          <p className="text-lg font-semibold">Logo</p>
+          <div className=" flex justify-between items-center gap-4 ">
+            <div className="p-2 ">
+              {formData.logo && (
+                <Image
+                  src={formData.logo}
+                  alt="logo"
+                  className="size-20"
+                  width={200}
+                  height={300}
+                />
+              )}
+            </div>
+            <div className="p-2 relative flex flex-col justify-center items-start gap-4">
+              <div>
+                <p className="text-sm font-semibold">
+                  Recommended size -{" "}
+                  <span className="text-sm font-light">200px X 200px</span>
+                </p>
+                <p className="text-sm font-semibold">
+                  Maximum file size -{" "}
+                  <span className="text-sm font-light">2MB</span>
+                </p>
+              </div>
+              <label
+                htmlFor="logo-upload"
+                className="text-center w-full bg-active_dark text-white font-semibold px-6 py-2 rounded-full"
+              >
+                Upload
+              </label>
               <input
+                id="logo-upload"
                 type="file"
-                name="logo"
-                id="profile-browse"
-                className="businesslogo"
+                className="opacity-0 absolute w-10"
+                onChange={(e) => handleFileChange(e, "logo")}
               />
-              <input
-                type="hidden"
-                name="oldlogo"
-                defaultValue="1725271347images.jpg"
-              />
-            </label>
+            </div>
           </div>
         </div>
-        <div className="form-field w-full">
-          <label htmlFor="">Business Name</label>
+        <div className="mt-2">
+          <label className="text-sm font-semibold" htmlFor="businessname">
+            Business Name
+          </label>
           <input
             type="text"
-            className="form-control"
-            name="businees_name"
-            defaultValue="Wolf Wolf Inc"
+            className="form-control mt-1"
+            id="businessname"
+            name="businessName"
+            value={formData.businessName}
+            onChange={(e) => handleChange(e)}
           />
         </div>
-        <div className="form-field w-full">
-          <label htmlFor="">Job Role</label>
+        <div className="mt-2">
+          <label className="text-sm font-semibold" htmlFor="jobrole">
+            Job Role
+          </label>
           <input
             type="text"
-            className="form-control"
-            name="job_title"
-            defaultValue="Fugit voluptate vol"
+            className="form-control mt-1"
+            id="jobrole"
+            name="jobRole"
+            value={formData.jobRole}
+            onChange={(e) => handleChange(e)}
           />
         </div>
-        <div className="form-field w-full">
-          <label htmlFor="">Address</label>
+        <div className="mt-2">
+          <label className="text-sm font-semibold" htmlFor="Address">
+            Address
+          </label>
           <input
             type="text"
-            className="form-control"
+            className="form-control mt-1"
+            id="Address"
             name="address"
-            defaultValue="gddfgdf"
+            value={formData.address}
+            onChange={(e) => handleChange(e)}
           />
         </div>
-        <div className="form-field w-full">
-          <label htmlFor="">Email ID 1</label>
+        <div className="mt-2">
+          <label className="text-sm font-semibold" htmlFor="emailID_1">
+            Email ID 1
+          </label>
           <input
             type="text"
-            className="form-control"
-            name="purpose"
-            defaultValue=""
-            placeholder="Enter the purpose of your email"
-            style={{
-              backgroundImage: 'url("data:image/png',
-              backgroundRepeat: "no-repeat",
-              backgroundSize: 20,
-              backgroundPosition: "97% center",
-              cursor: "auto",
-            }}
-            data-temp-mail-org={0}
+            className="form-control mt-1"
+            id="emailID_1_purpose"
+            name="emailID_1_purpose"
+            value={formData.emailID_1_purpose}
+            onChange={(e) => handleChange(e)}
           />
           <input
             type="text"
             className="form-control mt-1"
-            name="email"
-            defaultValue="kimibe5116@amxyy.com"
-            style={{
-              backgroundImage: 'url("data:image/png',
-              backgroundRepeat: "no-repeat",
-              backgroundSize: 20,
-              backgroundPosition: "97% center",
-              cursor: "auto",
-            }}
-            data-temp-mail-org={1}
+            id="emailID_1"
+            name="emailID_1"
+            value={formData.emailID_1}
+            onChange={(e) => handleChange(e)}
           />
         </div>
-        <div className="form-field w-full">
-          <label htmlFor="">Email ID 2</label>
+        <div className="mt-2">
+          <label className="text-sm font-semibold" htmlFor="emailID_2">
+            Email ID 2
+          </label>
           <input
             type="text"
-            className="form-control"
-            name="purpose_2"
-            id="purpose_2"
-            defaultValue=""
-            placeholder="Enter the purpose of your email"
-            style={{
-              backgroundImage: 'url("data:image/png',
-              backgroundRepeat: "no-repeat",
-              backgroundSize: 20,
-              backgroundPosition: "97% center",
-              cursor: "auto",
-            }}
-            data-temp-mail-org={2}
+            className="form-control mt-1"
+            id="emailID_2_purpose"
+            name="emailID_2_purpose"
+            value={formData.emailID_2_purpose}
+            onChange={(e) => handleChange(e)}
           />
           <input
             type="text"
             className="form-control mt-1"
-            name="email_2"
-            id="email_2"
-            defaultValue=""
-            placeholder="Enter Email ID 2"
-            style={{
-              backgroundImage: 'url("data:image/png',
-              backgroundRepeat: "no-repeat",
-              backgroundSize: 20,
-              backgroundPosition: "97% center",
-              cursor: "auto",
-            }}
-            data-temp-mail-org={3}
+            id="emailID_2"
+            name="emailID_2"
+            value={formData.emailID_2}
+            onChange={(e) => handleChange(e)}
           />
         </div>
-        <div className="form-field w-full">
-          <label htmlFor="">Email ID 3</label>
+        <div className="mt-2">
+          <label className="text-sm font-semibold" htmlFor="emailID_3">
+            Email ID 3
+          </label>
           <input
             type="text"
-            className="form-control"
-            name="purpose_3"
-            defaultValue=""
-            placeholder="Enter the purpose of your email"
-            style={{
-              backgroundImage: 'url("data:image/png',
-              backgroundRepeat: "no-repeat",
-              backgroundSize: 20,
-              backgroundPosition: "97% center",
-              cursor: "auto",
-            }}
-            data-temp-mail-org={4}
+            className="form-control mt-1"
+            id="emailID_3_purpose"
+            name="emailID_3_purpose"
+            value={formData.emailID_3_purpose}
+            onChange={(e) => handleChange(e)}
           />
           <input
             type="text"
             className="form-control mt-1"
-            name="email_3"
-            defaultValue=""
-            placeholder="Enter Email ID 3"
-            style={{
-              backgroundImage: 'url("data:image/png',
-              backgroundRepeat: "no-repeat",
-              backgroundSize: 20,
-              backgroundPosition: "97% center",
-              cursor: "auto",
-            }}
-            data-temp-mail-org={5}
+            id="emailID_3"
+            name="emailID_3"
+            value={formData.emailID_3}
+            onChange={(e) => handleChange(e)}
           />
         </div>
-        <div className="form-field w-full">
-          <label htmlFor="">Phone</label>
-          <br />
+        <div className="mt-2">
+          <label htmlFor="" className="text-sm font-semibold">
+            Company Number
+          </label>
+          <div className="relative">
+            <PhoneNumber
+              value={formData.countryCode}
+              onchange={(val) => setFormData({ ...formData, countryCode: val })}
+            />
+            <input
+              type="tel"
+              placeholder="Company Number"
+              name="companyNumber"
+              value={formData.companyNumber}
+              onChange={(e) => handleChange(e)}
+              className="form-control mt-1"
+              style={{ paddingLeft: "5.9rem" }}
+            />
+          </div>
         </div>
-        <div className="form-field w-full">
-          <label htmlFor="">Business Category</label>
-          <select name="category" className="form-control">
+        <div className="mt-2">
+          <label htmlFor="" className="text-sm font-semibold">
+            Business Category
+          </label>
+          <select
+            name="businessCategory"
+            className="form-control mt-1"
+            value={formData.businessCategory}
+            onChange={(e) => handleChange(e)}
+          >
             <option value="">Select Category</option>
             {options?.map((item, index) => (
               <option key={index} value={item.cid}>
@@ -202,113 +219,134 @@ const UpdateBusinessProfile = (props: Props) => {
             ))}
           </select>
         </div>
-
-        <div className="form-field w-full">
-          <label htmlFor="">About</label>
+        <div className="mt-2">
+          <label htmlFor="" className="text-sm font-semibold">
+            About
+          </label>
           <textarea
+            className="form-control mt-1 min-h-32"
+            value={formData.about}
             name="about"
-            id=""
-            className="form-control"
-            rows={5}
-            defaultValue={"Error commodi omnis                         "}
+            onChange={(e) => handleChange(e)}
           />
         </div>
-        <div className="form-field w-full">
-          <label htmlFor="">Meta Title</label>
-          <br />
+        <div className="mt-2">
+          <label htmlFor="" className="text-sm font-semibold">
+            Meta Title
+          </label>
           <input
             type="text"
-            className="form-control"
-            defaultValue=""
-            name="meta_title"
+            className="form-control mt-1"
+            id="metaTitle"
+            name="metaTitle"
+            value={formData.metaTitle}
+            onChange={(e) => handleChange(e)}
           />
         </div>
-        <div className="form-field w-full">
-          <label htmlFor="">Meta Keywords</label>
-          <br />
+        <div className="mt-2">
+          <label htmlFor="" className="text-sm font-semibold">
+            Meta Keywords
+          </label>
           <input
             type="text"
-            className="form-control"
-            defaultValue=""
-            name="meta_keywords"
+            className="form-control mt-1"
+            id="metaKeywords"
+            name="metaKeywords"
+            value={formData.metaKeywords}
+            onChange={(e) => handleChange(e)}
           />
         </div>
-        <div className="form-field w-full">
-          <label htmlFor="">Meta Description</label>
-          <br />
+        <div className="mt-2">
+          <label htmlFor="" className="text-sm font-semibold">
+            Meta Description
+          </label>
           <input
             type="text"
-            className="form-control"
-            defaultValue=""
-            name="meta_description"
+            className="form-control mt-1"
+            id="metaDescription"
+            name="metaDescription"
+            value={formData.metaDescription}
+            onChange={(e) => handleChange(e)}
           />
         </div>
-        <div className="edit-profile-logo-box d-flex align-items-center mt-3">
-          <div className="logo-box">
-            <label htmlFor="" className="w-full">
-              Banner
-            </label>
-            <img
-              src="assets/banner/banner.png"
-              alt=""
-              width="180px"
-              height="100px"
-            />
+        <div className="banner-section mt-2">
+          <p className="text-sm font-semibold">Banner</p>
+          <div className=" flex justify-between items-center gap-4 ">
+            <div className="p-2 w-32 h-20">
+              {formData.logo && (
+                <Image
+                  src={formData.banner}
+                  alt="logo"
+                  className="w-full h-16 object-cover"
+                  width={200}
+                  height={300}
+                />
+              )}
+            </div>
+            <div className="p-2 relative flex flex-col justify-center items-start gap-4">
+              <div>
+                <p className="text-sm font-semibold">
+                  Recommended size -{" "}
+                  <span className="text-sm font-light">1920px X 300px</span>
+                </p>
+                <p className="text-sm font-semibold">
+                  Maximum file size -{" "}
+                  <span className="text-sm font-light">2MB</span>
+                </p>
+              </div>
+              <label
+                htmlFor="banner-upload"
+                className="text-center w-full bg-active_dark text-white font-semibold px-6 py-2 rounded-full"
+              >
+                Upload
+              </label>
+              <input
+                id="banner-upload"
+                type="file"
+                className="opacity-0 absolute w-10"
+                onChange={(e) => handleFileChange(e, "banner")}
+              />
+            </div>
           </div>
-          <div className="upload-btn-box ml-1">
-            <p className="m-0">
-              <b>Recommended size - </b> 1920px x 300px.
-            </p>
-            <p className="m-0">
-              <b>Maximum file size - </b> 2MB.
-            </p>
-            <label htmlFor="logo" className="edit-logo-field mt-2">
-              <button className="upload-btn">Upload</button>
-              <input type="file" id="logo" className="banner" name="banner" />
-              <input type="hidden" name="oldbanner" defaultValue="" />{" "}
-            </label>
-          </div>
         </div>
-        <div className="form-field w-full">
-          <label htmlFor="">Social Links( Optional )</label>
+        <div className="mt-2">
+          <label className="text-sm font-semibold" htmlFor="EmailID-3">
+            {`Social Links ( Optional )`}
+          </label>
+
           <input
             type="text"
-            className="form-control mb-2"
-            name="facebook"
-            defaultValue=""
-            placeholder="Facebook"
+            className="form-control mt-1"
+            name="facebookLink"
+            value={formData.facebookLink}
+            onChange={(e) => handleChange(e)}
           />
           <input
             type="text"
-            className="form-control mb-2"
-            name="instagram"
-            defaultValue=""
-            placeholder="Instagram"
+            className="form-control mt-1"
+            name="instagramLink"
+            value={formData.instagramLink}
+            onChange={(e) => handleChange(e)}
           />
           <input
             type="text"
-            className="form-control mb-2"
+            className="form-control mt-1"
             name="twitter"
-            defaultValue=""
-            placeholder="Twitter"
+            value={formData.twitter}
+            onChange={(e) => handleChange(e)}
           />
           <input
             type="text"
-            className="form-control mb-2"
+            className="form-control mt-1"
             name="linkedin"
-            defaultValue=""
-            placeholder="Linkedin"
+            value={formData.linkedin}
+            onChange={(e) => handleChange(e)}
           />
         </div>
-        <button
-          className="theme-btn1 w-50"
-          type="submit"
-          name="updatebusiness"
-          id="updatebusiness"
-        >
-          Update
-        </button>
       </div>
+      <button className="py-2 px-6 bg-active_dark text-white font-bold mt-4 rounded-full">
+        Update
+      </button>
     </form>
   );
 };
