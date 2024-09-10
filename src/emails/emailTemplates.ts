@@ -1,0 +1,97 @@
+export const createAccountEmailTemplate = `You account have been created successfully`;
+
+export const emailVerificationTemplate = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .header h1 {
+            color: #333333;
+        }
+
+        .content {
+            padding: 20px 0;
+            color: #555555;
+            line-height: 1.6;
+        }
+
+        .content p {
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .button-container a {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #dddddd;
+            color: #999999;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Verify Your Email Address</h1>
+        </div>
+        <div class="content">
+            <p style="font-weight: 600;">Dear {{userName}},</p>
+            <p>Thank you for registering with us! To complete your sign-up process, please verify your email address by
+                clicking the button below.</p>
+            <div class="button-container">
+                <a href="{{verification_link}}" target="_blank">Verify Email</a>
+            </div>
+            <p>If you did not create an account, no further action is required.</p>
+            <p>Best Regards,<br>Consumerstales</p>
+        </div>
+        <div class="footer">
+            <p>If you’re having trouble clicking the "Verify Email" button, copy and paste the URL below into your web
+                browser:</p>
+            <p><a href="{{verification_link}}" target="_blank">{{verification_link}}</a></p>
+            <div style="margin-top: 20px;">
+                <p>Questions? Email us at <a style="font-weight: 700;"
+                        href="mailto:info@consumerstales.com">info@consumerstales.com</a>.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+`;

@@ -1,0 +1,205 @@
+.login-form-main {
+    width: 75%;
+    margin: 0 auto;
+    padding: 5% 0px;
+}
+
+.login-form-inner {
+    margin-top: 5%;
+}
+.sec-headings h2 {
+    font-size: 3vw;
+    font-weight: 700;
+}
+.sec-headings p {
+    font-weight: 600;
+}
+
+.login-form-inner form {
+    margin-top: 5vh;
+    width: 95%;
+}
+.login-form-inner form .form-field {
+    margin-bottom: 2.5vh;
+}
+.login-form-inner form label {
+    font-weight: 600;
+    color: #000;
+    font-size: 0.9vw;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.login-form-inner form input {
+    font-size: 0.9vw;
+    font-weight: 500;
+    padding: 1vh 1vw;
+    border-radius: 8px;
+    border: 1px #bdbdbd solid;
+}
+.iti {
+    position: relative;
+    display: inline-block;
+}
+
+.iti.iti--allow-dropdown.iti--show-flags.iti--inline-dropdown {
+    width: 100% !important;
+}
+.iti__flag-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    padding: 1px;
+}
+.iti--allow-dropdown .iti__flag-container, .iti--show-selected-dial-code .iti__flag-container {
+    right: auto;
+    left: 0;
+}
+
+.iti__selected-flag {
+    z-index: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 6px 0 8px;
+}
+
+.iti__flag.iti__af {
+    height: 14px;
+    background-position: -66px 0px;
+}
+.iti__arrow {
+    margin-left: 6px;
+    width: 0;
+    height: 0;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    border-top: 4px solid #555;
+}
+.iti__dropdown-content {
+    border-radius: 3px;
+    background-color: white;
+}
+
+.iti--inline-dropdown .iti__dropdown-content {
+    position: absolute;
+    z-index: 2;
+    margin-top: 3px;
+    margin-left: -1px;
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+.iti__country-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+.iti__search-input + .iti__country-list {
+    border-top: 1px solid #ccc;
+}
+
+.iti--inline-dropdown .iti__country-list {
+    max-height: 185px;
+}
+
+.iti__country {
+    display: flex;
+    align-items: center;
+    padding: 8px 8px;
+    outline: none;
+}
+.iti__flag-box {
+    display: inline-block;
+    width: 20px;
+}
+.iti__flag-box, .iti__country-name {
+    margin-right: 8px;
+}
+.iti__dial-code {
+    color: #999;
+}
+.login-form-inner form input {
+    font-size: 0.9vw;
+    font-weight: 500;
+    padding: 1vh 1vw;
+    border-radius: 8px;
+    border: 1px #bdbdbd solid;
+}
+.iti input.iti__tel-input, .iti input.iti__tel-input[type=text], .iti input.iti__tel-input[type=tel] {
+    position: relative;
+    z-index: 0;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-right: 36px;
+    margin-right: 0;
+}
+.iti--allow-dropdown input.iti__tel-input, .iti--allow-dropdown input.iti__tel-input[type=text], .iti--allow-dropdown input.iti__tel-input[type=tel], .iti--show-selected-dial-code input.iti__tel-input, .iti--show-selected-dial-code input.iti__tel-input[type=text], .iti--show-selected-dial-code input.iti__tel-input[type=tel] {
+    padding-right: 6px;
+    padding-left: 52px;
+    margin-left: 0;
+}
+
+.form-field .domain-email {
+    background: #e9e9e9;
+    border: 1px lightgrey solid;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 17px;
+    margin-left: 10px;
+    border-radius: 8px;
+}
+.login-form-inner form input {
+    font-size: 0.9vw;
+    font-weight: 500;
+    padding: 1vh 1vw;
+    border-radius: 8px;
+    border: 1px #bdbdbd solid;
+}
+.login-form-inner form .phone-input {
+    font-size: 0.9vw;
+    font-weight: 500;
+    padding: 1vh 5.5vw;
+    border-radius: 8px;
+    border: 1px #bdbdbd solid;
+}
+.theme-btn1 {
+    min-width: 64px !important;
+    padding: 1% 2.5% !important;
+    border-radius: 30px !important;
+    background: var(--Violet, #5247a5) !important;
+    border: none !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: var(--white, #fff) !important;
+    border: 2px var(--Violet) solid !important;
+}
+.form-field a {
+    text-decoration: none;
+    color: #423984;
+    font-weight: 600;
+}
