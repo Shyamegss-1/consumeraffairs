@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { CategoryOptions } from "../add-business/CategoryOptions";
 import Image from "next/image";
 import PhoneNumber from "../add-business/PhoneNumber";
+import { handleUpdateBusinessProfile } from "@/server-actions/businessRegister";
 
 type Props = {
   formData: any;
@@ -27,6 +28,10 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleSubmit = async (e) => {
+    const res = await handleUpdateBusinessProfile(formData);
+  };
+
   useEffect(() => {
     const options = async () => {
       let res = await CategoryOptions();
@@ -38,7 +43,10 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
   }, []);
   return (
     <>
-      <form  className="w-full relative max-h-[25rem] p-4 overflow-auto no-scrollbar">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full relative max-h-[25rem] p-4 overflow-auto no-scrollbar"
+      >
         <div className="relative flex flex-col justify-">
           <div className="profile-section">
             <p className="text-lg font-semibold">Logo</p>

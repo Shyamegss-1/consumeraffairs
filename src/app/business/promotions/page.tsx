@@ -11,7 +11,7 @@ const page = (props: Props) => {
     <BusinessAuthLayout>
       <div className="max-w-screen-xl mx-auto ">
         <h3 className="text-center font-bold text-4xl my-10">Promotions</h3>
-        <div className="grid grid-cols-12 gap-4">
+        <div className="grid grid-cols-12 gap-4 mb-20">
           <Advertisemnet/>
           <Media/>
         </div>
