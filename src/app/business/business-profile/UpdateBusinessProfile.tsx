@@ -28,7 +28,7 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     const res = await handleUpdateBusinessProfile(formData);
   };
 
