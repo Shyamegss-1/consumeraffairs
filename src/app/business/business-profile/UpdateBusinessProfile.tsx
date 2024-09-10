@@ -37,12 +37,8 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
     options();
   }, []);
   return (
-<<<<<<< HEAD
     <>
-      <form
-        className="w-full relative max-h-[25rem] p-4 overflow-auto no-scrollbar"
-        onSubmit={handleUpdate}
-      >
+      <form  className="w-full relative max-h-[25rem] p-4 overflow-auto no-scrollbar">
         <div className="relative flex flex-col justify-">
           <div className="profile-section">
             <p className="text-lg font-semibold">Logo</p>
@@ -80,23 +76,8 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
                   type="file"
                   className="opacity-0 absolute w-10"
                   onChange={(e) => handleFileChange(e, "logo")}
-=======
-    <form className="w-full relative max-h-80 p-4 overflow-y-scroll  no-scrollbar">
-      <div className="relative flex flex-col justify-">
-        <div className="profile-section">
-          <p className="text-lg font-semibold">Logo</p>
-          <div className=" flex justify-between items-center gap-4 ">
-            <div className="p-2 ">
-              {formData.logo && (
-                <Image
-                  src={formData.logo}
-                  alt="logo"
-                  className="size-20"
-                  width={200}
-                  height={300}
->>>>>>> parent of 3bbb67f (fixing types error)
                 />
-              )}
+              </div>
             </div>
             <div className="p-2 relative flex flex-col justify-center items-start gap-4">
               <div>
@@ -358,7 +339,6 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
           <label className="text-sm font-semibold" htmlFor="EmailID-3">
             {`Social Links ( Optional )`}
           </label>
-
           <input
             type="text"
             className="form-control mt-1"
@@ -388,11 +368,11 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
             onChange={(e) => handleChange(e)}
           />
         </div>
-      </div>
-      <button className="py-2 px-6 bg-active_dark text-white font-bold mt-4 rounded-full">
-        Update
-      </button>
-    </form>
+        <button className="py-2 px-6 bg-active_dark text-white font-bold mt-4 rounded-full">
+          Update
+        </button>
+      </form>
+    </>
   );
 };
 
