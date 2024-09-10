@@ -13,32 +13,32 @@ import { listingDomain } from "@/server-actions/listingDomain";
 const HomePage = ({ user }: any) => {
   const cardData = [
     {
-      icon: "/Frame.svg",
+      icon: "/icons/mortages.svg",
       url: "/finance/finance_companies",
       title: "Mortgages",
     },
     {
-      icon: "/Frame_2.svg",
+      icon: "/icons/Personal_loans.svg",
       url: "/finance/personal-loans",
       title: "Personal Loans",
     },
     {
-      icon: "/Frame_3.svg",
+      icon: "/icons/Solar.svg",
       url: "/finance/solar-energy",
       title: "Solar",
     },
     {
-      icon: "/Frame_4.svg",
+      icon: "/icons/Car_warranties.svg",
       url: "/finance/car-waranty",
       title: "Car waranties",
     },
     {
-      icon: "/Frame_5.svg",
+      icon: "/icons/Home_Warranties.svg",
       url: "/finance/home-waranty",
       title: "Home Warranties",
     },
     {
-      icon: "/Frame_15081.svg",
+      icon: "/icons/Artboard_6.svg",
       url: "/finance/moving",
       title: "Moving",
     },
@@ -154,8 +154,8 @@ const HomePage = ({ user }: any) => {
                 <div className="flex flex-col items-center gap-4">
                   <Image
                     alt={item.title}
-                    height={50}
-                    width={50}
+                    height={90}
+                    width={90}
                     src={item.icon}
                     priority
                   />

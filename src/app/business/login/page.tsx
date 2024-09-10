@@ -15,7 +15,7 @@ const page = async (props: Props) => {
   const session = await auth();
   console.log(session, "session ");
 
-  if (session?.user.userType==="BUSINESS_USER") {
+  if (session?.user?.userType==="BUSINESS_USER") {
     redirect("/business");
   }
 

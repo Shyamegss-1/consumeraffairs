@@ -9,79 +9,79 @@ const ProductInfo = () => {
       label: "Automotive",
       url: "/automotive/automotive.htm",
       imgSrc:
-        "https://media.consumeraffairs.com/files/homepage-items-images/Group_14964.png",
+        "/homepage/automotive.png",
     },
     {
       label: "Business Services",
       url: "/business-services/",
       imgSrc:
-        "https://media.consumeraffairs.com/files/homepage-items-images/Group_15077.png",
+        "/homepage/business-services.png",
     },
     {
       label: "Education",
       url: "/education/",
       imgSrc:
-        "https://media.consumeraffairs.com/files/homepage-items-images/Group_14962.png",
+        "/homepage/educatiomn.png",
     },
     {
       label: "Elder Care",
       url: "/elder-care-planning/",
       imgSrc:
-        "https://media.consumeraffairs.com/files/homepage-items-images/Group_14992.png",
+        "/homepage/elder.png",
     },
     {
       label: "Electronics & Tech",
       url: "/electronics.html",
       imgSrc:
-        "https://media.consumeraffairs.com/files/homepage-items-images/Electronics__Tech.png",
+        "/homepage/electronics-and-tech.png",
     },
     {
       label: "Family & Parenting",
       url: "/family/",
       imgSrc:
-        "https://media.consumeraffairs.com/files/homepage-items-images/Group_15076.png",
+        "/homepage/parenting.png",
     },
     {
       label: "Finance",
       url: "/finance/financial_services.htm",
       imgSrc:
-        "https://media.consumeraffairs.com/files/homepage-items-images/Group_14989.png",
+        "/homepage/finance.png",
     },
     {
       label: "Health & Fitness",
       url: "/health/",
       imgSrc:
-        "https://media.consumeraffairs.com/files/homepage-items-images/Group_14982.png",
+        "/homepage/health-and-fitness.png",
     },
     {
       label: "Homeowners",
       url: "/homeowners/",
       imgSrc:
-        "https://media.consumeraffairs.com/files/homepage-items-images/Group_14984.png",
+        "/homepage/home-owner.png",
     },
     {
       label: "Insurance",
       url: "/insurance/",
       imgSrc:
-        "https://media.consumeraffairs.com/files/homepage-items-images/Group_14968.png",
+        "/homepage/insurance.png",
     },
     {
       label: "Moving",
       url: "/moving-checklist/",
       imgSrc:
-        "https://media.consumeraffairs.com/files/homepage-items-images/Group_14972_mtcNeg8.png",
+        "/homepage/moving.png",
     },
     {
       label: "Pets",
       url: "/pets/",
       imgSrc:
-        "https://media.consumeraffairs.com/files/homepage-items-images/Group_14973.png",
+        "/homepage/pet.png",
     },
     {
       label: "Travel",
       url: "/travel/travel.htm",
       imgSrc:
-        "https://media.consumeraffairs.com/files/homepage-items-images/CA_sketches_3.png",
+        "/homepage/travel.png",
     },
     {
       label: "View All",

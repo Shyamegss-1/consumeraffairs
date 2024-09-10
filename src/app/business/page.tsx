@@ -14,7 +14,7 @@ type Props = {};
 
 const BusinessPage = async ({}: Props) => {
   const session = await auth();
-  if (!(session?.user.userType==="BUSINESS_USER")) {
+  if (!(session?.user?.userType==="BUSINESS_USER")) {
     redirect("/business/login");
   }
 
