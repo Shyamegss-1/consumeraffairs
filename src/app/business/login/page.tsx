@@ -4,6 +4,7 @@ import "./module.css";
 import LoginForm from "./LoginForm";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 type Props = {};
 export const metadata = {
@@ -25,7 +26,7 @@ const page = async (props: Props) => {
         <div className="col-span-4">
           <div className="h-full bg-primary_dark flex items-center justify-center">
             <div className="logo text-center">
-              <a href="../">
+              <Link href="/business">
                 <Image
                   src="/signup-banner.png"
                   className="rounded"
@@ -33,7 +34,7 @@ const page = async (props: Props) => {
                   height={400}
                   alt="bannerimage"
                 />
-              </a>
+              </Link>
             </div>
             {/*<div class="mt-6 advertisement-image">*/}
             {/*    <img src="/signup-banner.png">*/}

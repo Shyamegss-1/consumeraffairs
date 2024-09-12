@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import React from "react";
 import { ProfileIcon } from "../icons/Icons";
 import Link from "next/link";

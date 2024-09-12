@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { ReactNode } from "react";
 
-const AdminLayout = () => {
+const AdminLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <div>AdminLayout</div>
-  )
-}
+    <div className="dark:bg-boxdark-2 dark:text-bodydark">
+      {children}
+    </div>
+  );
+};
 
-export default AdminLayout
+export default AdminLayout;
