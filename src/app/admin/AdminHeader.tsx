@@ -4,10 +4,9 @@ import Link from "next/link";
 import { Logo } from "@/components/icons/Icons";
 import ProfileSection from "@/components/Navbar/ProfileSection";
 
-type Props {
+type Props= {
   children: React.ReactNode;
   open:boolean;
-  setOpen: 
 }
 
 const AdminHeader = ({}:Props) => {

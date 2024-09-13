@@ -31,6 +31,9 @@ export default function Pagination({
     return `${pathname}?${params.toString()}`;
   };
 
+  console.log(totalCount, totalPages);
+  
+
   return (
     <div className="mt-4 flex justify-between items-center">
       <div>
@@ -39,7 +42,7 @@ export default function Pagination({
       </div>
       <div className="flex space-x-2">
         <Link
-          href={`/business/my-listings?page=${
+          href={`${pathname}?page=${
             currentPage === totalPages ? currentPage : currentPage - 1
           }`}
           className={`p-2 border ${
@@ -50,7 +53,7 @@ export default function Pagination({
         </Link>
         {[...Array(totalPages)].map((_, i) => (
           <Link
-            href={`/business/my-listings?page=${i + 1}`}
+            href={`${pathname}?page=${i + 1}`}
             key={i}
             className={`py-1 px-2 border  ${
               currentPage === i + 1 ? "bg-active_dark text-white" : "bg-white"
@@ -61,7 +64,7 @@ export default function Pagination({
           </Link>
         ))}
         <Link
-          href={`/business/my-listings?page=${
+          href={`${pathname}?page=${
             currentPage === totalPages ? currentPage : currentPage + 1
           }`}
           className={`py-1 px-2 border ${

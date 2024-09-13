@@ -17,8 +17,11 @@ const page = async (props: Props) => {
   if (!(session?.user?.userType === "ADMIN")) {
     redirect("/admin/login");
   }
+
+  console.log(session?.user);
+  
   return (
-    <AdminAuthLayout>
+    <AdminAuthLayout user={session?.user}>
       <>
         <div className="grid grid-cols-12 gap-2 md:gap-4">
           <div className="col-span-12 lg:col-span-6 2xl:col-span-4">

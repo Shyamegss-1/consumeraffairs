@@ -5,10 +5,12 @@ import DropdownNotification from "./DropdownNotification";
 import DropdownUser from "./DropdownUser";
 import Image from "next/image";
 import DarkModeSwitcher from "./DarkModeSwitcher";
+import { User } from "next-auth";
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
+  user:User
 }) => {
   return (
     <header className="sticky top-0 z-30 flex w-full ">
@@ -122,7 +124,7 @@ const Header = (props: {
           </ul>
 
           {/* <!-- User Area --> */}
-          <DropdownUser />
+          <DropdownUser user={props.user}/>
           {/* <!-- User Area --> */}
         </div>
       </div>

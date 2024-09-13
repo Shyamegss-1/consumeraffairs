@@ -9,6 +9,7 @@ import ClickOutside from "@/components/ClickOutside";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { Logo } from "../icons/Icons";
 import SidebarItem from "./SidebarItem";
+import { MdOutlineRateReview } from "react-icons/md";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -49,6 +50,26 @@ const menuGroups = [
         ),
         label: "Dashboard",
         route: "/admin",
+      },
+      {
+        icon: <MdOutlineRateReview />,
+        label: "Reviews",
+        route: "/admin/reviews",
+      },
+      {
+        icon: <MdOutlineRateReview />,
+        label: "Blog",
+        route: "/admin/blogs",
+        children: [
+          {
+            label: "Category",
+            route: "/admin/blogs/category",
+          },
+          {
+            label: "Blogs",
+            route: "/admin/blogs",
+          }
+        ],
       },
       // {
       //   icon: (

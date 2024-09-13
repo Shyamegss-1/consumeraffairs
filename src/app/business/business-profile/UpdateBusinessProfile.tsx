@@ -87,30 +87,6 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
                 />
               </div>
             </div>
-            <div className="p-2 relative flex flex-col justify-center items-start gap-4">
-              <div>
-                <p className="text-sm font-semibold">
-                  Recommended size -{" "}
-                  <span className="text-sm font-light">200px X 200px</span>
-                </p>
-                <p className="text-sm font-semibold">
-                  Maximum file size -{" "}
-                  <span className="text-sm font-light">2MB</span>
-                </p>
-              </div>
-              <label
-                htmlFor="logo-upload"
-                className="text-center w-full bg-active_dark text-white font-semibold px-6 py-2 rounded-full"
-              >
-                Upload
-              </label>
-              <input
-                id="logo-upload"
-                type="file"
-                className="opacity-0 absolute w-10"
-                onChange={(e) => handleFileChange(e, "logo")}
-              />
-            </div>
           </div>
         </div>
         <div className="mt-2">

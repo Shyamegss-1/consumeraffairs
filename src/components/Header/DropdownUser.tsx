@@ -2,8 +2,9 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import ClickOutside from "@/components/ClickOutside";
+import { User } from "next-auth";
 
-const DropdownUser = () => {
+const DropdownUser = ({ user }: { user: User }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   return (
@@ -15,9 +16,9 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black ">
-            Thomas Anree
+            {user.userType}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          {/* <span className="block text-xs">UX Designer</span> */}
         </span>
 
         <span className="h-12 w-12 rounded-full">

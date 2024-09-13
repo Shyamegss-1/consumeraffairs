@@ -3,15 +3,18 @@ import Header from "@/components/Header";
 import Sidebar from "@/components/sidebar";
 import React, { useState, ReactNode } from "react";
 import AdminLayout from "./AdminLayout";
+import { User } from "next-auth";
 
 export default function AdminAuthLayout({
   children,
+  user
 }: {
   children: React.ReactNode;
+  user:User
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
-    <AdminLayout>
+    <AdminLayout >
       <div className="bg-gray-100 min-h-screen">
         {/* <!-- ===== Page Wrapper Start ===== --> */}
         <div className="flex">
@@ -22,7 +25,7 @@ export default function AdminAuthLayout({
           {/* <!-- ===== Content Area Start ===== --> */}
           <div className="relative flex flex-1 flex-col lg:ml-72">
             {/* <!-- ===== Header Start ===== --> */}
-            <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+            <Header user={user} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
             {/* <!-- ===== Header End ===== --> */}
 
             {/* <!-- ===== Main Content Start ===== --> */}
