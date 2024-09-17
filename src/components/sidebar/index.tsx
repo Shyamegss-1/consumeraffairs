@@ -9,7 +9,10 @@ import ClickOutside from "@/components/ClickOutside";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { Logo } from "../icons/Icons";
 import SidebarItem from "./SidebarItem";
-import { MdOutlineRateReview } from "react-icons/md";
+import { MdDashboardCustomize, MdOutlineDashboardCustomize, MdOutlineRateReview } from "react-icons/md";
+import { IoIosBusiness } from "react-icons/io";
+import { TbLogs, TbSeo } from "react-icons/tb";
+import { PiNotepad } from "react-icons/pi";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -57,9 +60,9 @@ const menuGroups = [
         route: "/admin/reviews",
       },
       {
-        icon: <MdOutlineRateReview />,
+        icon: <TbLogs />,
         label: "Blog",
-        route: "/admin/blogs",
+        route: "#",
         children: [
           {
             label: "Category",
@@ -68,7 +71,7 @@ const menuGroups = [
           {
             label: "Blogs",
             route: "/admin/blogs",
-          }
+          },
         ],
       },
       // {
@@ -116,6 +119,48 @@ const menuGroups = [
         //   { label: "Form Elements", route: "/forms/form-elements" },
         //   { label: "Form Layout", route: "/forms/form-layout" },
         // ],
+      },
+      {
+        icon: <IoIosBusiness />,
+        label: "Business",
+        route: "#",
+        children: [
+          {
+            label: "Category",
+            route: "/admin/business/category",
+          },
+          {
+            label: "Add Business",
+            route: "/admin/business/add",
+          },
+          {
+            label: "All Business",
+            route: "/admin/business",
+          },
+          {
+            label: "Claimed Business",
+            route: "/admin/business",
+          },
+          {
+            label: "Unclaimed Business",
+            route: "/admin/business?businessType",
+          },
+        ],
+      },
+      {
+        icon: <MdOutlineDashboardCustomize />,
+        label: "Category Footer",
+        route: "/admin/category-footer",
+      },
+      {
+        icon: <PiNotepad />,
+        label: "Footer",
+        route: "/admin/footer",
+      },
+      {
+        icon: <TbSeo />,
+        label: "Seo",
+        route: "/admin/seo",
       },
     ],
   },

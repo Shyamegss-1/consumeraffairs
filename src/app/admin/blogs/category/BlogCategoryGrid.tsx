@@ -47,7 +47,7 @@ const BlogCategoryGrid = ({ data, totalRecord }: any) => {
 
   const searchQueryValue: string = useDebounce(searchQuery, 500);
   // console.log(searchQueryValue, "searchQueryValue");
-  console.log(data);
+  // console.log(data);
 
   useEffect(() => {
     let params = new URLSearchParams(searchParams);

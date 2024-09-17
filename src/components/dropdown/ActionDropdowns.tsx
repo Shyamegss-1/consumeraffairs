@@ -14,7 +14,7 @@ type Props = {
 
 const ActionDropdowns = ({ btnLabel, children }: Props) => {
   return (
-    <Dropdown backdrop="blur">
+    <Dropdown backdrop="opaque">
       <DropdownTrigger>
         <Button variant="light">{btnLabel}</Button>
       </DropdownTrigger>
