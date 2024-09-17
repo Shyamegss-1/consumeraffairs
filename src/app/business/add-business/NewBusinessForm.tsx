@@ -4,15 +4,23 @@ import React, { Suspense, useEffect, useState } from "react";
 import { CategoryOptions } from "./CategoryOptions";
 import PhoneNumber from "./PhoneNumber";
 import { toast } from "sonner";
+import { convertToBase64 } from "@/lib/Hooks";
+import Swal from "sweetalert2";
+import { addListingByBusinessOwner } from "@/server-actions/addListingByBusinessUser";
+import LoadingScreen from "@/components/ui/LoadingScreen";
 
 //
 
-type Props = {};
+type Props = {
+  userId: string;
+};
 
-const NewBusinessForm = (props: Props) => {
+const NewBusinessForm = ({ userId }: Props) => {
   const [options, setOptins] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [logo, setLogo] = useState<string | null>(null);
+  const [countryCode, setCountryCode] = useState<string>("1");
+  const [country, setCountry] = useState<string>("United States");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent the default form submission behavior
@@ -21,11 +29,14 @@ const NewBusinessForm = (props: Props) => {
 
     try {
       setLoading(true);
-      const name = formData.get("fullname");
-      const jobTitle = formData.get("jobTitle");
-      const email = formData.get("email");
-      const website = formData.get("website");
-      const businessName = formData.get("company");
+      const company_name = formData.get("company_name");
+      const websiteUrl = formData.get("websiteUrl");
+      const category = formData.get("category");
+      const description = formData.get("description");
+      const companyEmail = formData.get("companyEmail");
+      const companyNumber = formData.get("companyNumber");
+      const companyAddress = formData.get("companyAddress");
+      const country = formData.get("country");
       // const data = {
       //   name: name as string,
       //   jobTitle: jobTitle as string,
@@ -33,24 +44,36 @@ const NewBusinessForm = (props: Props) => {
       //   website: websiteUrl ? (websiteUrl as string) : (website as string),
       //   businessName: businessName as string,
       //   phoneNumber: number ? (`${"+" + numberCode}-${number}` as string) : "",
-      //   userType: "BUSINESS_USER" as
-      //     | $Enums.UserType
-      //     | Prisma.EnumUserTypeFilter<"users">
-      //     | undefined,
+      //   userType: "BUSINESS_USER",
       // };
+      const data = {
+        userId: userId,
+        companyName: company_name as string,
+        websiteUrl: websiteUrl as string,
+        category: category as string,
+        description: description as string,
+        companyEmail: companyEmail as string,
+        companyNumber: companyNumber as string,
+        companyAddress: companyAddress as string,
+        country: country as string,
+        countryCode: countryCode as string,
+        logo: logo as string,
+      };
 
-      // const res = await businessRegister(data, claimUrl);
-      // if (!res.status) {
-      //   toast.error(res.message, {
-      //     id: toastId,
-      //   });
-      // } else {
-      //   toast.dismiss();
-      //   Swal.fire({
-      //     title: "Success",
-      //     text: "Check your email to verify your account",
-      //   });
-      // }
+      console.log(data);
+
+      const res = await addListingByBusinessOwner(data);
+      if (!res.status) {
+        toast.error(res.message, {
+          id: toastId,
+        });
+      } else {
+        toast.dismiss();
+        Swal.fire({
+          title: "Success",
+          text: "Check your email to verify your account",
+        });
+      }
     } catch (error) {
       toast.error("An error occurred", { id: toastId });
     } finally {
@@ -58,6 +81,13 @@ const NewBusinessForm = (props: Props) => {
     }
   };
 
+  const handleFileChange = async (event: any, key: string) => {
+    if (event.target.files && event.target.files.length > 0) {
+      // console.log(convertToBase64(event.target.files[0]),"jhhhgjh");
+      let logo: any = await convertToBase64(event.target.files[0]);
+      setLogo(logo);
+    }
+  };
   useEffect(() => {
     const options = async () => {
       let res = await CategoryOptions();
@@ -66,9 +96,9 @@ const NewBusinessForm = (props: Props) => {
     options();
   }, []);
   return (
-    <div className="px-10">
+    <div className="px-10   overflow-y-auto h-full custom-scrollbar">
       <form
-        className="bg-white rounded-2xl shadow-md p-6"
+        className="bg-white rounded-2xl shadow-md p-6 my-20"
         onSubmit={handleSubmit}
       >
         <h3 className="border-b-2 border-active_dark py-4 w-fit text-2xl font-bold text-slate-900">
@@ -76,26 +106,25 @@ const NewBusinessForm = (props: Props) => {
         </h3>
         <div className="w-full mt-10">
           <p className="text-lg text-slate-900 font-semibold mb-2">Logo</p>
-          <div className="grid grid-cols-12 gap-x-10">
+          <div className="grid grid-cols-12 gap-x-10 ">
             <Image
-              src={"/logo.png"}
+              src={logo || "/logo.png"}
               alt=""
               width={1080}
               height={1080}
               className="border rounded-full p-2 col-span-2"
             />
-            <div className="col-span-10 flex flex-col justify-center items-start relative">
+            <div className="col-span-10 flex flex-col justify-center items-center relative">
               <label
                 htmlFor="logo"
-                className="w-full ring-2 ring-primary_dark text-primary_dark font-semibold rounded-3xl text-center py-2 px-10"
+                className="w-1/2 ring-2 ring-primary_dark text-primary_dark font-semibold rounded-3xl text-center py-2"
               >
                 Browse Files
                 <input
+                  id="logo"
                   type="file"
-                  className="absolute  "
-                  onChange={(file) => {
-                    // setLogo(file?.target?.files[0]);
-                  }}
+                  className="absolute  opacity-0"
+                  onChange={(e) => handleFileChange(e, "logo")}
                 />
               </label>
               <p className="text-gray-500 mt-5 font-semibold">
@@ -107,9 +136,9 @@ const NewBusinessForm = (props: Props) => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-12 gap-4">
+        <div className="grid grid-cols-12 gap-4 mt-6">
           <div className="form-field col-span-4">
-            <label htmlFor="">Company Name</label>
+            <label htmlFor="company_name">Company Name</label>
             <input
               type="text"
               placeholder="Enter company name"
@@ -118,10 +147,11 @@ const NewBusinessForm = (props: Props) => {
             />
           </div>
           <div className="form-field col-span-4">
-            <label htmlFor="">Website URL</label>
+            <label htmlFor="websiteUrl">Website URL</label>
             <input
               type="text"
-              placeholder="Website URL"
+              id="websiteUrl"
+              placeholder="Enter Website Url"
               name="websiteUrl"
               className="form-control"
             />
@@ -153,25 +183,32 @@ const NewBusinessForm = (props: Props) => {
             <input
               type="email"
               placeholder="Company Email Address"
-              name="CompanyEmail"
+              name="companyEmail"
               className="form-control"
             />
           </div>
           <div className="form-field col-span-6">
             <label htmlFor="">Company Number</label>
             <div className="relative">
-              <PhoneNumber value="1" onchange={(val) => console.log(val)} />
+              <PhoneNumber
+                value={countryCode}
+                onchange={(val: any) => {
+                  console.log(val);
+                  setCountry(val.name);
+                  setCountryCode(val.dialCode);
+                }}
+              />
               <input
                 type="tel"
                 placeholder="Company Number"
-                name="CompanyNumber"
+                name="companyNumber"
                 className="form-control"
-                style={{ paddingLeft: "5.9rem" }}
+                style={{ paddingLeft: "6rem" }}
               />
             </div>
           </div>
           <div className="form-field col-span-6">
-            <label htmlFor="">Website URL</label>
+            <label htmlFor="">Company Address</label>
             <input
               type="text"
               placeholder="Company Address"
@@ -181,20 +218,24 @@ const NewBusinessForm = (props: Props) => {
           </div>
           <div className="form-field col-span-6">
             <label htmlFor="">Country</label>
-            <select name="category" className="form-control">
-              <option value="">Select Country</option>
-              {options?.map((item, index) => (
-                <option key={index} value={item.cid}>
-                  {item.category_name}
-                </option>
-              ))}
-            </select>
+            <input
+              type="text"
+              placeholder="Company Address"
+              name="country"
+              defaultValue={country}
+              className="form-control"
+            />
           </div>
         </div>
         <button className="py-2 px-6 rounded-full mt-4 bg-active_dark text-white font-bold">
           Submit
         </button>
       </form>
+      {loading && (
+        <div className="absolute z-30 w-full left-0 backdrop-blur-sm h-screen flex justify-center items-center">
+          <LoadingScreen text="Please Wait..." />
+        </div>
+      )}
     </div>
   );
 };

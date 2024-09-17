@@ -35,13 +35,18 @@ model blog {
 }
 
 model blog_category {
-  b_c_id         Int      @id @default(autoincrement())
-  b_c_name       String   @db.VarChar(255)
-  bcategory_slug String   @db.VarChar(255)
-  date           String   @db.VarChar(255)
-  b__c_status    Int
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  b_c_id          Int        @id @default(autoincrement())
+  b_c_name        String     @unique @db.VarChar(255)
+  b_c_description String?     @db.VarChar(255)
+  b_c_slug        String     @db.VarChar(255)
+  b__c_status     b_c_Status @default(Active)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+}
+
+enum b_c_Status {
+  Active
+  Inactive
 }
 
 model blog_comment {
@@ -103,7 +108,6 @@ model listing {
   website_link      String        @db.VarChar(255)
   about             String        @db.Text
   email             String        @db.VarChar(255)
-  number            String        @db.VarChar(255)
   address           String?       @db.VarChar(255)
   city              String?       @db.VarChar(255)
   pincode           String?       @db.VarChar(255)

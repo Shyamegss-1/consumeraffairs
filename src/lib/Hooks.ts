@@ -47,3 +47,16 @@ export function debounce(fn:Callback, delay:number) {
     timeoutId = setTimeout(() => fn(...args), delay);
   };
 }
+
+export function convertToBase64(file:any) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      const base64String = reader.result; // Extract Base64 content
+      resolve(base64String);
+    };
+    reader.onerror = (error) => reject(error);
+  });
+}
+

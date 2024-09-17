@@ -33,8 +33,10 @@ const page = async ({ params, searchParams }: ItemsPageProps) => {
       <h3 className="rounded-xl border bg-white px-6 py-4 shadow-md mb-4 text-xl font-semibold">
         Users
       </h3>
-      <div className="rounded-xl border bg-white px-6 py-4 shadow-md">
-        <Suspense fallback={<>Loading...</>}>
+      <div className="rounded-xl border bg-white px-6 py-4 shadow-md overflow-auto max-h-[79vh] custom-scroll">
+        <Suspense fallback={<><div className="loading-container">
+                  <div className="spinner"></div>
+                </div></>}>
           <Users page={page} pageSize={pageSize} search={search} />
         </Suspense>
       </div>

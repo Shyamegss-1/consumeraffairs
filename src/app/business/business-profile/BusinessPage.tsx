@@ -36,18 +36,12 @@ const BusinessPage = ({ businessDetails }: Props) => {
     linkedin: "",
   });
 
-  console.log(businessDetails, "businessDetails");
-
-  const handleUpdate = async () => {
-    const res = await handleUpdateBusinessProfile(formData);
-    console.log(res, "update res");
-  };
 
   useEffect(() => {
     if (businessDetails) {
       setFormData({
         id: businessDetails.listing[0].id,
-        logo: "/logo.png",
+        logo: businessDetails.listing[0].logo,
         businessName: businessDetails.userDetails.companyName,
         jobRole: businessDetails.userDetails.jobTitle,
         address: businessDetails.userDetails.address,
@@ -75,7 +69,7 @@ const BusinessPage = ({ businessDetails }: Props) => {
 
   return (
     <>
-      <div className="grid grid-cols-12 gap-4 mt-10">
+      <div className="grid grid-cols-12 gap-4 mt-10 relative">
         <div className="col-span-4 borders p-4 bg-white shadow-md rounded-xl">
           <div className="flex flex-col justify-center items-start">
             <h4 className="text-2xl font-bold mb-2 pb-4 border-b-2 border-b-active_dark">

@@ -18,10 +18,10 @@ export const PhoneNumber: React.FC<Props> = ({ value, onchange }) => {
       <CountrySelector
         buttonStyle={{ border: "none",backgroundColor:"transparent" }}
         selectedCountry={country}
-        onSelect={(country) => {
+        onSelect={(country:any) => {
           setCountryCode(country.dialCode);
           setCountry(country.iso2);
-          onchange(`${country.dialCode}-${value}`);
+          onchange(country);
         }}
       />
       <span className="text-primary font-medium">+{countryCode}</span>

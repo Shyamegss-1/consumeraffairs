@@ -572,7 +572,7 @@ textarea {
   position: absolute;
   bottom: 12%;
   left: 10%;
-  z-index: 999;
+  z-index: 9;
   display: flex;
   align-items: center;
 }

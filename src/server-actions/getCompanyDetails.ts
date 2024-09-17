@@ -26,7 +26,6 @@ export const getCompanyDetails = async (domain: string, user: any) => {
           userid: user ? Number(user?.id) : null,
           about: "",
           email: "",
-          number: "",
           address: "",
           verify_code: "0",
           website_link: domain.replaceAll("-", "."),

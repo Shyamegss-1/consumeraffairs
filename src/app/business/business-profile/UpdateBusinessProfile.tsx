@@ -4,6 +4,9 @@ import { CategoryOptions } from "../add-business/CategoryOptions";
 import Image from "next/image";
 import PhoneNumber from "../add-business/PhoneNumber";
 import { handleUpdateBusinessProfile } from "@/server-actions/businessRegister";
+import { convertToBase64 } from "@/lib/Hooks";
+import { toast } from "sonner";
+import LoadingScreen from "@/components/ui/LoadingScreen";
 
 type Props = {
   formData: any;
@@ -14,11 +17,13 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
   const [options, setOptins] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const handleFileChange = (event: any, key: string) => {
+  const handleFileChange = async (event: any, key: string) => {
     if (event.target.files && event.target.files.length > 0) {
+      // console.log(convertToBase64(event.target.files[0]),"jhhhgjh");
+
       setFormData({
         ...formData,
-        [key]: URL.createObjectURL(event.target.files[0]),
+        [key]: await convertToBase64(event.target.files[0]),
       });
     }
   };
@@ -28,15 +33,22 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    setLoading(true);
     const res = await handleUpdateBusinessProfile(formData);
+    setLoading(false);
+    console.log(res, "res");
+    if (res?.status) {
+      toast.success(res?.message);
+    } else {
+      toast.error(res?.message);
+    }
   };
 
   useEffect(() => {
     const options = async () => {
       let res = await CategoryOptions();
-      console.log(res, "ressssssssssss");
-
       setOptins(res);
     };
     options();
@@ -48,7 +60,7 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
         className="w-full relative max-h-[25rem] p-4 overflow-auto no-scrollbar"
       >
         <div className="relative flex flex-col justify-">
-          <div className="profile-section">
+          <div className="profile-section z-20">
             <p className="text-lg font-semibold">Logo</p>
             <div className=" flex justify-between items-center gap-4 ">
               <div className="p-2 ">
@@ -356,6 +368,11 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
           Update
         </button>
       </form>
+      {loading && (
+        <div className="absolute z-30 w-full left-0 backdrop-blur-sm h-screen flex justify-center items-center">
+          <LoadingScreen text="Please Wait..." />
+        </div>
+      )}
     </>
   );
 };

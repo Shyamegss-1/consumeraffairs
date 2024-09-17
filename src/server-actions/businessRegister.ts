@@ -8,6 +8,7 @@ import { businessUserSchema } from "@/lib/zod";
 import { hash } from "bcryptjs";
 import { sendMultipleEmails } from "@/lib/mailer";
 import { auth } from "@/auth";
+import { toast } from "sonner";
 
 export const businessRegister = async (
   formData: {
@@ -236,7 +237,10 @@ export const handleUpdateBusinessProfile = async (formData: any) => {
     if (!businessUser) {
       return { status: false, message: "Business Profile updation failed!" };
     }
-  } catch (error) {}
+    return { status: true, message: "Business Profile updated successfully" };
+  } catch (error:any) {
+    toast.error(String(error));
+  }
 };
 
 export const uploadPromotions = (formData: FormData) => {
