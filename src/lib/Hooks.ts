@@ -60,3 +60,23 @@ export function convertToBase64(file:any) {
   });
 }
 
+export function capitalize(str:string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+
+export function extractDomain(url:string) {
+  // Regular expression to match a valid domain from a URL
+  const regex = /^(?:https?:\/\/)?(?:www\.)?([\w-]+\.[\w.-]+)(?:\/|$)/i;
+  
+  // Use the regex to find the domain
+  const match = url.match(regex);
+  
+  // If a match is found, return the domain
+  if (match) {
+    return match[1];
+  } else {
+    // Return null or an error message if the input is not a valid URL
+    return null;
+  }
+}

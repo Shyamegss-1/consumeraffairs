@@ -3,16 +3,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 
 import ClickOutside from "@/components/ClickOutside";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import { Logo } from "../icons/Icons";
 import SidebarItem from "./SidebarItem";
-import { MdDashboardCustomize, MdOutlineDashboardCustomize, MdOutlineRateReview } from "react-icons/md";
-import { IoIosBusiness } from "react-icons/io";
+import {
+  MdOutlineDashboardCustomize,
+  MdOutlineRateReview,
+} from "react-icons/md";
+
 import { TbLogs, TbSeo } from "react-icons/tb";
 import { PiNotepad } from "react-icons/pi";
+import { IoBusinessOutline } from "react-icons/io5";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -121,7 +124,7 @@ const menuGroups = [
         // ],
       },
       {
-        icon: <IoIosBusiness />,
+        icon: <IoBusinessOutline />,
         label: "Business",
         route: "#",
         children: [
@@ -135,15 +138,15 @@ const menuGroups = [
           },
           {
             label: "All Business",
-            route: "/admin/business",
+            route: "/admin/business/all",
           },
           {
             label: "Claimed Business",
-            route: "/admin/business",
+            route: "/admin/business/claimed",
           },
           {
             label: "Unclaimed Business",
-            route: "/admin/business?businessType",
+            route: "/admin/business/unclaimed",
           },
         ],
       },

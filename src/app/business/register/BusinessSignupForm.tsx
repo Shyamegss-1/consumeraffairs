@@ -15,15 +15,12 @@ const BusinessSignupForm: React.FC<Props> = ({ claimUrl }) => {
   const [number, setMobNumber] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [numberCode, setMobNumberCode] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [websiteUrl, setWebsiteUrl] = useState<string>(() =>
-    claimUrl !== undefined && claimUrl !== ""
-      ? `www.${claimUrl?.toLowerCase()}`
-      : ""
+    claimUrl !== null && claimUrl !== "" ? `www.${claimUrl?.toLowerCase()}` : ""
   );
   const [emailAddressDomain, setEmailAddressDomain] = useState<string>(() =>
-    claimUrl !== undefined && claimUrl !== ""
-      ? `@${claimUrl?.toLowerCase()}`
-      : "@"
+    claimUrl !== null && claimUrl !== "" ? `@${claimUrl?.toLowerCase()}` : "@"
   );
   const onchange = (value: string) => {
     let number = value.split("-")[1];
@@ -38,7 +35,7 @@ const BusinessSignupForm: React.FC<Props> = ({ claimUrl }) => {
     e.preventDefault(); // Prevent the default form submission behavior
     const formData = new FormData(e.currentTarget);
     const toastId = toast.loading("loading...");
-    
+
     try {
       setLoading(true);
       const name = formData.get("fullname");
@@ -59,7 +56,7 @@ const BusinessSignupForm: React.FC<Props> = ({ claimUrl }) => {
           | undefined,
       };
 
-      const res = await businessRegister(data,claimUrl);
+      const res = await businessRegister(data, claimUrl);
       if (!res.status) {
         toast.error(res.message, {
           id: toastId,
@@ -77,6 +74,7 @@ const BusinessSignupForm: React.FC<Props> = ({ claimUrl }) => {
       setLoading(false);
     }
   };
+  console.log(claimUrl);
 
   return (
     <>
@@ -138,7 +136,7 @@ const BusinessSignupForm: React.FC<Props> = ({ claimUrl }) => {
                       setEmailAddressDomain("@" + validUrl);
                       setWebsiteUrl(e.target.value);
                     }}
-                    disabled={claimUrl !== undefined && claimUrl !== ""}
+                    disabled={claimUrl !== null && claimUrl !== ""}
                     id="website"
                     className="form-control disabled:bg-[#E9E9E9]"
                   />
@@ -152,7 +150,15 @@ const BusinessSignupForm: React.FC<Props> = ({ claimUrl }) => {
                       type="text"
                       name="email"
                       id="email"
-                      placeholder="info"
+                      value={email}
+                      onChange={(e) => {
+                        setEmail(
+                          e.target.value.includes("@")
+                            ? e.target.value.split("@")[0]
+                            : e.target.value
+                        );
+                      }}
+                      placeholder="Email Address"
                       className="form-control"
                     />
                     <span className="domain-email" id="domain">

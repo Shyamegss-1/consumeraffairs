@@ -11,7 +11,7 @@ export const listingDomain = async (domain: any) => {
       console.log(_domain, "ghjgjhg");
       return { status: true, domain: _domain };
     } else if (
-      /^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}$/.test(domain)
+      /^(?!:\/\/)([a-zA-Z0-9-_]{1,63}\.)+[a-zA-Z]{2,}$/.test(domain)
     ) {
       return { status: true, domain: domain };
     } else {
