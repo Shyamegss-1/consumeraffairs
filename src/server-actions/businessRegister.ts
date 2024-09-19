@@ -246,3 +246,6 @@ export const handleUpdateBusinessProfile = async (formData: any) => {
 export const uploadPromotions = (formData: FormData) => {
   console.log(formData);
 };
+
+
+

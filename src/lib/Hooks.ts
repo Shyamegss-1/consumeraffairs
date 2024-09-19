@@ -39,39 +39,40 @@ export async function checkConnection() {
   }
 }
 
-
-export function debounce(fn:Callback, delay:number) {
-  let timeoutId:any;
-  return (...args:any) => {
+export function debounce(fn: Callback, delay: number) {
+  let timeoutId: any;
+  return (...args: any) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => fn(...args), delay);
   };
 }
 
-export function convertToBase64(file:any) {
+export function convertToBase64(file: any) {
+  if (!file) {
+    return "";
+  }
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => {
-      const base64String = reader.result; // Extract Base64 content
+      const base64String: string = (reader.result as string) || ""; // Extract Base64 content
       resolve(base64String);
     };
     reader.onerror = (error) => reject(error);
   });
 }
 
-export function capitalize(str:string) {
+export function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-
-export function extractDomain(url:string) {
+export function extractDomain(url: string) {
   // Regular expression to match a valid domain from a URL
   const regex = /^(?:https?:\/\/)?(?:www\.)?([\w-]+\.[\w.-]+)(?:\/|$)/i;
-  
+
   // Use the regex to find the domain
   const match = url.match(regex);
-  
+
   // If a match is found, return the domain
   if (match) {
     return match[1];

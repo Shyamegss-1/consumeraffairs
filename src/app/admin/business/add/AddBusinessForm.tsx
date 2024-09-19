@@ -109,8 +109,8 @@ const AddBusinessForm = ({ userId }: Props) => {
   }, []);
   return (
     <>
-      <form className="" onSubmit={handleSubmit}>
-        <div className="w-full mt-10">
+      <form className="mt-96 top-0 relative" onSubmit={handleSubmit}>
+        <div className="w-full">
           <p className="text-lg text-slate-900 font-semibold mb-2">Logo</p>
           <div className="grid grid-cols-12 gap-x-10 ">
             <Image
@@ -118,7 +118,7 @@ const AddBusinessForm = ({ userId }: Props) => {
               alt=""
               width={1080}
               height={1080}
-              className="border rounded-full p-2 col-span-2"
+              className="border w-40 rounded-full p-2 col-span-2"
             />
             <div className="col-span-10 flex flex-col justify-center items-center relative">
               <label
@@ -274,7 +274,7 @@ const AddBusinessForm = ({ userId }: Props) => {
         </button>
       </form>
       {loading && (
-        <div className="absolute z-30 w-full left-0 backdrop-blur-sm h-screen flex justify-center items-center">
+        <div className="absolute z-30 w-full left-0 top-0 backdrop-blur-sm h-screen flex justify-center items-center">
           <LoadingScreen text="Please Wait..." />
         </div>
       )}

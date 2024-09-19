@@ -150,11 +150,11 @@ const menuGroups = [
           },
         ],
       },
-      {
-        icon: <MdOutlineDashboardCustomize />,
-        label: "Category Footer",
-        route: "/admin/category-footer",
-      },
+      // {
+      //   icon: <MdOutlineDashboardCustomize />,
+      //   label: "Category Footer",
+      //   route: "/admin/category-footer",
+      // },
       {
         icon: <PiNotepad />,
         label: "Footer",

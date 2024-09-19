@@ -6,12 +6,12 @@ export const getCategories = async () => {
   try {
     const categories = await prisma.category.findMany({
       where: {
-        status: 1,
+        status: true,
       },
     });
 
     const popularCategories = await categories.filter(
-      (item, i) => item.popular === 1
+      (item, i) => item.popular === true
     );
     //   console.log(categories,"jhghjgh");
     return {

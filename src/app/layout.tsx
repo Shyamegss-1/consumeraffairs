@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import UserLayout from "@/components/Layouts/userLayout/UserLayout";
 import { Toaster } from "sonner";
-import BusinessLayout from "@/components/Layouts/businessAdminLayout/BusinessLayout";
 import MainLayout from "./MainLayout";
 import { SessionProvider } from "next-auth/react";
 import { NextUIProvider } from "@nextui-org/react";

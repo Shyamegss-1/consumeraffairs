@@ -37,7 +37,7 @@ model blog {
 model blog_category {
   b_c_id          Int        @id @default(autoincrement())
   b_c_name        String     @unique @db.VarChar(255)
-  b_c_description String?     @db.VarChar(255)
+  b_c_description String?    @db.VarChar(255)
   b_c_slug        String     @db.VarChar(255)
   b__c_status     b_c_Status @default(Active)
   createdAt       DateTime   @default(now())
@@ -64,12 +64,13 @@ model blog_comment {
 
 model category {
   cid           Int       @id @default(autoincrement())
-  category_name String    @db.VarChar(200)
+  category_name String    @unique @db.VarChar(200)
   category_slug String    @db.VarChar(200)
   category_icon String?   @db.VarChar(255)
-  popular       Int?      @default(0)
+  description   String?   @db.VarChar(255)
+  popular       Boolean?  @default(false)
   date          String    @db.VarChar(20)
-  status        Int
+  status        Boolean   @default(true)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   listing       listing[]
@@ -85,15 +86,13 @@ model faq {
 }
 
 model inner_seo {
-  page_id          Int      @id @default(autoincrement())
-  page             String   @db.VarChar(200)
-  meta_title       String   @db.VarChar(250)
-  meta_description String   @db.Text
-  meta_keywords    String   @db.Text
-  header           String   @db.VarChar(1000)
-  footer           String   @db.VarChar(1000)
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  page_id     Int      @id @default(autoincrement())
+  page        String   @unique @db.VarChar(200)
+  title       String   @db.VarChar(250)
+  description String   @db.Text
+  keywords    String   @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model listing {
@@ -249,28 +248,6 @@ model UserDetails {
   image       String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-}
-
-model business_users {
-  id               Int     @id @default(autoincrement())
-  firstName        String
-  lastName         String?
-  email            String
-  website          String
-  companyName      String
-  address          String?
-  country          String?
-  verified         Boolean @default(false)
-  jobTitle         String
-  phone            String
-  verificationCode String?
-  accountType      String
-  static_code      String?
-  password         String?
-  cpassword        String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model roles {
