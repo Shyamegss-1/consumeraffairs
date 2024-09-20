@@ -2,15 +2,17 @@
 import ActionDropdowns from "@/components/dropdown/ActionDropdowns";
 import Pagination from "@/components/pagination/Pagination";
 import useDebounce from "@/lib/client-hooks/useDebounce";
-import { handleDelete, handleStatusUpdate } from "@/server-actions/addBlogCategory";
 import { DropdownItem, useDisclosure } from "@nextui-org/react";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import ChangePasswordModal from "./ChangePasswordModal";
+import { handleDelete, handleStatusUpdate } from "@/server-actions/Admin/Users";
 
 const UserGrid = ({ data, totalRecord }: any) => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [activeRowData, setActiveRowData] = useState(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const router = useRouter();
@@ -26,7 +28,7 @@ const UserGrid = ({ data, totalRecord }: any) => {
     setCurrentPage(page);
   };
 
-  console.log(totalRecord, totalPages, pageSize, "totalRecord");
+  // console.log(totalRecord, totalPages, pageSize, "totalRecord");
 
   // const handlePageSizeChange = (event: any) => {
   //   setPageSize(parseInt(event.target.value));
@@ -111,6 +113,9 @@ const UserGrid = ({ data, totalRecord }: any) => {
                   Profile Picture
                 </th>
                 <th className="py-2 px-4 border border-gray-300 bg-active_dark text-white">
+                  Verification Status
+                </th>
+                <th className="py-2 px-4 border border-gray-300 bg-active_dark text-white">
                   Status
                 </th>
                 <th className="py-2 px-4 border border-gray-300 bg-active_dark text-white">
@@ -144,25 +149,36 @@ const UserGrid = ({ data, totalRecord }: any) => {
                   </td>
                   <td className="py-2 px-4 border-b border-x border-gray-300 relative">
                     {item.verify ? (
-                      <span className="py-1 px-4 mx-auto bg-orange-500 text-white rounded-full w-fit block">
+                      <span className="text-sm py-1 px-4 mx-auto text-orange-800 bg-orange-300 rounded-full w-fit block">
                         Verified
                       </span>
                     ) : (
-                      <span className="py-1 px-4 mx-auto bg-red-500 text-white rounded-full w-fit block">
+                      <span className="text-sm py-1 px-4 mx-auto text-red-800 bg-red-300 rounded-full w-fit block">
                         Unverified
                       </span>
                     )}
                   </td>
+                  <td className="py-2 px-4 border-b border-x border-gray-300 relative">
+                    {item.active ? (
+                      <span className="text-sm py-1 px-4 mx-auto text-green-800 bg-green-300 rounded-full w-fit block">
+                        Active
+                      </span>
+                    ) : (
+                      <span className="text-sm py-1 px-4 mx-auto text-blue-800 bg-blue-300 rounded-full w-fit block">
+                        Unactive
+                      </span>
+                    )}
+                  </td>
                   <td className="py-2 px-4 border-b border-x border-gray-300">
-                  <div className="block mx-auto w-fit">
+                    <div className="block mx-auto w-fit">
                       <ActionDropdowns btnLabel={<BsThreeDotsVertical />}>
                         {item.b__c_status === "Active" ? (
                           <DropdownItem
                             onClick={async (e) => {
-                              e.preventDefault()
+                              e.preventDefault();
                               const res = await handleStatusUpdate(
-                                "Inactive",
-                                item.b_c_id
+                                false,
+                                item.id
                               );
                               if (res.status) {
                                 router.refresh();
@@ -175,10 +191,10 @@ const UserGrid = ({ data, totalRecord }: any) => {
                         ) : (
                           <DropdownItem
                             onClick={async (e) => {
-                              e.preventDefault()
+                              e.preventDefault();
                               const res = await handleStatusUpdate(
-                                "Active",
-                                item.b_c_id
+                                true,
+                                item.id
                               );
                               if (res.status) {
                                 router.refresh();
@@ -192,27 +208,20 @@ const UserGrid = ({ data, totalRecord }: any) => {
                         <DropdownItem
                           onClick={(e) => {
                             onOpen();
-                            // setActiveRowData({
-                            //   b_c_id: item.b_c_id,
-                            //   categoryName: item.b_c_name,
-                            //   description: item.b_c_description,
-                            // });
+                            setActiveRowData(item.id);
                           }}
-                          key="edit"
+                          key="change-password"
                         >
-                          Edit
+                          Change Password
                         </DropdownItem>
                         <DropdownItem
                           key="delete"
                           className="text-danger"
                           color="danger"
                           variant="solid"
-                          
                           onClick={async (e) => {
-                            e.preventDefault()
-                            const res = await handleDelete(
-                              item.b_c_id
-                            );
+                            e.preventDefault();
+                            const res = await handleDelete(item.id);
                             if (res.status) {
                               router.refresh();
                             }
@@ -234,6 +243,12 @@ const UserGrid = ({ data, totalRecord }: any) => {
               )}
             </tbody>
           </table>
+          <ChangePasswordModal
+            data={activeRowData}
+            isOpen={isOpen}
+            onOpen={onOpen}
+            onOpenChange={onOpenChange}
+          />
           {/* Pagination */}
         </div>
         <Pagination

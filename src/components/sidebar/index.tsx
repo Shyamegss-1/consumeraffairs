@@ -72,6 +72,10 @@ const menuGroups = [
             route: "/admin/blogs/category",
           },
           {
+            label: "Add Blogs",
+            route: "/admin/blogs/add",
+          },
+          {
             label: "Blogs",
             route: "/admin/blogs",
           },
@@ -150,11 +154,11 @@ const menuGroups = [
           },
         ],
       },
-      // {
-      //   icon: <MdOutlineDashboardCustomize />,
-      //   label: "Category Footer",
-      //   route: "/admin/category-footer",
-      // },
+      {
+        icon: <MdOutlineDashboardCustomize />,
+        label: "Category Footer",
+        route: "/admin/category-footer",
+      },
       {
         icon: <PiNotepad />,
         label: "Footer",

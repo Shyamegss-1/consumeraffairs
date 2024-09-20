@@ -2,17 +2,21 @@
 import ActionDropdowns from "@/components/dropdown/ActionDropdowns";
 import Pagination from "@/components/pagination/Pagination";
 import useDebounce from "@/lib/client-hooks/useDebounce";
-import { handleDelete, handleStatusUpdate } from "@/server-actions/addBlogCategory";
+import {
+  handleDelete,
+  handleStatusUpdate,
+} from "@/server-actions/Admin/Reviews";
 import { DropdownItem, useDisclosure } from "@nextui-org/react";
-import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaStar } from "react-icons/fa";
+import ReviewDetailModal from "./ReviewDetailModal";
 
 const UserGrid = ({ data, totalRecord }: any) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [currentPage, setCurrentPage] = useState(1);
+  const [activeId, setActiveId] = useState<any>(null);
   const [pageSize, setPageSize] = useState<number>(10);
 
   const router = useRouter();
@@ -50,6 +54,8 @@ const UserGrid = ({ data, totalRecord }: any) => {
     }
     router.push(`${pathname}?${params.toString()}`);
   }, [searchQueryValue]);
+
+
 
   return (
     <>
@@ -155,54 +161,66 @@ const UserGrid = ({ data, totalRecord }: any) => {
                     {item.createdAt.getFullYear()}
                   </td>
                   <td className="py-2 px-4 border-b border-x border-gray-300">
-                    {item.review_status}
+                    <span
+                      className={`${
+                        item.review_status === "Moderation"
+                          ? "text-yellow-800 bg-yellow-300"
+                          : item.review_status === "Reported"
+                          ? "text-red-800 bg-red-300"
+                          : item.review_status === "Inactive"
+                          ? "text-blue-800 bg-blue-300"
+                          : item.review_status === "Flagged"
+                          ? "text-cyan-800 bg-cyan-300"
+                          : "text-green-800 bg-green-300"
+                      } px-2 py-1 text-sm rounded-full block mx-auto w-fit`}
+                    >
+                      {item.review_status}
+                    </span>
                   </td>
                   <td className="py-2 px-4 border-b border-x border-gray-300">
                     <div className="block mx-auto w-fit">
                       <ActionDropdowns btnLabel={<BsThreeDotsVertical />}>
-                        {item.b__c_status === "Active" ? (
-                          <DropdownItem
-                            onClick={async () => {
-                              const res = await handleStatusUpdate(
-                                "Inactive",
-                                item.b_c_id
-                              );
-                              if (res.status) {
-                                router.refresh();
-                              }
-                            }}
-                            key="update_status"
-                          >
-                            Inactive
-                          </DropdownItem>
-                        ) : (
-                          <DropdownItem
-                            onClick={async () => {
-                              const res = await handleStatusUpdate(
-                                "Active",
-                                item.b_c_id
-                              );
-                              if (res.status) {
-                                router.refresh();
-                              }
-                            }}
-                            key="update_status"
-                          >
-                            Active
-                          </DropdownItem>
-                        )}
+                        {[
+                          "Moderation",
+                          "Active",
+                          "Inactive",
+                          "Reported",
+                          "Flagged",
+                        ]
+                          .filter((status) => status !== item.review_status)
+                          .map((it: any, i) => (
+                            <DropdownItem
+                              onClick={async () => {
+                                const res = await handleStatusUpdate(
+                                  it,
+                                  item.id
+                                );
+                                if (res.status) {
+                                  router.refresh();
+                                }
+                              }}
+                              key={it}
+                            >
+                              {it}
+                            </DropdownItem>
+                          ))}
+                        {/* <DropdownItem
+                          onClick={(e) => {
+                            onOpen();
+                            setActiveId(item);
+                          }}
+                          key="top-review"
+                        >
+                          Mark Top Review
+                        </DropdownItem> */}
                         <DropdownItem
                           onClick={(e) => {
                             onOpen();
-                            // setActiveRowData({
-                            //   b_c_id: item.b_c_id,
-                            //   categoryName: item.b_c_name,
-                            //   description: item.b_c_description,
-                            // });
+                            setActiveId(item);
                           }}
                           key="edit"
                         >
-                          Edit
+                          View Details
                         </DropdownItem>
                         <DropdownItem
                           key="delete"
@@ -211,7 +229,7 @@ const UserGrid = ({ data, totalRecord }: any) => {
                           variant="solid"
                           onClick={async (e) => {
                             e.preventDefault();
-                            const res = await handleDelete(item.b_c_id);
+                            const res = await handleDelete(item.id);
                             if (res.status) {
                               router.refresh();
                             }
@@ -233,6 +251,12 @@ const UserGrid = ({ data, totalRecord }: any) => {
               )}
             </tbody>
           </table>
+          <ReviewDetailModal
+            isOpen={isOpen}
+            onOpen={onOpen}
+            onOpenChange={onOpenChange}
+            data={activeId}
+          />
           {/* Pagination */}
         </div>
         <Pagination

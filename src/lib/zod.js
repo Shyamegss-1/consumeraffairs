@@ -14,6 +14,20 @@ export const signinSchema = object({
     required_error: "User Type is required",
   }).min(1, "User Type is required"),
 });
+export const changePasswordSchema = object({
+  password: string({ required_error: "Password is required" })
+    .min(1, "Password is required")
+    .min(8, "Password must be more than 8 characters")
+    .max(32, "Password must be less than 32 characters"),
+  confirmPassword: string({
+    required_error: "Confirm Password is required",
+  })
+    .min(1, "Confirm Password is required")
+    .min(8, "Confirm Password must be more than 8 characters")
+    .max(32, "Confirm Password must be less than 32 characters"),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Password is not matched with confirm password.",
+});
 
 export const signupSchema = object({
   firstName: string({
@@ -74,19 +88,19 @@ export const businessUserSchema = object({
   jobTitle: string({
     required_error: "Job Title is required",
   }).min(1, "Job Title is required"),
-  email:string({
+  email: string({
     required_error: "Email is required",
-    }).email("Invalid email"),
-  website:string({
+  }).email("Invalid email"),
+  website: string({
     required_error: "Website is required",
   }),
-  businessName:string({
+  businessName: string({
     required_error: "Business Name is required",
-    }).min(1, "Business Name is required"),
-  phoneNumber:string({
+  }).min(1, "Business Name is required"),
+  phoneNumber: string({
     required_error: "Phone Number is required",
-    }).min(1, "Phone Number is required"),
-  userType:string({
+  }).min(1, "Phone Number is required"),
+  userType: string({
     required_error: "User Type is required",
-    })
+  }),
 });
