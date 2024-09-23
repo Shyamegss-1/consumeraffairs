@@ -21,6 +21,7 @@ const page = async ({ params, searchParams }: ItemsPageProps) => {
     redirect("/admin/login");
   }
 
+  
   const page = Number(searchParams.page) || 1;
   const pageSize = Number(searchParams.pageSize) || 10;
   const search = searchParams.search || "";
@@ -29,7 +30,7 @@ const page = async ({ params, searchParams }: ItemsPageProps) => {
       <h3 className="rounded-xl border bg-white px-6 py-4 shadow-md mb-4 text-xl font-semibold">
         Post New Blog
       </h3>
-      <div className="rounded-xl border bg-white px-6 py-4 shadow-md overflow-auto max-h-[79vh] custom-scroll">
+      <div className="rounded-xl border bg-white px-6 py-4 shadow-md overflow-auto min-h-[79.5vh] custom-scroll">
         <Suspense
           fallback={
             <>

@@ -19,19 +19,25 @@ model admin {
 }
 
 model blog {
-  b_id             Int      @id @default(autoincrement())
-  b_title          String   @db.Text
-  b_slug           String   @db.Text
-  b_image          String   @db.VarChar(255)
-  tags             String?  @db.Text
-  b_description    String   @db.Text
-  b_category       String   @db.VarChar(255)
-  listing_category Int?
-  image_alt        String?  @db.VarChar(255)
-  date             String   @db.VarChar(255)
-  b_status         Int
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  b_id             Int            @id @default(autoincrement())
+  b_title          String         @db.Text
+  b_slug           String         @unique
+  b_image          String         @db.VarChar(255)
+  tags             String?        @db.Text
+  b_description    String         @db.Text
+  b_category       Int
+  blogCategory     blog_category  @relation(fields: [b_category], references: [b_c_id])
+  businessCategory Int
+  Category         category       @relation(fields: [businessCategory], references: [cid])
+  image_alt        String         @db.VarChar(255)
+  metaTitle        String?
+  metaKeywords     String?
+  metaDescription  String?
+  b_status         Boolean        @default(true)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  blog_comment     blog_comment[]
+  faq              faq[]
 }
 
 model blog_category {
@@ -42,6 +48,7 @@ model blog_category {
   b__c_status     b_c_Status @default(Active)
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
+  blog            blog[]
 }
 
 enum b_c_Status {
@@ -52,12 +59,12 @@ enum b_c_Status {
 model blog_comment {
   id        Int      @id @default(autoincrement())
   blog_id   Int
-  user_id   Int      @default(0)
-  name      String   @db.VarChar(255)
-  email     String   @db.VarChar(255)
+  blog      blog     @relation(fields: [blog_id], references: [b_id])
+  user_id   Int
+  user      users    @relation(fields: [user_id], references: [id])
   comment   String   @db.Text
-  date      String   @db.VarChar(50)
-  status    Int
+  date      DateTime @default(now())
+  status    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -74,25 +81,38 @@ model category {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   listing       listing[]
+  blog          blog[]
 }
 
 model faq {
   id        Int      @id @default(autoincrement())
   blog_id   Int
+  blog      blog     @relation(fields: [blog_id], references: [b_id])
   questions String   @db.Text
   answers   String   @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
+model pageMaster {
+  id        Int        @id @default(autoincrement())
+  pageName  String
+  pageSlug  String
+  status    Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  inner_seo inner_seo?
+}
+
 model inner_seo {
-  page_id     Int      @id @default(autoincrement())
-  page        String   @unique @db.VarChar(200)
-  title       String   @db.VarChar(250)
-  description String   @db.Text
-  keywords    String   @db.Text
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id          Int        @id @default(autoincrement())
+  page_id     Int        @unique
+  page        pageMaster @relation(fields: [page_id], references: [id])
+  title       String     @db.VarChar(250)
+  description String     @db.Text
+  keywords    String     @db.Text
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
 
 model listing {
@@ -206,27 +226,28 @@ model top_search {
 }
 
 model users {
-  id                Int          @id @default(autoincrement())
-  firstName         String       @db.VarChar(50)
-  lastName          String?      @db.VarChar(50)
-  email             String       @db.VarChar(50)
-  domain            String?      @db.VarChar(255)
-  password          String?      @db.VarChar(250)
-  cpassword         String?      @db.VarChar(250)
-  image             String?      @db.VarChar(255)
-  member_date       DateTime     @default(now())
-  verify            Boolean      @default(false)
+  id                Int            @id @default(autoincrement())
+  firstName         String         @db.VarChar(50)
+  lastName          String?        @db.VarChar(50)
+  email             String         @db.VarChar(50)
+  domain            String?        @db.VarChar(255)
+  password          String?        @db.VarChar(250)
+  cpassword         String?        @db.VarChar(250)
+  image             String?        @db.VarChar(255)
+  member_date       DateTime       @default(now())
+  verify            Boolean        @default(false)
   verificationToken String?
-  mobile_number     String?      @db.VarChar(15)
-  userType          UserType     @default(USER)
-  active            Boolean      @default(false)
-  createdAt         DateTime     @default(now())
-  updatedAt         DateTime     @updatedAt
-  role              roles?       @relation(fields: [role_id], references: [id])
+  mobile_number     String?        @db.VarChar(15)
+  userType          UserType       @default(USER)
+  active            Boolean        @default(false)
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  role              roles?         @relation(fields: [role_id], references: [id])
   role_id           Int?
   reviews           review[]
   listing           listing[]
   userDetails       UserDetails?
+  blog_comment      blog_comment[]
 }
 
 enum UserType {

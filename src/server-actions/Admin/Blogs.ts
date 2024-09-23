@@ -1,12 +1,15 @@
-"use server"
-import { ReviewStatus } from "@prisma/client";
+"use server";
 import { prisma } from "../../../prisma/prisma";
 
 export const handleDelete = async (id: number) => {
   try {
-    const deletedCategory = await prisma.review.delete({
+    const deletedCategory = await prisma.blog.delete({
       where: {
-        id: id,
+        b_id: id,
+      },
+      include: {
+        blog_comment: true,
+        faq: true,
       },
     });
     if (!deletedCategory) {
@@ -17,19 +20,18 @@ export const handleDelete = async (id: number) => {
       message: "Category deleted successfully",
     };
   } catch (error: any) {
-    console.log(error);
     return { status: false, message: String(error.message) };
   }
 };
 
-export const handleStatusUpdate = async (status: ReviewStatus, id: number) => {
+export const handleStatusUpdate = async (status: boolean, id: number) => {
   try {
-    const updatedCategory = await prisma.review.update({
+    const updatedCategory = await prisma.blog.update({
       where: {
-        id: id,
+        b_id: id,
       },
       data: {
-        review_status: status,
+        b_status: status,
       },
     });
     if (!updatedCategory) {
@@ -40,7 +42,44 @@ export const handleStatusUpdate = async (status: ReviewStatus, id: number) => {
       message: "Category status updated successfully",
     };
   } catch (error: any) {
-    console.log(error);
     return { status: false, message: String(error.message) };
+  }
+};
+
+export const AddBlog = async (data: {
+  title: string;
+  blogImage: string;
+  blogImageAlt: string;
+  businessCategory: number;
+  blogCategory: number;
+  tags: string;
+  slug: string;
+  metaTitle: string;
+  metaKeywords: string;
+  metaDescription: string;
+  blogContent: string;
+}) => {
+  try {
+    const blog = await prisma.blog.create({
+      data: {
+        b_title: data.title,
+        b_description: data.blogContent,
+        b_image: data.blogImage,
+        b_slug: data.slug ? data.slug : data.title.replaceAll(" ", "-"),
+        b_category: data.blogCategory,
+        businessCategory: data.businessCategory,
+        metaDescription: data.metaDescription,
+        metaKeywords: data.metaKeywords,
+        metaTitle: data.metaTitle,
+        image_alt: data.blogImageAlt,
+      },
+    });
+    if (!blog) {
+      throw new Error("Something went wrong, Please try again");
+    }
+    return { status: true, message: "Blog has been saved successfully", blog };
+  } catch (error: any) {
+    console.log(error);
+    return { status: false, message: String(error) };
   }
 };
