@@ -2,15 +2,12 @@
 import ActionDropdowns from "@/components/dropdown/ActionDropdowns";
 import Pagination from "@/components/pagination/Pagination";
 import useDebounce from "@/lib/client-hooks/useDebounce";
-import { capitalize } from "@/lib/Hooks";
 import {
   handleDelete,
   handleStatusUpdate,
-} from "@/server-actions/addBlogCategory";
-import {
-  DropdownItem,
-  useDisclosure,
-} from "@nextui-org/react";
+} from "@/server-actions/Admin/Business";
+
+import { DropdownItem, useDisclosure } from "@nextui-org/react";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -48,7 +45,7 @@ const UserGrid = ({ data, totalRecord }: any) => {
   // console.log(searchQueryValue, "searchQueryValue");
 
   console.log(statusFilter);
-  
+
   useEffect(() => {
     let params = new URLSearchParams(searchParams);
     if (searchQueryValue !== "") {
@@ -152,6 +149,9 @@ const UserGrid = ({ data, totalRecord }: any) => {
                   Profile Picture
                 </th>
                 <th className="py-2 px-4 border border-gray-300 bg-active_dark text-white">
+                  Claim Status
+                </th>
+                <th className="py-2 px-4 border border-gray-300 bg-active_dark text-white">
                   Status
                 </th>
                 <th className="py-2 px-4 border border-gray-300 bg-active_dark text-white">
@@ -191,34 +191,82 @@ const UserGrid = ({ data, totalRecord }: any) => {
                   </td>
                   <td className="py-2 px-4 border-b border-x border-gray-300 relative">
                     {item.claim ? (
-                      <span className="py-1 px-4 mx-auto bg-orange-500/60 text-white rounded-full w-fit block">
+                      <span className="py-1 px-4 mx-auto text-sm bg-orange-300 text-orange-800  rounded-full w-fit block">
                         Claimed
                       </span>
                     ) : (
-                      <span className="py-1 px-4 mx-auto bg-red-500/60 text-white rounded-full w-fit block">
+                      <span className="py-1 px-4 mx-auto text-sm bg-red-300 text-red-800 rounded-full w-fit block">
                         Unclaimed
                       </span>
                     )}
                   </td>
+                  <td className="py-2 px-4 border-b border-x border-gray-300 relative">
+                    {!item.status ? (
+                      <span className="py-1 px-4 mx-auto text-sm bg-blue-300 text-blue-800 rounded-full w-fit block">
+                        Inactive
+                      </span>
+                    ) : (
+                      <span className="py-1 px-4 mx-auto text-sm bg-green-300 text-green-800 rounded-full w-fit block">
+                        Active
+                      </span>
+                    )}
+                  </td>
                   <td className="py-2 px-4 border-b border-x border-gray-300">
-                    {item.createdAt.getDate()}/{item.createdAt.getMonth()}/{item.createdAt.getFullYear()}
+                    {item.createdAt.getDate()}/{item.createdAt.getMonth()}/
+                    {item.createdAt.getFullYear()}
                   </td>
                   <td className="py-2 px-4 border-b border-x border-gray-300">
                     <div className="block mx-auto w-fit">
                       <ActionDropdowns btnLabel={<BsThreeDotsVertical />}>
-                        {item.b__c_status === "Active" ? (
+                        {item.claim ? (
                           <DropdownItem
                             onClick={async (e) => {
                               e.preventDefault();
                               const res = await handleStatusUpdate(
-                                "Inactive",
-                                item.b_c_id
+                                false,
+                                item.id,
+                                "claim"
                               );
                               if (res.status) {
                                 router.refresh();
                               }
                             }}
-                            key="update_status"
+                            key="Unclaim"
+                          >
+                            Unclaim
+                          </DropdownItem>
+                        ) : (
+                          <DropdownItem
+                            onClick={async (e) => {
+                              e.preventDefault();
+                              const res = await handleStatusUpdate(
+                                true,
+                                item.id,
+                                "claim"
+                              );
+                              if (res.status) {
+                                router.refresh();
+                              }
+                            }}
+                            key="Claim"
+                          >
+                            Claim
+                          </DropdownItem>
+                        )}
+                        {item.status ? (
+                          <DropdownItem
+                            onClick={async (e) => {
+                              e.preventDefault();
+                              const res = await handleStatusUpdate(
+                                false,
+                                item.id,
+                                "status"
+                              );
+                              if (res.status) {
+                                router.refresh();
+                              }
+                            }}
+                            key="Inactive"
                           >
                             Inactive
                           </DropdownItem>
@@ -227,26 +275,23 @@ const UserGrid = ({ data, totalRecord }: any) => {
                             onClick={async (e) => {
                               e.preventDefault();
                               const res = await handleStatusUpdate(
-                                "Active",
-                                item.b_c_id
+                                true,
+                                item.id,
+                                "status"
                               );
                               if (res.status) {
                                 router.refresh();
                               }
                             }}
-                            key="update_status"
+                            key="Active"
                           >
                             Active
                           </DropdownItem>
                         )}
                         <DropdownItem
                           onClick={(e) => {
-                            onOpen();
-                            // setActiveRowData({
-                            //   b_c_id: item.b_c_id,
-                            //   categoryName: item.b_c_name,
-                            //   description: item.b_c_description,
-                            // });
+                            e.preventDefault();
+                            router.push("/admin/business/edit/id");
                           }}
                           key="edit"
                         >
@@ -259,7 +304,7 @@ const UserGrid = ({ data, totalRecord }: any) => {
                           variant="solid"
                           onClick={async (e) => {
                             e.preventDefault();
-                            const res = await handleDelete(item.b_c_id);
+                            const res = await handleDelete(item.id);
                             if (res.status) {
                               router.refresh();
                             }
@@ -283,13 +328,13 @@ const UserGrid = ({ data, totalRecord }: any) => {
           </table>
           {/* Pagination */}
         </div>
-        <Pagination
+        {/* <Pagination
           currentPage={currentPage}
           pageSize={pageSize}
           startIndex={startIndex}
           totalCount={data.length}
           totalPages={totalPages}
-        />
+        /> */}
       </div>
     </>
   );

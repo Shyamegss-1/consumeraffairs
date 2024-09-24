@@ -1,6 +1,6 @@
 import { comment } from "postcss";
 import { title } from "process";
-import { number, object, string } from "zod";
+import { literal, number, object, string } from "zod";
 
 export const signinSchema = object({
   email: string({
@@ -103,4 +103,22 @@ export const businessUserSchema = object({
   userType: string({
     required_error: "User Type is required",
   }),
+});
+
+
+
+
+// Define the validation schema with required fields
+export const blogValidationSchema = object({
+  title: string().min(1, { message: "Title is required" }),  // required string
+  businessCategory: number({ invalid_type_error: "Business category must be a number" }).min(1, { message: "Business category is required" }),  // required number
+  blogCategory: number({ invalid_type_error: "Blog category must be a number" }).min(1, { message: "Blog category is required" }),  // required number
+  tags: string().optional().or(literal("")),  // required string
+  slug: string().optional().or(literal("")),
+  blogImage: string().min(1, { message: "Blog image is required" }),  // required string
+  blogImageAlt: string().min(1, { message: "Blog image alt text is required" }),  // required string
+  blogContent: string().min(1, { message: "Blog content is required" }),  // required string
+  metaTitle: string().min(1, { message: "Meta title is required" }),  // required string
+  metaKeywords: string().optional().or(literal("")),
+  metaDescription: string().min(1, { message: "Meta description is required" }),  // required string
 });

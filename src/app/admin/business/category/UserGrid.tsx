@@ -8,10 +8,8 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import CategoryModal from "./CategoryModal";
-import {
-  handleDelete,
-  handleStatusUpdate,
-} from "@/server-actions/Admin/Business";
+import { handleDelete, handleStatusUpdate } from "@/server-actions/Admin/BusinessCategory";
+
 
 const UserGrid = ({ data, totalRecord }: any) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -276,7 +274,7 @@ const UserGrid = ({ data, totalRecord }: any) => {
                           variant="solid"
                           onClick={async (e) => {
                             e.preventDefault();
-                            const res = await handleDelete(item.b_c_id);
+                            const res = await handleDelete(item.cid);
                             if (res.status) {
                               router.refresh();
                             }
@@ -306,13 +304,13 @@ const UserGrid = ({ data, totalRecord }: any) => {
           />
           {/* Pagination */}
         </div>
-        <Pagination
+        {/* <Pagination
           currentPage={currentPage}
           pageSize={pageSize}
           startIndex={startIndex}
           totalCount={data.length}
           totalPages={totalPages}
-        />
+        /> */}
       </div>
     </>
   );

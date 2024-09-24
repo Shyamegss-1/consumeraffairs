@@ -32,7 +32,7 @@ export const getCompanyDetails = async (domain: string, user: any) => {
           name: domain.replaceAll("-", "."),
           slug: domain,
           claim: false,
-          status: 0,
+          status: true,
           logo: "logo.png",
           date: Date(),
         },

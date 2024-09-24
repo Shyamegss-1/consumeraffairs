@@ -1,8 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
+import dynamic from 'next/dynamic';
+const CKEditor = dynamic(() => import('@ckeditor/ckeditor5-react').then(mod => mod.CKEditor), {
+    ssr: false,
+});
 
-const EditorComponent = ({ data, onChange, name }) => {
+const EditorComponent = ({ data, onChange, name, id }) => {
     const editorRef = useRef(null);
 
     useEffect(() => {
@@ -33,6 +36,7 @@ const EditorComponent = ({ data, onChange, name }) => {
 
     return (
         <CKEditor
+            id={id}
             editor={ClassicEditor}
             config={{
                 // CKEditor config if needed

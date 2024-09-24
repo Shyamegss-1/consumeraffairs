@@ -1,9 +1,7 @@
 import React from "react";
-import { prisma } from "../../../../prisma/prisma";
+import { prisma } from "../../../../../prisma/prisma";
 import { auth } from "@/auth";
-import UserGrid from "./BlogGrid";
-import { UserType } from "@prisma/client";
-import BlogGrid from "./BlogGrid";
+import FooterGrid from "./FooterGrid";
 
 type Props = {
   page: number;
@@ -11,27 +9,23 @@ type Props = {
   search: string;
 };
 
-const Blogs = async (props: Props) => {
+const Users = async (props: Props) => {
   const session = await auth();
   const skip = (props.page - 1) * props.pageSize;
-  const data = await prisma.blog.findMany({
+  const data = await prisma.category.findMany({
     where: {
       OR: [
         {
-          b_title: {
+          category_name: {
             contains: props.search,
           },
         },
         {
-          b_description: {
+          category_slug: {
             contains: props.search,
           },
         },
       ],
-    },
-    include: {
-      blogCategory: true,
-      Category: true,
     },
     skip,
     take: props.pageSize,
@@ -40,10 +34,10 @@ const Blogs = async (props: Props) => {
     },
   });
 
-  const totalRecord = await prisma.blog.count();
+  const totalRecord = await prisma.users.count();
 
   // console.log(data, "data", session?.user.id);
-  return <BlogGrid data={data} totalRecord={totalRecord} />;
+  return <FooterGrid data={data} totalRecord={totalRecord} />;
 };
 
-export default Blogs;
+export default Users;

@@ -20,8 +20,6 @@ const page = async ({ params, searchParams }: ItemsPageProps) => {
   if (!(session?.user?.userType === "ADMIN")) {
     redirect("/admin/login");
   }
-
-  
   const page = Number(searchParams.page) || 1;
   const pageSize = Number(searchParams.pageSize) || 10;
   const search = searchParams.search || "";
@@ -40,7 +38,7 @@ const page = async ({ params, searchParams }: ItemsPageProps) => {
             </>
           }
         >
-          <BlogForm />
+          <BlogForm blogData={null}/>
         </Suspense>
       </div>
     </AdminAuthLayout>

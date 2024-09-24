@@ -172,7 +172,7 @@ const UserGrid = ({ data, totalRecord }: any) => {
                   <td className="py-2 px-4 border-b border-x border-gray-300">
                     <div className="block mx-auto w-fit">
                       <ActionDropdowns btnLabel={<BsThreeDotsVertical />}>
-                        {item.b__c_status === "Active" ? (
+                        {item.active? (
                           <DropdownItem
                             onClick={async (e) => {
                               e.preventDefault();
@@ -251,13 +251,13 @@ const UserGrid = ({ data, totalRecord }: any) => {
           />
           {/* Pagination */}
         </div>
-        <Pagination
+        {/* <Pagination
           currentPage={currentPage}
           pageSize={pageSize}
           startIndex={startIndex}
           totalCount={data.length}
           totalPages={totalPages}
-        />
+        /> */}
       </div>
     </>
   );

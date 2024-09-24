@@ -4,9 +4,10 @@ import Image from "next/image";
 import React from "react";
 import CompanyDetailLayout from "./CompanyDetailLayout";
 import ReviewForm from "./ReviewForm";
+import { TbFlagCheck, TbFlagCog } from "react-icons/tb";
 
 type Props = {
-    company:string
+  company: string;
 };
 
 const CompanyDetails = async (props: Props) => {
@@ -50,14 +51,24 @@ const CompanyDetails = async (props: Props) => {
           </div>
         </div>
       </div>
-      <CompanyDetailLayout websiteName={companyDetail.website_link} claimStatus={companyDetail.claim}>
+      <CompanyDetailLayout
+        websiteName={companyDetail.website_link}
+        claimStatus={companyDetail.claim}
+      >
         <div className="col-span-8">
-          <div className="business-profile-about-content">
+          <div className="business-profile-about-content flex justify-between items-center">
             <h4 className="mb-3 text-2xl font-bold">About Business</h4>
-            <div className="underline" />
-            <p className="mt-4"></p>
+            <TbFlagCog
+              className="size-10 cursor-pointer"
+              // onClick={() => {
+              //   "use client"
+              //   console.log(companyDetail.flagged);
+              // }}
+            />
           </div>
-          <div className="business-profilecontact-details mt-4"></div>
+          <div className="business-profilecontact-details mt-4">
+            {/* <TbFlagCheck /> */}
+          </div>
           <div className="advertisement">
             <Image
               src="/consumerstales.jpg"

@@ -46,9 +46,9 @@ const CompanyDetailLayout = ({ children, websiteName, claimStatus }: Props) => {
             {/* <iconify-icon icon="ph:globe-bold" />  */}Visit Website
           </button>
         </Link>
-        <Link className="mr-2" href={`/business/register?claim=${websiteName}`}>
-          <button className=" " style={{}}>
-            {claimStatus ? (
+        {claimStatus ? (
+          <Link className="mr-2" href={`#`}>
+            <button className=" " style={{}}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={20}
@@ -65,7 +65,16 @@ const CompanyDetailLayout = ({ children, websiteName, claimStatus }: Props) => {
                   />
                 </g>
               </svg>
-            ) : (
+              {/* <iconify-icon icon="humbleicons:times-circle" />  */}
+              Claim website/listing
+            </button>
+          </Link>
+        ) : (
+          <Link
+            className="mr-2"
+            href={`/business/register?claim=${websiteName}`}
+          >
+            <button className=" " style={{}}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
@@ -77,11 +86,11 @@ const CompanyDetailLayout = ({ children, websiteName, claimStatus }: Props) => {
                   <path stroke-linecap="round" d="m9 15l6-6m0 6L9 9"></path>
                 </g>
               </svg>
-            )}
-            {/* <iconify-icon icon="humbleicons:times-circle" />  */}
-            Claim website/listing
-          </button>
-        </Link>
+              {/* <iconify-icon icon="humbleicons:times-circle" />  */}
+              Claim website/listing
+            </button>
+          </Link>
+        )}
       </div>
       <div className="grid grid-cols-12 gap-4">
         {children}

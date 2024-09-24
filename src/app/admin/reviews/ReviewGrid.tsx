@@ -167,10 +167,10 @@ const UserGrid = ({ data, totalRecord }: any) => {
                           ? "text-yellow-800 bg-yellow-300"
                           : item.review_status === "Reported"
                           ? "text-red-800 bg-red-300"
-                          : item.review_status === "Inactive"
-                          ? "text-blue-800 bg-blue-300"
                           : item.review_status === "Flagged"
                           ? "text-cyan-800 bg-cyan-300"
+                          : item.review_status === "Inactive"
+                          ? "text-blue-800 bg-blue-300"
                           : "text-green-800 bg-green-300"
                       } px-2 py-1 text-sm rounded-full block mx-auto w-fit`}
                     >

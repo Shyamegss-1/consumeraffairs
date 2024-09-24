@@ -22,76 +22,80 @@ model blog {
   b_id             Int            @id @default(autoincrement())
   b_title          String         @db.Text
   b_slug           String         @unique
-  b_image          String         @db.VarChar(255)
+  b_image          String         @db.LongText
   tags             String?        @db.Text
   b_description    String         @db.Text
   b_category       Int
-  blogCategory     blog_category  @relation(fields: [b_category], references: [b_c_id])
-  businessCategory Int
-  Category         category       @relation(fields: [businessCategory], references: [cid])
   image_alt        String         @db.VarChar(255)
-  metaTitle        String?
-  metaKeywords     String?
-  metaDescription  String?
   b_status         Boolean        @default(true)
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
+  businessCategory Int
+  metaDescription  String?
+  metaKeywords     String?
+  metaTitle        String?
+  blogCategory     blog_category  @relation(fields: [b_category], references: [b_c_id])
+  Category         category       @relation(fields: [businessCategory], references: [cid])
   blog_comment     blog_comment[]
   faq              faq[]
+
+  @@index([b_category], map: "blog_b_category_fkey")
+  @@index([businessCategory], map: "blog_businessCategory_fkey")
 }
 
 model blog_category {
   b_c_id          Int        @id @default(autoincrement())
   b_c_name        String     @unique @db.VarChar(255)
-  b_c_description String?    @db.VarChar(255)
-  b_c_slug        String     @db.VarChar(255)
   b__c_status     b_c_Status @default(Active)
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
+  b_c_description String?    @db.VarChar(255)
+  b_c_slug        String     @db.VarChar(255)
   blog            blog[]
-}
-
-enum b_c_Status {
-  Active
-  Inactive
 }
 
 model blog_comment {
   id        Int      @id @default(autoincrement())
   blog_id   Int
-  blog      blog     @relation(fields: [blog_id], references: [b_id])
   user_id   Int
-  user      users    @relation(fields: [user_id], references: [id])
   comment   String   @db.Text
   date      DateTime @default(now())
   status    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  blog      blog     @relation(fields: [blog_id], references: [b_id])
+  user      users    @relation(fields: [user_id], references: [id])
+
+  @@index([blog_id], map: "blog_comment_blog_id_fkey")
+  @@index([user_id], map: "blog_comment_user_id_fkey")
 }
 
 model category {
-  cid           Int       @id @default(autoincrement())
-  category_name String    @unique @db.VarChar(200)
-  category_slug String    @db.VarChar(200)
-  category_icon String?   @db.VarChar(255)
-  description   String?   @db.VarChar(255)
-  popular       Boolean?  @default(false)
-  date          String    @db.VarChar(20)
-  status        Boolean   @default(true)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  listing       listing[]
-  blog          blog[]
+  cid            Int              @id @default(autoincrement())
+  category_name  String           @unique @db.VarChar(200)
+  category_slug  String           @db.VarChar(200)
+  category_icon  String?          @db.LongText
+  popular        Boolean?         @default(false)
+  date           String           @db.VarChar(20)
+  status         Boolean          @default(true)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  description    String?          @db.VarChar(255)
+  blog           blog[]
+  listing        listing[]
+  CategoryFooter CategoryFooter[]
 }
 
 model faq {
   id        Int      @id @default(autoincrement())
   blog_id   Int
-  blog      blog     @relation(fields: [blog_id], references: [b_id])
   questions String   @db.Text
   answers   String   @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  blog      blog     @relation(fields: [blog_id], references: [b_id])
+
+  @@index([blog_id], map: "faq_blog_id_fkey")
 }
 
 model pageMaster {
@@ -105,25 +109,22 @@ model pageMaster {
 }
 
 model inner_seo {
-  id          Int        @id @default(autoincrement())
   page_id     Int        @unique
-  page        pageMaster @relation(fields: [page_id], references: [id])
-  title       String     @db.VarChar(250)
-  description String     @db.Text
-  keywords    String     @db.Text
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+  description String     @db.Text
+  keywords    String     @db.Text
+  title       String     @db.VarChar(250)
+  id          Int        @id @default(autoincrement())
+  page        pageMaster @relation(fields: [page_id], references: [id])
 }
 
 model listing {
   id                Int           @id @default(autoincrement())
   userid            Int?
-  user              users?        @relation(fields: [userid], references: [id])
   name              String        @db.VarChar(255)
   slug              String        @db.VarChar(255)
-  category          category?     @relation(fields: [category_id], references: [cid])
   category_id       Int?
-  logo              String?       @default("/logo.png")
   website_link      String        @db.VarChar(255)
   about             String        @db.Text
   email             String        @db.VarChar(255)
@@ -134,35 +135,38 @@ model listing {
   date              String        @db.VarChar(30)
   verify_code       String?       @db.VarChar(10)
   claim             Boolean       @default(false)
-  status            Int
+  status            Boolean       @default(false)
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  businessCategory  String?
   companyName       String?
-  jobTitle          String?
-  phone             String?
-  image             String?
+  companyNumber     String?
+  countryCode       String?       @default("1")
   emailID_1         String?
   emailID_1_purpose String?
   emailID_2         String?
   emailID_2_purpose String?
   emailID_3         String?
   emailID_3_purpose String?
-  countryCode       String?       @default("1")
-  companyNumber     String?
-  businessCategory  String?
-  metaTitle         String?
-  metaKeywords      String?
+  jobTitle          String?
   metaDescription   String?
-  banner            String?       @default("/banner.png")
-  createdAt         DateTime      @default(now())
-  updatedAt         DateTime      @updatedAt
+  metaKeywords      String?
+  metaTitle         String?
+  phone             String?
+  banner            String?       @db.LongText
+  logo              String?       @db.LongText
+  category          category?     @relation(fields: [category_id], references: [cid])
+  user              users?        @relation(fields: [userid], references: [id])
   reviews           review[]
   social_links      social_links?
+
+  @@index([category_id], map: "listing_category_id_fkey")
+  @@index([userid], map: "listing_userid_fkey")
 }
 
 model review {
   id               Int            @id @default(autoincrement())
-  user             users          @relation(fields: [user_id], references: [id])
   user_id          Int
-  company          listing        @relation(fields: [company_id], references: [id])
   company_id       Int
   top_review       Boolean?       @default(false)
   review_title     String         @db.VarChar(50)
@@ -172,39 +176,36 @@ model review {
   review_status    ReviewStatus?  @default(Moderation)
   review_date      DateTime       @default(now())
   flag             Boolean?       @default(false)
-  flagDetail       flagDetails?
   reported         Boolean?       @default(false)
-  reportDetail     ReportDetails?
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @updatedAt
-}
+  reportDetail     ReportDetails?
+  flagDetail       flagDetails?
+  company          listing        @relation(fields: [company_id], references: [id])
+  user             users          @relation(fields: [user_id], references: [id])
 
-enum ReviewStatus {
-  Moderation
-  Active
-  Inactive
-  Reported
-  Flagged
+  @@index([company_id], map: "review_company_id_fkey")
+  @@index([user_id], map: "review_user_id_fkey")
 }
 
 model ReportDetails {
   id            Int      @id @default(autoincrement())
-  review        review   @relation(fields: [review_id], references: [id])
   review_id     Int      @unique
   report_date   DateTime @default(now())
   report_reason String   @db.Text
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  review        review   @relation(fields: [review_id], references: [id])
 }
 
 model flagDetails {
   id          Int      @id @default(autoincrement())
-  review      review   @relation(fields: [reviewId], references: [id])
   reviewId    Int      @unique
   flag_reason String   @db.Text
   flag_date   String   @db.VarChar(20)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  review      review   @relation(fields: [reviewId], references: [id])
 }
 
 model settings {
@@ -233,7 +234,7 @@ model users {
   domain            String?        @db.VarChar(255)
   password          String?        @db.VarChar(250)
   cpassword         String?        @db.VarChar(250)
-  image             String?        @db.VarChar(255)
+  image             String?        @db.LongText
   member_date       DateTime       @default(now())
   verify            Boolean        @default(false)
   verificationToken String?
@@ -242,23 +243,18 @@ model users {
   active            Boolean        @default(false)
   createdAt         DateTime       @default(now())
   updatedAt         DateTime       @updatedAt
-  role              roles?         @relation(fields: [role_id], references: [id])
   role_id           Int?
-  reviews           review[]
-  listing           listing[]
   userDetails       UserDetails?
   blog_comment      blog_comment[]
-}
+  listing           listing[]
+  reviews           review[]
+  role              roles?         @relation(fields: [role_id], references: [id])
 
-enum UserType {
-  USER
-  BUSINESS_USER
-  ADMIN
+  @@index([role_id], map: "users_role_id_fkey")
 }
 
 model UserDetails {
   id          Int      @id @default(autoincrement())
-  user        users?   @relation(fields: [user_id], references: [id])
   user_id     Int?     @unique
   website     String?
   companyName String?
@@ -269,6 +265,7 @@ model UserDetails {
   image       String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  user        users?   @relation(fields: [user_id], references: [id])
 }
 
 model roles {
@@ -283,11 +280,40 @@ model roles {
 model social_links {
   id        Int      @id @default(autoincrement())
   listingId Int?     @unique
-  listing   listing? @relation(fields: [listingId], references: [id])
   facebooke String?  @default("https://www.facebook.com/")
   linkedin  String?  @default("https://www.instagram.com/")
   twitter   String?  @default("https://twitter.com/i/flow/login?lang=en")
   instagram String?  @default("https://www.linkedin.com/login")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  listing   listing? @relation(fields: [listingId], references: [id])
+}
+
+enum b_c_Status {
+  Active
+  Inactive
+}
+
+enum ReviewStatus {
+  Moderation
+  Active
+  Inactive
+  Reported
+  Flagged
+}
+
+enum UserType {
+  USER
+  BUSINESS_USER
+  ADMIN
+}
+
+model CategoryFooter {
+  id         Int       @id @default(autoincrement())
+  categoryId Int
+  category   category  @relation(fields: [categoryId], references: [cid])
+  content    String    @db.LongText
+  status     Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
 }

@@ -157,17 +157,17 @@ const menuGroups = [
       {
         icon: <MdOutlineDashboardCustomize />,
         label: "Category Footer",
-        route: "/admin/category-footer",
+        route: "/admin/settings/dynamic-footer",
       },
       {
         icon: <PiNotepad />,
         label: "Footer",
-        route: "/admin/footer",
+        route: "/admin/settings/footer",
       },
       {
         icon: <TbSeo />,
         label: "Seo",
-        route: "/admin/seo",
+        route: "/admin/settings/seo",
       },
     ],
   },
