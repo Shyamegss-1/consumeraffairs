@@ -19,7 +19,8 @@ const NewBusinessForm = ({ userId }: Props) => {
   const [options, setOptins] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [logo, setLogo] = useState<string | null>(null);
-  const [countryCode, setCountryCode] = useState<string>("1");
+  const [countryCode, setCountryCode] = useState<string | null>("us");
+  const [countryDialCode, setCountryDialCode] = useState<string | null>("1");
   const [country, setCountry] = useState<string>("United States");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -191,11 +192,14 @@ const NewBusinessForm = ({ userId }: Props) => {
             <label htmlFor="">Company Number</label>
             <div className="relative">
               <PhoneNumber
-                value={countryCode}
+                value={{
+                  countryCode: countryCode ? countryCode : "us",
+                  countryDialCode: countryDialCode ? countryDialCode : "1",
+                }}
                 onchange={(val: any) => {
-                  console.log(val);
                   setCountry(val.name);
-                  setCountryCode(val.dialCode);
+                  setCountryDialCode(val.dialCode);
+                  setCountryCode(val.iso2);
                 }}
               />
               <input

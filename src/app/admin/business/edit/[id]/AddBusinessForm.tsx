@@ -9,7 +9,6 @@ import LoadingScreen from "@/components/ui/LoadingScreen";
 import { CategoryOptions } from "@/app/business/add-business/CategoryOptions";
 import PhoneNumber from "@/app/business/add-business/PhoneNumber";
 import { Switch } from "@nextui-org/react";
-import { CountrySelector } from "react-international-phone";
 
 //
 interface formData {
