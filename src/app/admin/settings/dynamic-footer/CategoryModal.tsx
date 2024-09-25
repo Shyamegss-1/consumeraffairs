@@ -35,14 +35,14 @@ type Props = {
     content: string;
     status: boolean;
   };
-  setActiveRowData: Dispatch<
-    SetStateAction<{
-      id: null;
-      category: string;
-      content: string;
-      status: boolean;
-    }>
-  >;
+  // setActiveRowData: Dispatch<
+  //   SetStateAction<{
+  //     id: null;
+  //     category: string;
+  //     content: string;
+  //     status: boolean;
+  //   }>
+  // >;
 };
 
 const CategoryModal = ({
@@ -50,7 +50,7 @@ const CategoryModal = ({
   onOpen,
   onOpenChange,
   data,
-  setActiveRowData,
+  // setActiveRowData,
 }: Props) => {
   const router = useRouter();
   const [options, setOptins] = useState<any[]>([]);
@@ -70,12 +70,12 @@ const CategoryModal = ({
     if (res.status) {
       router.refresh();
       toast.success(res.message);
-      setActiveRowData({
-        id: null,
-        category: "",
-        content: "",
-        status: true,
-      });
+      // setActiveRowData({
+      //   id: null,
+      //   category: "",
+      //   content: "",
+      //   status: true,
+      // });
     } else {
       toast.error(res.message);
     }

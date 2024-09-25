@@ -30,11 +30,9 @@ const TableHeader = (props: Props) => {
         onOpen={onOpen}
         onOpenChange={onOpenChange}
         data={{
-          cid: null,
-          category_name: "",
-          description: "",
-          category_icon: "",
-          popular: false,
+          id: null,
+          category: "",
+          content: "",
           status: true,
         }}
       />
