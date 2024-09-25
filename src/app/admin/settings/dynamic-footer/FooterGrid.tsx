@@ -246,7 +246,7 @@ const FooterGrid = ({ data, totalRecord }: any) => {
             onOpen={onOpen}
             onOpenChange={onOpenChange}
             data={activeRowData}
-            setActiveRowData={setActiveRowData}
+            // setActiveRowData={setActiveRowData}
           />
           {/* Pagination */}
         </div>
