@@ -291,7 +291,7 @@ const UserGrid = ({ data, totalRecord }: any) => {
                         <DropdownItem
                           onClick={(e) => {
                             e.preventDefault();
-                            router.push("/admin/business/edit/id");
+                            router.push(`/admin/business/edit/${item.id}`);
                           }}
                           key="edit"
                         >

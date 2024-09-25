@@ -14,9 +14,11 @@ import { CategoryOptions } from "@/app/business/add-business/CategoryOptions";
 import PhoneNumber from "@/app/business/add-business/PhoneNumber";
 import { Input, Select, SelectItem, Switch, Textarea } from "@nextui-org/react";
 import EditorComponent from "@/components/rich-text-editor/CKEEditor";
+import { handleSeo } from "@/server-actions/Admin/Footer";
 
 //
 interface formData {
+  id: number | null;
   pageName: any;
   metaTitle: string;
   metaDescription: string;
@@ -30,44 +32,53 @@ type Props = {
 const AddBusinessForm = ({ userId }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<formData>({
-    pageName: "",
+    id: null,
+    pageName: null,
     metaTitle: "",
     metaDescription: "",
     metaKeywords: "",
   });
+  const [pageList, setPageList] = useState<any[]>([]);
+
+  const getPages = async () => {
+    const res = await fetch("/api/page-master", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    // console.log(data.data);
+    setPageList(data.data);
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent the default form submission behavior
-    const formData = new FormData(e.currentTarget);
-    const toastId = toast.loading("loading...");
 
+    const toastId = toast.loading("loading...");
     try {
       setLoading(true);
 
-      // const data = {
-      //   userId: userId,
-      //   content,
-      // };
-
       console.log(formData);
 
-      // const res = await addListingByAdmin(data);
-      // setLoading(false);
-      // if (!res.status) {
-      //   toast.error(res.message, {
-      //     id: toastId,
-      //   });
-      // } else {
-      //   toast.dismiss();
-      //   Swal.fire({
-      //     title: "Success",
-      //     text: "Check your email to verify your account",
-      //   });
-      // }
+      const res = await handleSeo(formData);
+      setLoading(false);
+      if (!res.status) {
+        toast.error(res.message, {
+          id: toastId,
+        });
+      } else {
+        toast.success(res.status, {
+          id: toastId,
+        });
+      }
     } catch (error) {
       toast.error("An error occurred", { id: toastId });
     }
   };
+
+  useEffect(() => {
+    getPages();
+  }, []);
 
   return (
     <>
@@ -92,8 +103,16 @@ const AddBusinessForm = ({ userId }: Props) => {
               labelPlacement="outside"
               className="max-w-xs"
             >
-              <SelectItem key="Home">{"Home"}</SelectItem>
-              <SelectItem key="About">{"About"}</SelectItem>
+              {pageList.map((item) => {
+                return (
+                  <SelectItem
+                    key={`${item.id}`}
+                    textValue={String(item.pageName)}
+                  >
+                    {item.pageName}
+                  </SelectItem>
+                );
+              })}
             </Select>
           </div>
           <div className="col-span-1 w-full">

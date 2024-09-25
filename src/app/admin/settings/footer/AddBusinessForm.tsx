@@ -1,62 +1,52 @@
 "use client";
-import Image from "next/image";
 import React, { Suspense, useEffect, useState } from "react";
-
 import { toast } from "sonner";
-import { convertToBase64 } from "@/lib/Hooks";
-import Swal from "sweetalert2";
-import {
-  addListingByAdmin,
-  addListingByBusinessOwner,
-} from "@/server-actions/addListingByBusinessUser";
 import LoadingScreen from "@/components/ui/LoadingScreen";
-import { CategoryOptions } from "@/app/business/add-business/CategoryOptions";
-import PhoneNumber from "@/app/business/add-business/PhoneNumber";
-import { Switch } from "@nextui-org/react";
 import EditorComponent from "@/components/rich-text-editor/CKEEditor";
+import { handleCreateUpdateFooter } from "@/server-actions/Admin/Footer";
 
 //
 
 type Props = {
   userId: string;
+  footerData: any;
 };
 
-const AddBusinessForm = ({ userId }: Props) => {
+const AddBusinessForm = ({ userId, footerData }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [content, setContent] = useState<string | null>("");
+  const [content, setContent] = useState<string | null>(null);
+  const [id, setId] = useState<number | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent the default form submission behavior
-    const formData = new FormData(e.currentTarget);
-    const toastId = toast.loading("loading...");
-
+    const toastId = toast.loading("Please wait...");
     try {
       setLoading(true);
-
-      const data = {
-        userId: userId,
-        content,
-      };
-
-      console.log(data);
-
-      // const res = await addListingByAdmin(data);
-      // setLoading(false);
-      // if (!res.status) {
-      //   toast.error(res.message, {
-      //     id: toastId,
-      //   });
-      // } else {
-      //   toast.dismiss();
-      //   Swal.fire({
-      //     title: "Success",
-      //     text: "Check your email to verify your account",
-      //   });
-      // }
+      if (!content) {
+        return toast.error("Please add content in editor", {
+          id: toastId,
+        });
+      }
+      const res = await handleCreateUpdateFooter({ content, id });
+      setLoading(false);
+      if (!res.status) {
+        toast.error(res.message, {
+          id: toastId,
+        });
+      } else {
+        toast.success(res.message, {
+          id: toastId,
+        });
+      }
     } catch (error) {
       toast.error("An error occurred", { id: toastId });
     }
   };
+
+  useEffect(() => {
+    setContent(footerData?.content);
+    setId(footerData?.id);
+  }, []);
 
   return (
     <>
@@ -71,7 +61,7 @@ const AddBusinessForm = ({ userId }: Props) => {
           <EditorComponent
             name="content"
             id="content"
-            data={content}
+            data={content ? content : ""}
             onChange={(value: any) => setContent(value)}
           />
         </div>

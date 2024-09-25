@@ -131,7 +131,6 @@ model listing {
   address           String?       @db.VarChar(255)
   city              String?       @db.VarChar(255)
   pincode           String?       @db.VarChar(255)
-  country           String?       @db.VarChar(255)
   date              String        @db.VarChar(30)
   verify_code       String?       @db.VarChar(10)
   claim             Boolean       @default(false)
@@ -141,7 +140,9 @@ model listing {
   businessCategory  String?
   companyName       String?
   companyNumber     String?
-  countryCode       String?       @default("1")
+  countryDialCode   String?
+  countryCode       String?
+  country           String?       @default("United States") @db.VarChar(255)
   emailID_1         String?
   emailID_1_purpose String?
   emailID_2         String?
@@ -316,4 +317,12 @@ model CategoryFooter {
   status     Boolean   @default(true)
   createdAt  DateTime  @default(now())
   updatedAt  DateTime? @updatedAt
+}
+
+model Footer {
+  id        Int      @id @default(autoincrement())
+  content   String
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

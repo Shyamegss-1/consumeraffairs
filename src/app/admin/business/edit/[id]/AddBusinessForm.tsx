@@ -4,23 +4,34 @@ import React, { Suspense, useEffect, useState } from "react";
 
 import { toast } from "sonner";
 import { convertToBase64 } from "@/lib/Hooks";
-import Swal from "sweetalert2";
-import {
-  addListingByAdmin,
-  addListingByBusinessOwner,
-} from "@/server-actions/addListingByBusinessUser";
+import { updateListingByAdmin } from "@/server-actions/addListingByBusinessUser";
 import LoadingScreen from "@/components/ui/LoadingScreen";
 import { CategoryOptions } from "@/app/business/add-business/CategoryOptions";
 import PhoneNumber from "@/app/business/add-business/PhoneNumber";
 import { Switch } from "@nextui-org/react";
+import { CountrySelector } from "react-international-phone";
 
 //
+interface formData {
+  userId: string | null;
+  description: string;
+  companyEmail: string;
+  websiteUrl: string;
+  companyName: string | null;
+  companyNumber: string | null;
+  category: string | null;
+  metaTitle: string | null;
+  metaDescription: string | null;
+  metaTags: string | null;
+  companyAddress: string | null;
+}
 
 type Props = {
   userId: string;
+  business: any;
 };
 
-const AddBusinessForm = ({ userId }: Props) => {
+const AddBusinessForm = ({ userId, business }: Props) => {
   const [options, setOptins] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [logo, setLogo] = useState<string | null>(null);
@@ -28,6 +39,20 @@ const AddBusinessForm = ({ userId }: Props) => {
   const [countryDialCode, setCountryDialCode] = useState<string | null>("1");
   const [country, setCountry] = useState<string | null>("United States");
   const [isClaimed, setIsClaimed] = useState<boolean>(false);
+  const [BusinessStatus, setBusinessStatus] = useState<boolean>(false);
+  const [formData, setFormData] = useState<formData>({
+    userId: "",
+    description: "",
+    companyEmail: "",
+    websiteUrl: "",
+    companyName: "",
+    companyNumber: "",
+    category: "",
+    metaTitle: "",
+    metaDescription: "",
+    metaTags: "",
+    companyAddress: "",
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent the default form submission behavior
@@ -77,17 +102,15 @@ const AddBusinessForm = ({ userId }: Props) => {
 
       console.log(data);
 
-      const res = await addListingByAdmin(data);
+      const res = await updateListingByAdmin(data, business.id);
       setLoading(false);
       if (!res.status) {
         toast.error(res.message, {
           id: toastId,
         });
       } else {
-        toast.dismiss();
-        Swal.fire({
-          title: "Success",
-          text: "Check your email to verify your account",
+        toast.success(res.message, {
+          id: toastId,
         });
       }
     } catch (error) {
@@ -107,49 +130,73 @@ const AddBusinessForm = ({ userId }: Props) => {
       let res = await CategoryOptions();
       setOptins(res);
     };
+    setFormData({
+      ...formData,
+      companyEmail: business.email,
+      companyNumber: business.companyNumber,
+      companyName: business.companyName,
+      description: business.about,
+      metaDescription: business.metaDescription,
+      metaTitle: business.metaTitle,
+      metaTags: business.metaKeywords,
+      userId: String(business.userid),
+      websiteUrl: business.website_link,
+      category: business.category_id ? String(business.category_id) : "",
+      companyAddress: business.address,
+    });
+    setLogo(business.logo);
+    setCountryDialCode(business.countryDialCode);
+    setCountryCode(business.countryCode);
+    setCountry(business.country);
+    setIsClaimed(business.claim);
+    setBusinessStatus(business.status);
     options();
   }, []);
   return (
     <>
-      <form className="mt-96 top-0 relative" onSubmit={handleSubmit}>
-        <div className="w-full">
-          <p className="text-lg text-slate-900 font-semibold mb-2">Logo</p>
-          <div className="grid grid-cols-12 gap-x-10 ">
-            <Image
-              src={logo || "/logo.png"}
-              alt=""
-              width={1080}
-              height={1080}
-              className="border w-40 rounded-full p-2 col-span-2"
-            />
-            <div className="col-span-10 flex flex-col justify-center items-center relative">
-              <label
-                htmlFor="logo"
-                className="w-1/2 ring-2 ring-primary_dark text-primary_dark font-semibold rounded-3xl text-center py-2"
-              >
-                Browse Files
-                <input
-                  id="logo"
-                  type="file"
-                  className="absolute  opacity-0"
-                  onChange={(e) => handleFileChange(e, "logo")}
-                />
-              </label>
-              <p className="text-gray-500 mt-5 font-semibold">
-                Note*:{" "}
-                <span className="text-gray-400">
-                  File should be 200px X 200px.
-                </span>
-              </p>
+      <form className="relative" onSubmit={handleSubmit}>
+        <div className="grid grid-cols-12 gap-4 mt-6">
+          <div className="col-span-12">
+            <p className="text-lg text-slate-900 font-semibold mb-2">Logo</p>
+            <div className="grid grid-cols-12 gap-x-10 ">
+              <Image
+                src={logo || "/logo.png"}
+                alt="logo"
+                width={1080}
+                height={1080}
+                className="border w-40 rounded-full p-2 col-span-2"
+              />
+              <div className="col-span-10 flex flex-col justify-center items-center relative">
+                <label
+                  htmlFor="logo"
+                  className="w-1/2 ring-2 ring-primary_dark text-primary_dark font-semibold rounded-3xl text-center py-2"
+                >
+                  Browse Files
+                  <input
+                    id="logo"
+                    type="file"
+                    className="absolute  opacity-0"
+                    onChange={(e) => handleFileChange(e, "logo")}
+                  />
+                </label>
+                <p className="text-gray-500 mt-5 font-semibold">
+                  Note*:{" "}
+                  <span className="text-gray-400">
+                    File should be 200px X 200px.
+                  </span>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="grid grid-cols-12 gap-4 mt-6">
           <div className="form-field col-span-4">
             <label htmlFor="company_name">Company Name</label>
             <input
               type="text"
               placeholder="Enter company name"
+              value={formData.companyName ? formData.companyName : ""}
+              onChange={(e) =>
+                setFormData({ ...formData, companyName: e.target.value })
+              }
               name="company_name"
               className="form-control"
             />
@@ -159,6 +206,10 @@ const AddBusinessForm = ({ userId }: Props) => {
             <input
               type="text"
               id="websiteUrl"
+              value={formData.websiteUrl ? formData.websiteUrl : ""}
+              onChange={(e) =>
+                setFormData({ ...formData, websiteUrl: e.target.value })
+              }
               placeholder="Enter Website Url"
               name="websiteUrl"
               className="form-control"
@@ -166,7 +217,14 @@ const AddBusinessForm = ({ userId }: Props) => {
           </div>
           <div className="form-field col-span-4">
             <label htmlFor="">Business Category</label>
-            <select name="category" className="form-control">
+            <select
+              name="category"
+              className="form-control"
+              value={formData.category ? formData.category : ""}
+              onChange={(e) =>
+                setFormData({ ...formData, category: e.target.value })
+              }
+            >
               <option value="">Select Category</option>
               {options?.map((item, index) => (
                 <option key={index} value={item.cid}>
@@ -178,14 +236,26 @@ const AddBusinessForm = ({ userId }: Props) => {
           <div className="form-field col-span-12 ">
             <label htmlFor="">About Description</label>
             <textarea
+              value={formData.description ? formData.description : ""}
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
               placeholder="Website URL"
               name="description"
               className="form-control min-h-32"
             />
           </div>
-          <div className="form-field col-span-12 ">
+          <div className="form-field col-span-3 mt-4">
             <Switch isSelected={isClaimed} onValueChange={setIsClaimed}>
               Claimed
+            </Switch>
+          </div>
+          <div className="form-field col-span-3 mt-4">
+            <Switch
+              isSelected={BusinessStatus}
+              onValueChange={setBusinessStatus}
+            >
+              Status
             </Switch>
           </div>
           <h3 className="border-b-2 border-active_dark py-4 w-fit text-2xl font-bold text-slate-900 col-span-12">
@@ -194,6 +264,10 @@ const AddBusinessForm = ({ userId }: Props) => {
           <div className="form-field col-span-6">
             <label htmlFor="">Company Email Address</label>
             <input
+              value={formData.companyEmail ? formData.companyEmail : ""}
+              onChange={(e) =>
+                setFormData({ ...formData, companyEmail: e.target.value })
+              }
               type="email"
               placeholder="Company Email Address"
               name="companyEmail"
@@ -203,6 +277,7 @@ const AddBusinessForm = ({ userId }: Props) => {
           <div className="form-field col-span-6">
             <label htmlFor="">Company Number</label>
             <div className="relative">
+              {/* {countryCode} */}
               <PhoneNumber
                 value={{
                   countryCode: countryCode ? countryCode : "us",
@@ -216,6 +291,10 @@ const AddBusinessForm = ({ userId }: Props) => {
               />
               <input
                 type="tel"
+                value={formData.companyNumber ? formData.companyNumber : ""}
+                onChange={(e) =>
+                  setFormData({ ...formData, companyNumber: e.target.value })
+                }
                 placeholder="Company Number"
                 name="companyNumber"
                 className="form-control"
@@ -227,6 +306,10 @@ const AddBusinessForm = ({ userId }: Props) => {
             <label htmlFor="">Company Address</label>
             <input
               type="text"
+              value={formData.companyAddress ? formData.companyAddress : ""}
+              onChange={(e) =>
+                setFormData({ ...formData, companyAddress: e.target.value })
+              }
               placeholder="Company Address"
               name="companyAddress"
               className="form-control"
@@ -249,6 +332,10 @@ const AddBusinessForm = ({ userId }: Props) => {
           <div className="form-field col-span-6">
             <label htmlFor="">Meta Title</label>
             <input
+              value={formData.metaTitle ? formData.metaTitle : ""}
+              onChange={(e) =>
+                setFormData({ ...formData, metaTitle: e.target.value })
+              }
               type="text"
               placeholder="Meta Title"
               name="metaTitle"
@@ -258,6 +345,10 @@ const AddBusinessForm = ({ userId }: Props) => {
           <div className="form-field col-span-6">
             <label htmlFor="">Meta Tags</label>
             <input
+              value={formData.metaTags ? formData.metaTags : ""}
+              onChange={(e) =>
+                setFormData({ ...formData, metaTags: e.target.value })
+              }
               type="text"
               placeholder="Meta Tags"
               name="metaTags"
@@ -267,6 +358,10 @@ const AddBusinessForm = ({ userId }: Props) => {
           <div className="form-field col-span-6">
             <label htmlFor="">Meta Description</label>
             <input
+              value={formData.metaDescription ? formData.metaDescription : ""}
+              onChange={(e) =>
+                setFormData({ ...formData, metaDescription: e.target.value })
+              }
               type="text"
               placeholder="Meta Description"
               name="metaDescription"
@@ -275,14 +370,14 @@ const AddBusinessForm = ({ userId }: Props) => {
           </div>
         </div>
         <button className="py-2 px-6 rounded-full mt-4 bg-active_dark text-white font-bold">
-          Submit
+          Update
         </button>
+        {loading && (
+          <div className="absolute z-30 w-full left-0 bottom-0 backdrop-blur-sm h-screen flex justify-center items-center">
+            <LoadingScreen text="Please Wait..." />
+          </div>
+        )}
       </form>
-      {loading && (
-        <div className="absolute z-30 w-full left-0 top-0 backdrop-blur-sm h-screen flex justify-center items-center">
-          <LoadingScreen text="Please Wait..." />
-        </div>
-      )}
     </>
   );
 };

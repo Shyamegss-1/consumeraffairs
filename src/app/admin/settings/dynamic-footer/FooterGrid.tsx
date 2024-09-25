@@ -8,9 +8,11 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-import { handleDelete, handleStatusUpdate } from "@/server-actions/Admin/BusinessCategory";
+import {
+  handleDelete,
+  handleStatusUpdate,
+} from "@/server-actions/Admin/BusinessCategory";
 import CategoryModal from "./CategoryModal";
-
 
 const FooterGrid = ({ data, totalRecord }: any) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -22,11 +24,9 @@ const FooterGrid = ({ data, totalRecord }: any) => {
   const searchParams: any = useSearchParams();
   const totalPages = Math.ceil(totalRecord / pageSize);
   const [activeRowData, setActiveRowData] = useState({
-    cid: null,
-    category_name: "",
-    description: "",
-    category_icon: "",
-    popular: false,
+    id: null,
+    category: "",
+    content: "",
     status: true,
   });
 
@@ -138,13 +138,15 @@ const FooterGrid = ({ data, totalRecord }: any) => {
                     {index + 1}
                   </td>
                   <td className="py-2 px-4 border-b border-x border-gray-300">
-                    {item.category_name}
+                    {item.category.category_name}
                   </td>
                   <td className="py-2 px-4 border-b border-x border-gray-300">
-                    {item.category_slug}
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: `<div className="line-clamp-3">${item.content}</div>`,
+                      }}
+                    />
                   </td>
-                 
-                  
                   <td className="py-2 px-4 border-b border-x border-gray-300 relative">
                     {item.status ? (
                       <span className="py-1 px-4 mx-auto bg-orange-500/60 text-white rounded-full w-fit block">
@@ -200,11 +202,9 @@ const FooterGrid = ({ data, totalRecord }: any) => {
                           onClick={(e) => {
                             onOpen();
                             setActiveRowData({
-                              cid: item.cid,
-                              category_name: item.category_name,
-                              description: item.description,
-                              category_icon: item.category_icon,
-                              popular: item.popular,
+                              id: item.id,
+                              category: item.categoryId,
+                              content: item.content,
                               status: item.status,
                             });
                           }}
@@ -246,6 +246,7 @@ const FooterGrid = ({ data, totalRecord }: any) => {
             onOpen={onOpen}
             onOpenChange={onOpenChange}
             data={activeRowData}
+            setActiveRowData={setActiveRowData}
           />
           {/* Pagination */}
         </div>

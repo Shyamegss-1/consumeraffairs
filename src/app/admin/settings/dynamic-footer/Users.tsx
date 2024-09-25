@@ -12,20 +12,25 @@ type Props = {
 const Users = async (props: Props) => {
   const session = await auth();
   const skip = (props.page - 1) * props.pageSize;
-  const data = await prisma.category.findMany({
+  const data = await prisma.categoryFooter.findMany({
     where: {
       OR: [
         {
-          category_name: {
+          content: {
             contains: props.search,
           },
         },
         {
-          category_slug: {
-            contains: props.search,
+          category: {
+            category_name: {
+              contains: props.search,
+            },
           },
         },
       ],
+    },
+    include: {
+      category: true,
     },
     skip,
     take: props.pageSize,
@@ -34,7 +39,7 @@ const Users = async (props: Props) => {
     },
   });
 
-  const totalRecord = await prisma.users.count();
+  const totalRecord = await prisma.categoryFooter.count();
 
   // console.log(data, "data", session?.user.id);
   return <FooterGrid data={data} totalRecord={totalRecord} />;

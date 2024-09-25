@@ -5,11 +5,13 @@ import React, { Suspense } from "react";
 import AddBusinessForm from "./AddBusinessForm";
 import type { Metadata } from "next";
 import { getPageMeta } from "@/app/lib/meta";
-import { prisma } from "../../../../../prisma/prisma";
+import { prisma } from "../../../../../../prisma/prisma";
+import Link from "next/link";
+import FormHeader from "./FormHeader";
 
 type Props = {
   params: {
-    page: string;
+    id: string;
   };
   searchParams: {
     page?: string;
@@ -43,19 +45,30 @@ const page = async ({ params, searchParams }: Props) => {
     redirect("/admin/login");
   }
 
-  const footerData = await prisma.footer.findFirst();
-
-  const page = Number(searchParams.page) || 1;
-  const pageSize = Number(searchParams.pageSize) || 10;
-  const search = searchParams.search || "";
+  const business = await prisma.listing.findUnique({
+    where: {
+      id: Number(params.id),
+    },
+    include: {
+      user: true,
+    },
+  });
   return (
     <>
       <AdminAuthLayout user={session?.user}>
-        <h3 className="rounded-xl border bg-white px-6 py-4 shadow-md mb-4 text-xl font-semibold">
-          Add Footer Content
-        </h3>
-        <div className="rounded-xl border bg-white px-6 py-4 shadow-md overflow-auto max-h-[79vh] custom-scroll flex justify-center items-center relative">
-          <AddBusinessForm userId={session?.user.id} footerData={footerData} />
+        <FormHeader />
+        <div className="rounded-xl border bg-white px-6 py-4 shadow-md overflow-auto max-h-[79vh] custom-scroll ">
+          <Suspense
+            fallback={
+              <>
+                <div className="loading-container">
+                  <div className="spinner"></div>
+                </div>
+              </>
+            }
+          >
+            <AddBusinessForm userId={session?.user.id} business={business} />
+          </Suspense>
         </div>
       </AdminAuthLayout>
     </>

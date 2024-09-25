@@ -712,3 +712,45 @@ textarea {
     transform: rotate(360deg);
   }
 }
+
+
+
+/* General heading styles */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Arial', sans-serif; /* Set your preferred font */
+  font-weight: bold;
+  color: #333; /* Default text color */
+  margin-bottom: 0.5em; /* Spacing below the heading */
+  line-height: 1.2; /* Adjust line height */
+}
+
+/* Specific styles for each heading */
+h1 {
+  font-size: 2.5rem; /* Largest heading */
+  color: #1a1a1a; /* Darker color for h1 */
+}
+
+h2 {
+  font-size: 2rem;
+  color: #333;
+}
+
+h3 {
+  font-size: 1.75rem;
+  color: #444;
+}
+
+h4 {
+  font-size: 1.5rem;
+  color: #555;
+}
+
+h5 {
+  font-size: 1.25rem;
+  color: #666;
+}
+
+h6 {
+  font-size: 1rem; /* Smallest heading */
+  color: #777;
+}
