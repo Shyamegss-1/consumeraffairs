@@ -2,6 +2,7 @@
 
 import { ReviewStatus } from "@prisma/client";
 import { prisma } from "../../../prisma/prisma";
+import { sendMultipleEmails } from "@/lib/mailer";
 
 export const handleDelete = async (id: number) => {
   try {
@@ -32,10 +33,24 @@ export const handleStatusUpdate = async (status: ReviewStatus, id: number) => {
       data: {
         review_status: status,
       },
+      include: {
+        user: true,
+      },
     });
     if (!updatedCategory) {
       throw new Error("Something went wrong, Please try again");
     }
+    await sendMultipleEmails({
+      email: updatedCategory.user.email,
+      subject: `Congratulations! Your review has been ${updatedCategory.review_status}.`,
+      html: "",
+      text: `Hi ${updatedCategory.user.firstName}
+Your review of Avast has just been ${updatedCategory.review_status}. Thanks for helping to build trust online and empower shoppers everywhere.
+Best regards,
+Admin
+My Reviews
+`,
+    });
     return {
       status: true,
       message: "Category status updated successfully",

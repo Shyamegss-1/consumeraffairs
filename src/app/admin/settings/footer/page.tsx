@@ -45,6 +45,8 @@ const page = async ({ params, searchParams }: Props) => {
 
   const footerData = await prisma.footer.findFirst();
 
+  console.log(footerData);
+
   const page = Number(searchParams.page) || 1;
   const pageSize = Number(searchParams.pageSize) || 10;
   const search = searchParams.search || "";

@@ -49,6 +49,7 @@ export const handleCreateCategoryFooter = async (data: {
   id: string | null;
   category: string;
   content: string;
+  status: boolean;
 }) => {
   try {
     let CategoryFooter;
@@ -60,6 +61,7 @@ export const handleCreateCategoryFooter = async (data: {
         data: {
           content: data.content,
           categoryId: Number(data.category),
+          status: data.status,
         },
       });
     } else {
@@ -156,9 +158,7 @@ export const handleSeo = async (data: {
     }
     return {
       status: true,
-      message: `SEO has been ${
-        data.id ? "updated" : "added"
-      } successfully`,
+      message: `SEO has been ${data.id ? "updated" : "added"} successfully`,
       Footer,
     };
   } catch (error: any) {

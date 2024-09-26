@@ -322,7 +322,7 @@ model CategoryFooter {
 
 model Footer {
   id        Int      @id @default(autoincrement())
-  content   String
+  content   String   @db.LongText
   status    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -35,29 +35,19 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
             <div key={item.id} className="business-review-single-box mt-4">
               <div className="business-review-profile-box">
                 <div className="business-review-profile-info flex items-center">
-                  <div className="business-review-logo">
-                    <p
-                      style={{
-                        height: 60,
-                        margin: "auto",
-                        fontSize: "26px !important",
-                        color: "#fff",
-                        width: 60,
-                        lineHeight: 60,
-                        textAlign: "center",
-                        borderRadius: "50%",
-                        backgroundColor: "green",
-                      }}
-                    >
-                      {`${item.user.firstName
-                        .charAt(0)
-                        .toUpperCase()} ${item.user.lastName
-                        .charAt(0)
-                        .toUpperCase()}`}
+                  <div className="h-16 w-16 bg-green-900 text-white border rounded-full flex justify-center items-center">
+                    <p className="font-bold text-2xl">
+                      {`${item.user.firstName?.charAt(0)?.toUpperCase()} ${
+                        item.user.lastName
+                          ? item.user.lastName?.charAt(0)?.toUpperCase()
+                          : ""
+                      }`}
                     </p>
                   </div>
                   <div className="business-user-name ms-2">
-                    <h4>{`${item.user.firstName} ${item.user.lastName}`}</h4>
+                    <h4>{`${item.user.firstName} ${
+                      item.user.lastName ? item.user.lastName : ""
+                    }`}</h4>
                   </div>
                 </div>
                 <div className="business-review-rating-box">
@@ -105,7 +95,7 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
           <h4 className="mb-3 text-heading-3 font-heading-3">
             Write A Review{" "}
           </h4>
-          <hr className="text-black h-2"/>
+          <hr className="text-black h-2" />
         </div>
         <div className="mt-4 w-full">
           <form
@@ -314,7 +304,7 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
                             const res = await loginHandler({
                               email: email ? (email as string) : "",
                               password: password ? (password as string) : "",
-                              userType: "USER"
+                              userType: "USER",
                             });
                             console.log(res);
 
@@ -387,7 +377,7 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
                               await loginHandler({
                                 email: _email,
                                 password: _password,
-                                userType:"USER"
+                                userType: "USER",
                               });
                               const _res: any = await postReviews({
                                 ...data,
