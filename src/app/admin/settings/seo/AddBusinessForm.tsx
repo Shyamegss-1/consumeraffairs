@@ -15,6 +15,8 @@ import PhoneNumber from "@/app/business/add-business/PhoneNumber";
 import { Input, Select, SelectItem, Switch, Textarea } from "@nextui-org/react";
 import EditorComponent from "@/components/rich-text-editor/CKEEditor";
 import { handleSeo } from "@/server-actions/Admin/Footer";
+import FooterGrid from "./FooterGrid";
+import Users from "./Users";
 
 //
 interface formData {
@@ -27,9 +29,21 @@ interface formData {
 
 type Props = {
   userId: string;
+  page: number;
+  pageSize: number;
+  search: string;
+  data: any;
+  totalRecord: number;
 };
 
-const AddBusinessForm = ({ userId }: Props) => {
+const AddBusinessForm = ({
+  userId,
+  page,
+  pageSize,
+  search,
+  data,
+  totalRecord,
+}: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [formData, setFormData] = useState<formData>({
     id: null,
@@ -67,7 +81,7 @@ const AddBusinessForm = ({ userId }: Props) => {
           id: toastId,
         });
       } else {
-        toast.success(res.status, {
+        toast.success(res.message, {
           id: toastId,
         });
       }
@@ -92,7 +106,7 @@ const AddBusinessForm = ({ userId }: Props) => {
               variant="bordered"
               color="primary"
               name="blogCategory"
-              selectedKeys={[formData.pageName]}
+              selectedKeys={[String(formData.pageName)]}
               onSelectionChange={({ currentKey }) =>
                 setFormData({ ...formData, pageName: currentKey })
               }
@@ -122,14 +136,14 @@ const AddBusinessForm = ({ userId }: Props) => {
                 setFormData({ ...formData, metaTitle: value });
               }}
               type="text"
-              label="Tags (Separated by comma without space)"
+              label="Title"
               variant="bordered"
               color="primary"
               name="tags"
               id="tags"
               classNames={{ label: ["text-gray-700, font-medium"] }}
               labelPlacement={"outside"}
-              placeholder="Tags"
+              placeholder="Title"
               description={null}
             />
           </div>
@@ -178,6 +192,16 @@ const AddBusinessForm = ({ userId }: Props) => {
           <LoadingScreen text="Please Wait..." />
         </div>
       )}
+      <div className="mt-4">
+        <FooterGrid
+          data={data}
+          totalRecord={totalRecord}
+          setFormData={setFormData}
+        />
+      </div>
+      {/* <div className="mt-4">
+        <Users page={page} pageSize={pageSize} search={search} />
+      </div> */}
     </>
   );
 };

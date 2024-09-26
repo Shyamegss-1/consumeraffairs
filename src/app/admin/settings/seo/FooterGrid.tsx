@@ -2,16 +2,14 @@
 import ActionDropdowns from "@/components/dropdown/ActionDropdowns";
 import Pagination from "@/components/pagination/Pagination";
 import useDebounce from "@/lib/client-hooks/useDebounce";
+import { handleDelete, handleStatusUpdate } from "@/server-actions/Admin/Seo";
 import { DropdownItem, useDisclosure } from "@nextui-org/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 
-import CategoryModal from "./CategoryModal";
-import { handleDelete, handleStatusUpdate } from "@/server-actions/Admin/DynamicFooter";
-
-const FooterGrid = ({ data, totalRecord }: any) => {
+const FooterGrid = ({ data, totalRecord, setFormData }: any) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [statusFilter, setStatusFilter] = useState<string>("");
   const [pageSize, setPageSize] = useState<number>(10);
@@ -20,12 +18,7 @@ const FooterGrid = ({ data, totalRecord }: any) => {
   const pathname = usePathname();
   const searchParams: any = useSearchParams();
   const totalPages = Math.ceil(totalRecord / pageSize);
-  const [activeRowData, setActiveRowData] = useState({
-    id: null,
-    category: "",
-    content: "",
-    status: true,
-  });
+
 
   const [searchQuery, setSearchQuery] = useState(
     () => searchParams?.get("search") || ""
@@ -42,10 +35,9 @@ const FooterGrid = ({ data, totalRecord }: any) => {
   //   setCurrentPage(1); // Reset to first page when page size changes
   // };
 
-  console.log(activeRowData, "activerow dat");
 
   const startIndex = (currentPage - 1) * pageSize;
-  const currentData: any[] = data.slice(startIndex, startIndex + pageSize);
+  const currentData: any[] = data?.slice(startIndex, startIndex + pageSize);
 
   const searchQueryValue: string = useDebounce(searchQuery, 500);
   // console.log(searchQueryValue, "searchQueryValue");
@@ -112,10 +104,16 @@ const FooterGrid = ({ data, totalRecord }: any) => {
                   Sr. No.
                 </th>
                 <th className="py-2 px-4 border border-gray-300 bg-active_dark text-white">
-                  Top Searches
+                  Page Name
                 </th>
                 <th className="py-2 px-4 border border-gray-300 bg-active_dark text-white">
-                  Content
+                  Title
+                </th>
+                <th className="py-2 px-4 border border-gray-300 bg-active_dark text-white">
+                  Meta Keywords
+                </th>
+                <th className="py-2 px-4 border border-gray-300 bg-active_dark text-white">
+                  Meta Description
                 </th>
                 <th className="py-2 px-4 border border-gray-300 bg-active_dark text-white">
                   Status
@@ -135,12 +133,18 @@ const FooterGrid = ({ data, totalRecord }: any) => {
                     {index + 1}
                   </td>
                   <td className="py-2 px-4 border-b border-x border-gray-300">
-                    {item.category.category_name}
+                    {item.page.pageName}
+                  </td>
+                  <td className="py-2 px-4 border-b border-x border-gray-300">
+                    {item.title}
+                  </td>
+                  <td className="py-2 px-4 border-b border-x border-gray-300">
+                    {item.keywords}
                   </td>
                   <td className="py-2 px-4 border-b border-x border-gray-300">
                     <div
                       dangerouslySetInnerHTML={{
-                        __html: `<div className="line-clamp-3">${item.content}</div>`,
+                        __html: `<div className="line-clamp-3">${item.description}</div>`,
                       }}
                     />
                   </td>
@@ -198,11 +202,12 @@ const FooterGrid = ({ data, totalRecord }: any) => {
                         <DropdownItem
                           onClick={(e) => {
                             onOpen();
-                            setActiveRowData({
+                            setFormData({
                               id: item.id,
-                              category: item.categoryId,
-                              content: item.content,
-                              status: item.status,
+                              pageName: item.page_id,
+                              metaTitle: item.title,
+                              metaDescription: item.description,
+                              metaKeywords: item.keywords,
                             });
                           }}
                           key="edit"
@@ -238,13 +243,13 @@ const FooterGrid = ({ data, totalRecord }: any) => {
               )}
             </tbody>
           </table>
-          <CategoryModal
+          {/* <CategoryModal
             isOpen={isOpen}
             onOpen={onOpen}
             onOpenChange={onOpenChange}
             data={activeRowData}
             // setActiveRowData={setActiveRowData}
-          />
+          /> */}
           {/* Pagination */}
         </div>
         {/* <Pagination

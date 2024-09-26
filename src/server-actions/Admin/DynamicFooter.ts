@@ -1,9 +1,10 @@
-"use server"
+"use server";
+
 import { prisma } from "../../../prisma/prisma";
 
 export const handleDelete = async (id: number) => {
   try {
-    const deletedCategory = await prisma.inner_seo.delete({
+    const deletedCategory = await prisma.categoryFooter.delete({
       where: {
         id: id,
       },
@@ -13,17 +14,19 @@ export const handleDelete = async (id: number) => {
     }
     return {
       status: true,
-      message: "Category deleted successfully",
+      message: "Category footer deleted successfully",
     };
   } catch (error: any) {
-    console.log(error);
     return { status: false, message: String(error.message) };
   }
 };
 
-export const handleStatusUpdate = async (status: boolean, id: number) => {
+export const handleStatusUpdate = async (
+  status: boolean,
+  id: number,
+) => {
   try {
-    const updatedCategory = await prisma.inner_seo.update({
+    const updatedCategory = await prisma.categoryFooter.update({
       where: {
         id: id,
       },
@@ -36,10 +39,9 @@ export const handleStatusUpdate = async (status: boolean, id: number) => {
     }
     return {
       status: true,
-      message: "Category status updated successfully",
+      message: "Category footer updated successfully",
     };
   } catch (error: any) {
-    console.log(error);
     return { status: false, message: String(error.message) };
   }
 };

@@ -135,7 +135,7 @@ export const handleSeo = async (data: {
           id: Number(data.id),
         },
         data: {
-          page_id: data.pageName,
+          page_id: Number(data.pageName),
           title: data.metaTitle,
           keywords: data.metaKeywords,
           description: data.metaDescription,
@@ -144,7 +144,7 @@ export const handleSeo = async (data: {
     } else {
       Footer = await prisma.inner_seo.create({
         data: {
-          page_id: data.pageName,
+          page_id: Number(data.pageName),
           title: data.metaTitle,
           keywords: data.metaKeywords,
           description: data.metaDescription,

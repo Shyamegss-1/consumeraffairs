@@ -87,7 +87,7 @@ const CategoryModal = ({ isOpen, onOpen, onOpenChange, data }: Props) => {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Add Category
+                {formData.cid?"Update":"Add"} Category
               </ModalHeader>
               <form onSubmit={handleSubmit}>
                 <ModalBody>
@@ -191,7 +191,11 @@ const CategoryModal = ({ isOpen, onOpen, onOpenChange, data }: Props) => {
                     disabled={loading}
                     className="ring-active_dark ring-2 text-active_dark_dark ml-4 rounded-md p-2 px-4 hover:bg-active_dark hover:text-white font-semibold"
                   >
-                    {loading ? "Please wait..." : "Add"}
+                    {loading
+                      ? "Please wait..."
+                      : formData.cid
+                      ? "Update"
+                      : "Add"}
                   </button>
                 </ModalFooter>
               </form>

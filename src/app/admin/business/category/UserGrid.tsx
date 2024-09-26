@@ -8,8 +8,11 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import CategoryModal from "./CategoryModal";
-import { handleDelete, handleStatusUpdate } from "@/server-actions/Admin/BusinessCategory";
-
+import {
+  handleDelete,
+  handleStatusUpdate,
+} from "@/server-actions/Admin/BusinessCategory";
+import { toast } from "sonner";
 
 const UserGrid = ({ data, totalRecord }: any) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -224,7 +227,8 @@ const UserGrid = ({ data, totalRecord }: any) => {
                               e.preventDefault();
                               const res = await handleStatusUpdate(
                                 false,
-                                item.cid
+                                item.cid,
+                                "status"
                               );
                               if (res.status) {
                                 router.refresh();
@@ -240,7 +244,8 @@ const UserGrid = ({ data, totalRecord }: any) => {
                               e.preventDefault();
                               const res = await handleStatusUpdate(
                                 true,
-                                item.cid
+                                item.cid,
+                                "status"
                               );
                               if (res.status) {
                                 router.refresh();
@@ -249,6 +254,42 @@ const UserGrid = ({ data, totalRecord }: any) => {
                             key="update_status"
                           >
                             Active
+                          </DropdownItem>
+                        )}
+
+                        {item.popular ? (
+                          <DropdownItem
+                            onClick={async (e) => {
+                              e.preventDefault();
+                              const res = await handleStatusUpdate(
+                                false,
+                                item.cid,
+                                "popular"
+                              );
+                              if (res.status) {
+                                router.refresh();
+                              }
+                            }}
+                            key="update_status"
+                          >
+                            Remove from popular
+                          </DropdownItem>
+                        ) : (
+                          <DropdownItem
+                            onClick={async (e) => {
+                              e.preventDefault();
+                              const res = await handleStatusUpdate(
+                                true,
+                                item.cid,
+                                "popular"
+                              );
+                              if (res.status) {
+                                router.refresh();
+                              }
+                            }}
+                            key="update_status"
+                          >
+                            Mark as popular
                           </DropdownItem>
                         )}
                         <DropdownItem
@@ -277,6 +318,8 @@ const UserGrid = ({ data, totalRecord }: any) => {
                             const res = await handleDelete(item.cid);
                             if (res.status) {
                               router.refresh();
+                            } else {
+                              toast.error(res.message);
                             }
                           }}
                         >

@@ -2,12 +2,14 @@
 import { loginHandler } from "@/server-actions/authActions";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { toast } from "sonner";
 
 type Props = {};
 
 const LoginForm = (props: Props) => {
   const [loading, setLoading] = useState(false);
+  const [eyeToggle, setEyeToggle] = useState(true);
   const router = useRouter();
 
   const handleAdminLogin = async (formData: FormData) => {
@@ -56,11 +58,22 @@ const LoginForm = (props: Props) => {
           Password
         </label>
         <input
-          type="text"
+          type={eyeToggle ? "password" : "text"}
           id="password"
           name="password"
           className="rounded border border-gray-200 text-sm w-full font-normal leading-[18px] text-black tracking-[0px] appearance-none block h-11 m-0 p-[11px] focus:ring-2 ring-offset-2 ring-primary_light outline-0"
         />
+        {eyeToggle ? (
+          <BsEye
+            className="absolute right-2 top-[55%] cursor-pointer"
+            onClick={() => setEyeToggle(!eyeToggle)}
+          />
+        ) : (
+          <BsEyeSlash
+            className="absolute right-2 top-[55%] cursor-pointer"
+            onClick={() => setEyeToggle(!eyeToggle)}
+          />
+        )}
       </div>
       <div>
         <a className="text-sm text-primary_light" href="#">

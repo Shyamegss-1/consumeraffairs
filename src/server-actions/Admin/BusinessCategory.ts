@@ -1,4 +1,4 @@
-"use server"
+"use server";
 import { ReviewStatus } from "@prisma/client";
 import { prisma } from "../../../prisma/prisma";
 
@@ -58,7 +58,6 @@ export const addBusinessCategory = async (formData: {
       category: newCategory,
     };
   } catch (error: any) {
-    console.log(error);
     return { status: false, message: String(error.message) };
   }
 };
@@ -78,19 +77,22 @@ export const handleDelete = async (id: number) => {
       message: "Category deleted successfully",
     };
   } catch (error: any) {
-    console.log(error);
     return { status: false, message: String(error.message) };
   }
 };
 
-export const handleStatusUpdate = async (status: boolean, id: number) => {
+export const handleStatusUpdate = async (
+  status: boolean,
+  id: number,
+  key: string
+) => {
   try {
     const updatedCategory = await prisma.category.update({
       where: {
         cid: id,
       },
       data: {
-        status: status,
+        [key]: status,
       },
     });
     if (!updatedCategory) {
@@ -101,7 +103,6 @@ export const handleStatusUpdate = async (status: boolean, id: number) => {
       message: "Category status updated successfully",
     };
   } catch (error: any) {
-    console.log(error);
     return { status: false, message: String(error.message) };
   }
 };

@@ -109,13 +109,14 @@ model pageMaster {
 }
 
 model inner_seo {
+  id          Int        @id @default(autoincrement())
   page_id     Int        @unique
+  title       String     @db.VarChar(250)
+  keywords    String     @db.Text
+  description String     @db.Text
+  status      Boolean    @default(true)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  description String     @db.Text
-  keywords    String     @db.Text
-  title       String     @db.VarChar(250)
-  id          Int        @id @default(autoincrement())
   page        pageMaster @relation(fields: [page_id], references: [id])
 }
 
