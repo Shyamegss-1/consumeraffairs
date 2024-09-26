@@ -81,9 +81,9 @@ model category {
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   description    String?          @db.VarChar(255)
+  CategoryFooter CategoryFooter[]
   blog           blog[]
   listing        listing[]
-  CategoryFooter CategoryFooter[]
 }
 
 model faq {
@@ -109,14 +109,14 @@ model pageMaster {
 }
 
 model inner_seo {
-  id          Int        @id @default(autoincrement())
   page_id     Int        @unique
-  title       String     @db.VarChar(250)
-  keywords    String     @db.Text
-  description String     @db.Text
-  status      Boolean    @default(true)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+  description String     @db.Text
+  keywords    String     @db.Text
+  title       String     @db.VarChar(250)
+  id          Int        @id @default(autoincrement())
+  status      Boolean    @default(true)
   page        pageMaster @relation(fields: [page_id], references: [id])
 }
 
@@ -132,6 +132,7 @@ model listing {
   address           String?       @db.VarChar(255)
   city              String?       @db.VarChar(255)
   pincode           String?       @db.VarChar(255)
+  country           String?       @default("United States") @db.VarChar(255)
   date              String        @db.VarChar(30)
   verify_code       String?       @db.VarChar(10)
   claim             Boolean       @default(false)
@@ -141,9 +142,7 @@ model listing {
   businessCategory  String?
   companyName       String?
   companyNumber     String?
-  countryDialCode   String?
   countryCode       String?
-  country           String?       @default("United States") @db.VarChar(255)
   emailID_1         String?
   emailID_1_purpose String?
   emailID_2         String?
@@ -157,6 +156,7 @@ model listing {
   phone             String?
   banner            String?       @db.LongText
   logo              String?       @db.LongText
+  countryDialCode   String?
   category          category?     @relation(fields: [category_id], references: [cid])
   user              users?        @relation(fields: [userid], references: [id])
   reviews           review[]
@@ -291,6 +291,26 @@ model social_links {
   listing   listing? @relation(fields: [listingId], references: [id])
 }
 
+model CategoryFooter {
+  id         Int       @id @default(autoincrement())
+  categoryId Int
+  content    String    @db.LongText
+  status     Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
+  category   category  @relation(fields: [categoryId], references: [cid])
+
+  @@index([categoryId], map: "CategoryFooter_categoryId_fkey")
+}
+
+model Footer {
+  id        Int      @id @default(autoincrement())
+  content   String   @db.LongText
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum b_c_Status {
   Active
   Inactive
@@ -308,22 +328,4 @@ enum UserType {
   USER
   BUSINESS_USER
   ADMIN
-}
-
-model CategoryFooter {
-  id         Int       @id @default(autoincrement())
-  categoryId Int
-  category   category  @relation(fields: [categoryId], references: [cid])
-  content    String    @db.LongText
-  status     Boolean   @default(true)
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime? @updatedAt
-}
-
-model Footer {
-  id        Int      @id @default(autoincrement())
-  content   String   @db.LongText
-  status    Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
