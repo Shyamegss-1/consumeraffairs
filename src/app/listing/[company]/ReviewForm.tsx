@@ -4,6 +4,8 @@ import { loginHandler, signupHandler } from "@/server-actions/authActions";
 import { postReviews } from "@/server-actions/postReviews";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { FaFlag } from "react-icons/fa6";
+import { IoFlagOutline } from "react-icons/io5";
 import Swal from "sweetalert2";
 type Props = {
   prevReviews: any;
@@ -56,11 +58,11 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
                     <i className="fa fa-star me-1" />
                     <i className="fa fa-star me-1" />
                     <i className="fa fa-star me-1" />
-                    <i className="fa fa-star me-1" />{" "}
-                    <span
-                      className="fa fa-flag-o ms-2 fs-3 text-dark report-button"
-                      data-id={210}
-                    />
+                    <i className="fa fa-star me-1" />
+                    <div className="flex justify-center items-center ml-2">
+                      <FaFlag className="" />
+                      <IoFlagOutline className="" />
+                    </div>
                   </div>
                   <div className="business-review-added-on">
                     <p>

@@ -17,6 +17,8 @@ const UserDetails = async (props: Props) => {
     },
   });
 
+  // console.log(users);
+  
   const totalUsers = async () => {
     return (
       <div className="py-4 px-6 flex justify-between items-center">

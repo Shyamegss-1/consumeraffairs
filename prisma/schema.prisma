@@ -51,7 +51,7 @@ model blog_category {
   updatedAt       DateTime   @updatedAt
   b_c_description String?    @db.VarChar(255)
   b_c_slug        String     @db.VarChar(255)
-  blog            blog[]
+  blog            blog[]     
 }
 
 model blog_comment {
@@ -63,8 +63,8 @@ model blog_comment {
   status    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  blog      blog     @relation(fields: [blog_id], references: [b_id])
-  user      users    @relation(fields: [user_id], references: [id])
+  blog      blog     @relation(fields: [blog_id], references: [b_id], onDelete: Cascade)
+  user      users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@index([blog_id], map: "blog_comment_blog_id_fkey")
   @@index([user_id], map: "blog_comment_user_id_fkey")
@@ -159,7 +159,7 @@ model listing {
   countryDialCode   String?
   category          category?     @relation(fields: [category_id], references: [cid])
   user              users?        @relation(fields: [userid], references: [id])
-  reviews           review[]
+  reviews           review[] // Cascading delete on related reviews
   social_links      social_links?
 
   @@index([category_id], map: "listing_category_id_fkey")
@@ -183,7 +183,7 @@ model review {
   updatedAt        DateTime       @updatedAt
   reportDetail     ReportDetails?
   flagDetail       flagDetails?
-  company          listing        @relation(fields: [company_id], references: [id])
+  company          listing        @relation(fields: [company_id], references: [id], onDelete: Cascade)
   user             users          @relation(fields: [user_id], references: [id])
 
   @@index([company_id], map: "review_company_id_fkey")

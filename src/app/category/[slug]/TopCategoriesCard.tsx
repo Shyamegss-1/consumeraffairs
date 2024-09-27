@@ -1,9 +1,24 @@
 import Image from "next/image";
 import React from "react";
+import { prisma } from "../../../../prisma/prisma";
 
 type Props = {};
 
-const TopCategoriesCard = (props: Props) => {
+const TopCategoriesCard = async ({}: Props) => {
+  const topCategories = await prisma.category.findMany({
+    where: {
+      status: true,
+      popular: true,
+    },
+    orderBy: {
+      popular: "asc",
+    },
+  });
+  const socialLinks = await prisma.social_links.findFirst({
+    where: {
+      listingId: 1,
+    },
+  });
   return (
     <div className="col-span-4 my-3">
       <div className="business-review-right-side">
@@ -13,16 +28,16 @@ const TopCategoriesCard = (props: Props) => {
             <div className="underline w-100 mt-3" />
           </div>
           <div className="social-media-icons mt-3">
-            <a href="">
+            <a href={socialLinks?.facebooke ? socialLinks?.facebooke : ""}>
               <Image height={40} width={40} src="/bi_facebook.png" alt="" />
             </a>
-            <a href="">
+            <a href={socialLinks?.instagram ? socialLinks?.instagram : ""}>
               <Image height={40} width={40} src="/bi_instagram.png" alt="" />
             </a>
-            <a href="">
+            <a href={socialLinks?.twitter ? socialLinks?.twitter : ""}>
               <Image height={40} width={40} src="/bi_twitter.png" alt="" />
             </a>
-            <a href="">
+            <a href={socialLinks?.linkedin ? socialLinks?.linkedin : ""}>
               <Image height={40} width={40} src="/bi_linkedin.png" alt="" />
             </a>
           </div>
@@ -36,10 +51,14 @@ const TopCategoriesCard = (props: Props) => {
           </div>
           <div className="top-categories-list">
             <ul>
-              <li>
-                <a href=" document-solutions">Document Solutions</a>
-              </li>{" "}
-              <li>
+              {topCategories?.map((item, index) => (
+                <li key={index}>
+                  <a href={`/category/${item.category_slug}`}>
+                    {item.category_name}
+                  </a>
+                </li>
+              ))}
+              {/* <li>
                 <a href=" education-management">Education Management</a>
               </li>{" "}
               <li>
@@ -62,7 +81,7 @@ const TopCategoriesCard = (props: Props) => {
               </li>{" "}
               <li>
                 <a href="/other_categories">Others</a>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

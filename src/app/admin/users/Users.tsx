@@ -15,9 +15,18 @@ const Users = async (props: Props) => {
   const skip = (props.page - 1) * props.pageSize;
   const data = await prisma.users.findMany({
     where: {
-      userType: {
-        not: UserType.ADMIN,
-      },
+      NOT: [
+        {
+          userType: {
+            equals: "ADMIN",
+          },
+        },
+        {
+          userType: {
+            equals: "BUSINESS_USER",
+          },
+        },
+      ],
       OR: [
         {
           firstName: {

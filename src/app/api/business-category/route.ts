@@ -11,6 +11,9 @@ export async function GET(request: NextRequest) {
         cid: true,
         category_name: true,
       },
+      orderBy: {
+        category_name: "asc",
+      },
     });
 
     return NextResponse.json({

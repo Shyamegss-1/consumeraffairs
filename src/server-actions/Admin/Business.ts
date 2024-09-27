@@ -10,6 +10,8 @@ export const handleDelete = async (id: number) => {
       },
       include: {
         user: true,
+        reviews:true,
+        social_links:true
       },
     });
     if (!deletedBusiness) {

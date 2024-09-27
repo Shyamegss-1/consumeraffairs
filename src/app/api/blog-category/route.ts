@@ -11,6 +11,9 @@ export async function GET(request: NextRequest) {
         b_c_id: true,
         b_c_name: true,
       },
+      orderBy: {
+        b_c_name: "asc",
+      },
     });
 
     return NextResponse.json({

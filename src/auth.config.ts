@@ -6,6 +6,9 @@ import { CredentialsSignin, NextAuthConfig } from "next-auth";
 import { ZodError } from "zod";
 import { signinSchema } from "./lib/zod";
 import { UserType } from "@prisma/client";
+import { sendMultipleEmails } from "./lib/mailer";
+import bcryptjs from "bcryptjs";
+import { emailVerificationTemplate } from "./emails/emailTemplates";
 
 const authOptions: NextAuthConfig = {
   providers: [
@@ -37,6 +40,7 @@ const authOptions: NextAuthConfig = {
               userType: userType as UserType | undefined,
             },
           });
+
           if (!user || !user.email || !user.password) {
             throw new CredentialsSignin({
               cause: "Invalid email or password.",
@@ -48,6 +52,14 @@ const authOptions: NextAuthConfig = {
           if (!isMatch) {
             throw new CredentialsSignin({
               cause: "Invalid email or password.",
+            });
+          }
+
+          if (!user.verify) {
+           
+            throw new CredentialsSignin({
+              cause:
+                "Email verification required. Please check your inbox for a verification link to confirm your email.",
             });
           }
 
@@ -72,8 +84,8 @@ const authOptions: NextAuthConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      
-      console.log(isLoggedIn, nextUrl.origin, "isLoggedin");
+
+      console.log(isLoggedIn, nextUrl.origin,auth?.user, "isLoggedin");
 
       return true;
     },
