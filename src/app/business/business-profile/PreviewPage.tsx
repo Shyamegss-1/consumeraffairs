@@ -15,7 +15,7 @@ const PreviewPage = ({ logo, banner, listing, userDetails, user }: Props) => {
     <div className="main-business-profile-section custom-scroll">
       <div className="banner-profile-box">
         <Image
-          src={banner}
+          src={banner || '/banner.png'}
           className="img-fluid banner-img w-full h-[300px] bannerimg "
           width={1920}
           height={1080}
@@ -24,7 +24,7 @@ const PreviewPage = ({ logo, banner, listing, userDetails, user }: Props) => {
         />
         <div className="banner-profile-content">
           <div className="banner-profile-logo">
-            <Image src={logo} alt="" width={40} height={40} priority />
+            <Image src={logo || "/logo.png"} alt="" width={40} height={40} priority />
           </div>
           <div className="banner-profile-info ml-4">
             <h1 className="text-white text-4xl tracking-wide font-semibold">

@@ -129,7 +129,7 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
                     didClose() {
                       console.log(res.reviews);
                       if (res.reviews) {
-                        setReviews([res.reviews, ...reviews]);
+                        // setReviews([res.reviews, ...reviews]);
                       }
                     },
                   });
@@ -248,24 +248,11 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
                               activeForm = "signin";
                             }
                           });
-                        // document
-                        //   .getElementById("signin_btn")
-                        //   ?.addEventListener("click", () => {
-                        //     if (signupForm) {
-                        //       signupForm.style.display = "block";
-                        //     }
-                        //   });
-                        // document.getElementById("signup").style.display="none"
                         document
                           .getElementById("google-login")
                           ?.addEventListener("click", () => {
                             signIn("google");
                           });
-
-                        // emailInput.onkeyup = (event) =>
-                        //   event.key === "Enter" && Swal.clickConfirm();
-                        // passwordInput.onkeyup = (event) =>
-                        //   event.key === "Enter" && Swal.clickConfirm();
                       },
                       preConfirm: async () => {
                         const popup = Swal.getPopup()!;
@@ -324,7 +311,7 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
                                   didClose() {
                                     // console.log(res.reviews);
                                     if (_res.reviews) {
-                                      setReviews([_res.reviews, ...reviews]);
+                                      // setReviews([_res.reviews, ...reviews]);
                                     }
                                     const form = document.querySelector("form");
                                     if (form) {
@@ -394,7 +381,7 @@ const ReviewForm = ({ prevReviews, companyId, userId }: Props) => {
                                     // console.log(res.reviews);
                                     if (_res.reviews) {
                                       // console.log();
-                                      setReviews([_res.reviews, ...reviews]);
+                                      // setReviews([_res.reviews, ...reviews]);
                                     }
                                     const form = document.querySelector("form");
                                     if (form) {

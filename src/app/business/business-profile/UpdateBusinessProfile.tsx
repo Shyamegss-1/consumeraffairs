@@ -66,7 +66,7 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
               <div className="p-2 ">
                 {formData.logo && (
                   <Image
-                    src={formData.logo}
+                    src={formData.logo || "/logo.png"}
                     alt="logo"
                     className="size-20"
                     width={200}
@@ -110,7 +110,7 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
             className="form-control mt-1"
             id="businessname"
             name="businessName"
-            value={formData.businessName}
+            value={formData.businessName || ""}
             onChange={(e) => handleChange(e)}
           />
         </div>
@@ -123,7 +123,7 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
             className="form-control mt-1"
             id="jobrole"
             name="jobRole"
-            value={formData.jobRole}
+            value={formData.jobRole || ""}
             onChange={(e) => handleChange(e)}
           />
         </div>
@@ -136,7 +136,7 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
             className="form-control mt-1"
             id="Address"
             name="address"
-            value={formData.address}
+            value={formData.address || ""}
             onChange={(e) => handleChange(e)}
           />
         </div>
@@ -149,7 +149,7 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
             className="form-control mt-1"
             id="emailID_1_purpose"
             name="emailID_1_purpose"
-            value={formData.emailID_1_purpose}
+            value={formData.emailID_1_purpose || ""}
             onChange={(e) => handleChange(e)}
           />
           <input
@@ -157,7 +157,7 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
             className="form-control mt-1"
             id="emailID_1"
             name="emailID_1"
-            value={formData.emailID_1}
+            value={formData.emailID_1 || ""}
             onChange={(e) => handleChange(e)}
           />
         </div>
@@ -170,7 +170,7 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
             className="form-control mt-1"
             id="emailID_2_purpose"
             name="emailID_2_purpose"
-            value={formData.emailID_2_purpose}
+            value={formData.emailID_2_purpose || ""}
             onChange={(e) => handleChange(e)}
           />
           <input
@@ -178,7 +178,7 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
             className="form-control mt-1"
             id="emailID_2"
             name="emailID_2"
-            value={formData.emailID_2}
+            value={formData.emailID_2 || ""}
             onChange={(e) => handleChange(e)}
           />
         </div>
@@ -191,7 +191,7 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
             className="form-control mt-1"
             id="emailID_3_purpose"
             name="emailID_3_purpose"
-            value={formData.emailID_3_purpose}
+            value={formData.emailID_3_purpose || ""}
             onChange={(e) => handleChange(e)}
           />
           <input
@@ -199,7 +199,7 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
             className="form-control mt-1"
             id="emailID_3"
             name="emailID_3"
-            value={formData.emailID_3}
+            value={formData.emailID_3 || ""}
             onChange={(e) => handleChange(e)}
           />
         </div>
@@ -208,15 +208,25 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
             Company Number
           </label>
           <div className="relative">
-            <PhoneNumber
-              value={formData.countryCode}
-              onchange={(val) => setFormData({ ...formData, countryCode: val })}
-            />
+          {/* <PhoneNumber
+                value={{
+                  countryCode: formData.countryCode ? formData.countryCode : "us",
+                  countryDialCode: formData.countryDialCode ? formData.countryDialCode : "1",
+                }}
+                onchange={(val: any) => {
+                  setFormData(()=>{
+                    return {...formData, countryCode: val.countryCode, countryDialCode: val.countryDial}
+                  })
+                  setCountry(val.name);
+                  setCountryDialCode(val.dialCode);
+                  setCountryCode(val.iso2);
+                }}
+              /> */}
             <input
               type="tel"
               placeholder="Company Number"
               name="companyNumber"
-              value={formData.companyNumber}
+              value={formData.companyNumber || ""}
               onChange={(e) => handleChange(e)}
               className="form-control mt-1"
               style={{ paddingLeft: "5.9rem" }}
@@ -230,12 +240,12 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
           <select
             name="businessCategory"
             className="form-control mt-1"
-            value={formData.businessCategory}
+            value={formData.businessCategory || ""}
             onChange={(e) => handleChange(e)}
           >
             <option value="">Select Category</option>
             {options?.map((item, index) => (
-              <option key={index} value={item.cid}>
+              <option key={index} value={item.cid || ""}>
                 {item.category_name}
               </option>
             ))}
@@ -247,7 +257,7 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
           </label>
           <textarea
             className="form-control mt-1 min-h-32"
-            value={formData.about}
+            value={formData.about || ""}
             name="about"
             onChange={(e) => handleChange(e)}
           />
@@ -261,7 +271,7 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
             className="form-control mt-1"
             id="metaTitle"
             name="metaTitle"
-            value={formData.metaTitle}
+            value={formData.metaTitle || ""}
             onChange={(e) => handleChange(e)}
           />
         </div>
@@ -274,7 +284,7 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
             className="form-control mt-1"
             id="metaKeywords"
             name="metaKeywords"
-            value={formData.metaKeywords}
+            value={formData.metaKeywords || ""}
             onChange={(e) => handleChange(e)}
           />
         </div>
@@ -287,7 +297,7 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
             className="form-control mt-1"
             id="metaDescription"
             name="metaDescription"
-            value={formData.metaDescription}
+            value={formData.metaDescription || ""}
             onChange={(e) => handleChange(e)}
           />
         </div>
@@ -297,7 +307,7 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
             <div className="p-2 w-32 h-20">
               {formData.logo && (
                 <Image
-                  src={formData.banner}
+                  src={formData.banner || '/banner.png'}
                   alt="logo"
                   className="w-full h-16 object-cover"
                   width={200}
@@ -339,28 +349,28 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
             type="text"
             className="form-control mt-1"
             name="facebookLink"
-            value={formData.facebookLink}
+            value={formData.facebookLink || ""}
             onChange={(e) => handleChange(e)}
           />
           <input
             type="text"
             className="form-control mt-1"
             name="instagramLink"
-            value={formData.instagramLink}
+            value={formData.instagramLink || ""}
             onChange={(e) => handleChange(e)}
           />
           <input
             type="text"
             className="form-control mt-1"
             name="twitter"
-            value={formData.twitter}
+            value={formData.twitter || ""}
             onChange={(e) => handleChange(e)}
           />
           <input
             type="text"
             className="form-control mt-1"
             name="linkedin"
-            value={formData.linkedin}
+            value={formData.linkedin || ""}
             onChange={(e) => handleChange(e)}
           />
         </div>

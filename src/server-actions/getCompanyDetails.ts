@@ -12,12 +12,22 @@ export const getCompanyDetails = async (domain: string, user: any) => {
       },
       include: {
         reviews: {
+          where: {
+            NOT: {
+              OR: [
+                { review_status: "Inactive" },
+                { review_status: "Moderation" },
+              ],
+            },
+          },
           include: {
             user: true,
           },
         },
       },
     });
+    console.log(company);
+    
     if (company) {
       return company;
     } else {
@@ -38,12 +48,22 @@ export const getCompanyDetails = async (domain: string, user: any) => {
         },
         include: {
           reviews: {
+            where: {
+              NOT: {
+                OR: [
+                  { review_status: "Inactive" },
+                  { review_status: "Moderation" },
+                ],
+              },
+            },
             include: {
               user: true,
             },
           },
         },
       });
+      // console.log(newCompany);
+
       return newCompany;
     }
   } catch (error) {

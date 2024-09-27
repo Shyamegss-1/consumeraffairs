@@ -161,7 +161,7 @@ const BlogForm = ({ blogData }: Props) => {
     // console.log(data.data);
     setblogCategories(data.data);
   };
-  console.log(formData);
+  console.log(blogCategories);
 
   useEffect(() => {
     getBusinessCategoryData();

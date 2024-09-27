@@ -3,8 +3,9 @@ import SideSection from "./SideSection";
 import BusinessSignupForm from "./BusinessSignupForm";
 import "./Module.css";
 import { redirect } from "next/navigation";
+import { auth } from "@/auth";
 
-const Page = ({
+const Page = async ({
   searchParams,
 }: {
   searchParams?: {
@@ -12,7 +13,7 @@ const Page = ({
   };
 }) => {
   // console.log(searchParams?.claim);
-
+  const session = await auth();
   // useEffect(() => {
   if (searchParams?.claim) {
     const isValid =
@@ -24,6 +25,10 @@ const Page = ({
     if (!isValid) {
       redirect("/business/register");
     }
+  }
+
+  if (session?.user.userType === "USER") {
+    return redirect("/");
   }
 
   // }, []);

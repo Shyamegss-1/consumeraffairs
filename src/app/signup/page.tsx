@@ -258,7 +258,7 @@ const page = async () => {
 
   // console.log(session?.user, "hfghfgf");
 
-  if (session?.user) {
+  if (session?.user?.userType === "USER") {
     return redirect("/");
   }
 
@@ -293,9 +293,11 @@ const page = async () => {
                 fillRule="evenodd"
               />
             </svg> */}
-            <Logo/>
+            <Logo />
           </Link>
-          <h4 className="create__ttl text-heading-2 font-heading-2">Create an Account</h4>
+          <h4 className="create__ttl text-heading-2 font-heading-2">
+            Create an Account
+          </h4>
           <SignupForm countryList={countryList} />
           <div className="create__lnk-wrp">
             <Link className="underline text-blue-600" href="/signin">

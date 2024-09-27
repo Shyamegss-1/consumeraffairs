@@ -59,10 +59,10 @@ const BusinessPage = ({ businessDetails }: Props) => {
         metaKeywords: businessDetails.listing[0].metaKeywords,
         metaDescription: businessDetails.listing[0].metaDescription,
         banner: businessDetails.listing[0].banner,
-        facebookLink: businessDetails.listing[0].social_links.facebooke,
-        instagramLink: businessDetails.listing[0].social_links.instagram,
-        twitter: businessDetails.listing[0].social_links.twitter,
-        linkedin: businessDetails.listing[0].social_links.linkedin,
+        facebookLink: businessDetails.listing[0].social_links?.facebooke,
+        instagramLink: businessDetails.listing[0].social_links?.instagram,
+        twitter: businessDetails.listing[0].social_links?.twitter,
+        linkedin: businessDetails.listing[0].social_links?.linkedin,
       });
     }
   }, []);
