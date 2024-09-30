@@ -133,6 +133,7 @@ export const addListingByAdmin = async (data: {
 export const updateListingByAdmin = async (
   data: {
     userId: string;
+    category: string;
     description: string;
     companyEmail: string;
     logo: string;
@@ -157,12 +158,15 @@ export const updateListingByAdmin = async (
       return { status: false, message: "Invalid website URL" };
     }
 
+    console.log(data);
+    
     const newCompany = await prisma.listing.update({
       where: {
         id: id,
       },
       data: {
         userid: Number(data.userId),
+        category_id: Number(data.category),
         about: data.description,
         name: data.companyName,
         slug: domain.replaceAll(".", "-"),
@@ -193,19 +197,6 @@ export const updateListingByAdmin = async (
     if (!newCompany) {
       return { status: false, message: "Something went wrong!" };
     }
-    // await sendMultipleEmails({
-    //   email: user.email,
-    //   subject: "Verify your email",
-    //   // text:"Verify your email"
-    //   html: emailVerificationTemplate
-    //     .replaceAll("{{userName}}", user.firstName)
-    //     .replaceAll(
-    //       "{{verification_link}}",
-    //       claimUrl
-    //         ? `${process.env.DOMAIN}/verifyemail?token=${verificationToken}&claimUrl=${claimUrl}`
-    //         : `${process.env.DOMAIN}/verifyemail?token=${verificationToken}`
-    //     ),
-    // });
     return {
       status: true,
       message: "Business has been updated successfully.",

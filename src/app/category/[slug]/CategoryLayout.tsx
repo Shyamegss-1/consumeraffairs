@@ -1,27 +1,20 @@
 import Image from "next/image";
 import React, { ReactNode } from "react";
 import TopCategoriesCard from "./TopCategoriesCard";
+import CompanyFooter from "@/app/listing/(listing-footer)/CompanyFooter";
 
 type Props = {
   children: ReactNode;
+  params: any;
 };
 
-const CategoryLayout = ({ children }: Props) => {
+const CategoryLayout = ({ children, params }: Props) => {
   return (
     <section className="softwares-main mt-5">
       <div className="max-w-7xl mx-auto ">
-        <div className="">
-          <div className="cat-total-listings mt-5 mb-4">
-            <h1 className="fs-3">
-              <b>5 </b>Listings in Aerospace and defense Available
-            </h1>
-          </div>
-          <div className="grid grid-cols-12 gap-4">
-            {children}
-            <TopCategoriesCard />
-          </div>
-        </div>
+        <div className="">{children}</div>
       </div>
+      <CompanyFooter />
     </section>
   );
 };
