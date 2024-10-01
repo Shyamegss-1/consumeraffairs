@@ -6,7 +6,6 @@ import SearchComponent from "./SearchComponent";
 import ProfileSection from "./ProfileSection";
 
 const Navbar = () => {
-
   const navLinks = [
     {
       label: "Trending",
@@ -43,7 +42,13 @@ const Navbar = () => {
           >
             Read/Write a review
           </Link>
-          <SearchComponent />
+          <Link
+            href={"/blogs"}
+            className="hover:bg-hover px-4 py-3 rounded-lg font-normal"
+          >
+            Blogs
+          </Link>
+          {/* <SearchComponent /> */}
           <ProfileSection />
           <Link
             href={"/business"}
