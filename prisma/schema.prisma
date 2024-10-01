@@ -51,20 +51,22 @@ model blog_category {
   updatedAt       DateTime   @updatedAt
   b_c_description String?    @db.VarChar(255)
   b_c_slug        String     @db.VarChar(255)
-  blog            blog[]     
+  blog            blog[]
 }
 
 model blog_comment {
   id        Int      @id @default(autoincrement())
   blog_id   Int
-  user_id   Int
+  user_id   Int?
+  name      String?
+  email     String?
   comment   String   @db.Text
   date      DateTime @default(now())
   status    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   blog      blog     @relation(fields: [blog_id], references: [b_id], onDelete: Cascade)
-  user      users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  user      users?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@index([blog_id], map: "blog_comment_blog_id_fkey")
   @@index([user_id], map: "blog_comment_user_id_fkey")
