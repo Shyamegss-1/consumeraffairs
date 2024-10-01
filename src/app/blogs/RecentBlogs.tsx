@@ -12,16 +12,19 @@ const RecentBlogs = (props: Props) => {
       where: {
         b_status: true,
       },
-      take: 9,
+      orderBy: {
+        createdAt: "asc",
+      },
+      take: 12,
     });
     return (
-      <div className="grid grid-cols-12 gap-6">
+      <div className="grid grid-cols-12 gap-4 sm:gap-6">
         {blog.map((item, index) => (
           <div
-            className="col-span-12 md:col-span-6 lg:col-span-4 border rounded-xl p-4 shadow-md flex flex-col justify-between items-center"
+            className="col-span-12 sm:col-span-6 lg:col-span-4 border rounded-xl p-4 shadow-md flex flex-col justify-between items-center"
             key={item.b_id}
           >
-            <div>
+            <Link href={`/blogs/${item.b_slug}`}>
               <Image
                 src={
                   item.b_image || item.b_image !== ""
@@ -37,13 +40,16 @@ const RecentBlogs = (props: Props) => {
               <h1 className="text-lg font-medium mt-4 line-clamp-2">
                 {item.b_title}
               </h1>
-            </div>
-            <Link
-              className="text-blue-700 border border-blue-100 hover:bg-blue-100 hover:text-blue-700 rounded-full py-1 px-4"
-              href={`/blogs/${item.b_slug}`}
-            >
-              Read More
             </Link>
+            <div className="flex justify-between items-center">
+              {/* <div>{item.businessCategory}</div> */}
+              <Link
+                className="text-blue-700 border border-blue-100 hover:bg-blue-100 hover:text-blue-700 hover:underline rounded-full py-1 px-4"
+                href={`/blogs/${item.b_slug}`}
+              >
+                Read More
+              </Link>
+            </div>
           </div>
         ))}
       </div>
