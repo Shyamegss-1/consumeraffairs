@@ -31,14 +31,27 @@ const Users = async (props: Props) => {
     skip,
     take: props.pageSize,
     orderBy: {
-      createdAt: "desc",
+      category_name: "asc",
     },
   });
 
-  const totalRecord = await prisma.users.count();
-
-  // console.log(data, "data", session?.user.id);
-  return <UserGrid data={data} totalRecord={totalRecord} />;
+  const totalRecord = await prisma.category.count({
+    where: {
+      OR: [
+        {
+          category_name: {
+            contains: props.search,
+          },
+        },
+        {
+          category_slug: {
+            contains: props.search,
+          },
+        },
+      ],
+    },
+  });
+  return <UserGrid data={data} totalRecord={totalRecord} page={props.page} />;
 };
 
 export default Users;

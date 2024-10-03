@@ -19,6 +19,9 @@ const TopCategoriesCard = async ({}: Props) => {
       listingId: 1,
     },
   });
+
+
+
   return (
     <div className="col-span-4 my-3">
       <div className="business-review-right-side">
@@ -44,7 +47,7 @@ const TopCategoriesCard = async ({}: Props) => {
         </div>
         <div className="business-top-categories mt-4">
           <div className="text-start w-full">
-            <h4 className="text-start text-heading-4 font-heading-4">
+            <h4 className="text-start">
               Top Categories
             </h4>
             <div className="underline w-full h-0.5 bg-blue-600 mt-3 " />
@@ -58,32 +61,11 @@ const TopCategoriesCard = async ({}: Props) => {
                   </a>
                 </li>
               ))}
-              {/* <li>
-                <a href=" education-management">Education Management</a>
-              </li>{" "}
-              <li>
-                <a href=" electrical-power">Electrical Power</a>
-              </li>{" "}
-              <li>
-                <a href=" transportation">Transportation</a>
-              </li>{" "}
-              <li>
-                <a href=" webops-platform">WebOps Platform</a>
-              </li>{" "}
-              <li>
-                <a href=" workflow-solutions">Workflow Solutions</a>
-              </li>{" "}
-              <li>
-                <a href=" workforce-management">Workforce Management</a>
-              </li>{" "}
-              <li>
-                <a href=" accounting">Accounting</a>
-              </li>{" "}
-              <li>
-                <a href="/other_categories">Others</a>
-              </li> */}
             </ul>
           </div>
+        </div>
+        <div className="business-top-categories mt-4">
+          
         </div>
       </div>
     </div>

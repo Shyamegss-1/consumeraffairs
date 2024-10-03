@@ -1,7 +1,6 @@
-"use client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
 import ServiceSection from "./ServiceSection";
 import RecentReviews from "./RecentReviews";
 import ProductInfo from "./ProductInfo";
@@ -9,38 +8,39 @@ import Banner from "./Banner";
 import { redirect } from "next/navigation";
 import Swal from "sweetalert2";
 import { listingDomain } from "@/server-actions/listingDomain";
+import DomainForm from "./DomainForm";
 
 const HomePage = ({ user }: any) => {
   const cardData = [
     {
       icon: "/icons/mortages.svg",
-      url: "/finance/finance_companies",
-      title: "Mortgages",
+      url: "/category/banking",
+      title: "Banking",
     },
     {
       icon: "/icons/Personal_loans.svg",
-      url: "/finance/personal-loans",
+      url: "/category/financial",
       title: "Personal Loans",
     },
     {
       icon: "/icons/Solar.svg",
-      url: "/finance/solar-energy",
-      title: "Solar",
+      url: "/category/energy",
+      title: "Energy",
     },
     {
       icon: "/icons/Car_warranties.svg",
-      url: "/finance/car-waranty",
-      title: "Car waranties",
+      url: "/category/automobile-manufacturer",
+      title: "Automobiles",
     },
     {
       icon: "/icons/Home_Warranties.svg",
-      url: "/finance/home-waranty",
-      title: "Home Warranties",
+      url: "/category/home-improvement-company",
+      title: "Home Improvement Company",
     },
     {
       icon: "/icons/Artboard_6.svg",
-      url: "/finance/moving",
-      title: "Moving",
+      url: "/category/media",
+      title: "Media",
     },
   ];
 
@@ -65,40 +65,7 @@ const HomePage = ({ user }: any) => {
                 </Link>
 
                 <div className=" mt-14 relative w-full">
-                  <form
-                    action={async (formData) => {
-                      const domain = formData.get("domain");
-                      const res = await listingDomain(domain);
-                      if (!res.status) {
-                        Swal.fire({
-                          title: "Error",
-                          text: String(res.error),
-                          icon: "error",
-                        });
-                        return;
-                      } else {
-                        redirect(
-                          `/listing/${String(res.domain)?.replaceAll(".", "-")}`
-                        );
-                      }
-                    }}
-                  >
-                    <input
-                      type="text"
-                      name="domain"
-                      placeholder="Kindly enter your domain name Eg. consumeraffairs.com"
-                      className="py-3 pl-3 rounded-md pr-14 text-xl w-full focus:ring-2 focus:outline-none placeholder:text-base"
-                    />
-                    <button type="submit">
-                      <Image
-                        className="absolute z-20 top-3.5 right-4"
-                        src={"/next-solid-arrow.svg"}
-                        width={20}
-                        height={20}
-                        alt=""
-                      />
-                    </button>
-                  </form>
+                  <DomainForm />
                 </div>
               </div>
             </div>
@@ -141,7 +108,9 @@ const HomePage = ({ user }: any) => {
         </div>
       </div>
       <ServiceSection />
-      <RecentReviews />
+      <Suspense fallback={<></>}>
+        <RecentReviews />
+      </Suspense>
       <ProductInfo />
       <Banner />
 

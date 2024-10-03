@@ -1,9 +1,65 @@
-import Carousel from "@/components/carousel/Carousel";
 import InfiniteCarousel from "@/components/InfiniteCarousel/InfiniteCarousel";
 import Link from "next/link";
-import React from "react";
+import React, { Suspense } from "react";
+import { prisma } from "../../../prisma/prisma";
 
 const RecentReviews = () => {
+  const recentReviews = async () => {
+    const review = await prisma.review.findMany({
+      include: {
+        user: true,
+        company: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      take: 10,
+    });
+    return review.map((item) => (
+      <div
+        key={item.id}
+        className="ring-1 ring-gray-200 p-4 rounded-3xl  mx-4 max-w-72 min-w-72 min-h-40"
+      >
+        <div className="flex justify-start items-center gap-4">
+          <p className="size-12 flex justify-center items-center bg-green-200 rounded-full">
+            {item.user.firstName.charAt(0)}
+          </p>
+          <div className="">
+            <p>{item.user.firstName}</p>
+            <p className="text-xs">{item.createdAt.toLocaleDateString()}</p>
+          </div>
+        </div>
+        {/* <div className="mt-2">
+          <div className="rvw__hdr-stat">
+            <div className="rvw__rtg rvw__rtg--sm-dsk stars-sprt stars-sprt--p-1" />
+          </div>
+          <span className="text-xs">
+            Reviewed{" "}
+            <Link href={"/"} className="underline">
+              Western Union
+            </Link>{" "}
+            on Aug. 1, 2024
+          </span>
+        </div> */}
+        <div className="mt-4 w-full">
+          <h6 className="w-full text-sm font-normal text-wrap line-clamp-5">
+            {item.review_comment}
+            {/* I have used Western Union to purchase money orders for many years.
+            But in the last few I have had to return my money orders for
+            refunds. When purchasing them at the store they had no problem
+            taking my cash and.... */}
+            &nbsp;
+          </h6>
+          <Link
+            href={`/listing/${item.company.slug}`}
+            className="font-medium underline"
+          >
+            full review
+          </Link>
+        </div>
+      </div>
+    ));
+  };
   return (
     <div className="hmpg-rvws">
       <div className="relative max-w-7xl mx-auto mt-20 ">
@@ -92,260 +148,7 @@ const RecentReviews = () => {
       </div>
       <div className="max-w-7xl mx-auto flex justify-center items-center">
         <InfiniteCarousel>
-          <div className="ring-1 ring-gray-200 p-4 rounded-3xl  mx-4 max-w-72">
-            <div className="flex justify-start items-center gap-4">
-              <p className="size-12 flex justify-center items-center bg-green-200 rounded-full">
-                C
-              </p>
-              <div className="">
-                <p>C leanne</p>
-                <p className="text-xs">Oklahoma City, OK</p>
-              </div>
-            </div>
-            <div className="mt-2">
-              <div className="rvw__hdr-stat">
-                <div className="rvw__rtg rvw__rtg--sm-dsk stars-sprt stars-sprt--p-1" />
-              </div>
-              <span className="text-xs">
-                Reviewed{" "}
-                <Link href={"/"} className="underline">
-                  Western Union
-                </Link>{" "}
-                on Aug. 1, 2024
-              </span>
-            </div>
-            <div className="mt-2">
-              <h6 className=" text-sm font-normal text-wrap">
-                I have used Western Union to purchase money orders for many
-                years. But in the last few I have had to return my money orders
-                for refunds. When purchasing them at the store they had no
-                problem taking my cash and....&nbsp;
-                <Link href={"/"} className="font-medium underline">
-                  full review
-                </Link>
-              </h6>
-            </div>
-          </div>
-          <div className="ring-1 ring-gray-200 p-4 rounded-3xl  mx-4 max-w-72 min-h-60">
-            <div className="flex justify-start items-center gap-4">
-              <p className="size-12 flex justify-center items-center bg-green-200 rounded-full">
-                C
-              </p>
-              <div className="">
-                <p>C leanne</p>
-                <p className="text-xs">Oklahoma City, OK</p>
-              </div>
-            </div>
-            <div className="mt-2">
-              <div className="rvw__hdr-stat">
-                <div className="rvw__rtg rvw__rtg--sm-dsk stars-sprt stars-sprt--p-1" />
-              </div>
-              <span className="text-xs">
-                Reviewed{" "}
-                <Link href={"/"} className="underline">
-                  Western Union
-                </Link>{" "}
-                on Aug. 1, 2024
-              </span>
-            </div>
-            <div className="mt-2">
-              <h6 className=" text-sm font-normal text-wrap">
-                I have used Western Union to purchase money orders for many
-                years. But in the last few I have had to return my money orders
-                for refunds. When purchasing them at the store they had no
-                problem taking my cash and....&nbsp;
-                <Link href={"/"} className="font-medium underline">
-                  full review
-                </Link>
-              </h6>
-            </div>
-          </div>
-          <div className="ring-1 ring-gray-200 p-4 rounded-3xl mx-4 max-w-72">
-            <div className="flex justify-start items-center gap-4">
-              <p className="size-12 flex justify-center items-center bg-green-200 rounded-full">
-                C
-              </p>
-              <div className="">
-                <p>C leanne</p>
-                <p className="text-xs">Oklahoma City, OK</p>
-              </div>
-            </div>
-            <div className="mt-2">
-              <div className="rvw__hdr-stat">
-                <div className="rvw__rtg rvw__rtg--sm-dsk stars-sprt stars-sprt--p-1" />
-              </div>
-              <span className="text-xs">
-                Reviewed{" "}
-                <Link href={"/"} className="underline">
-                  Western Union
-                </Link>{" "}
-                on Aug. 1, 2024
-              </span>
-            </div>
-            <div className="mt-2">
-              <h6 className=" text-sm font-normal text-wrap">
-                I have used Western Union to purchase money orders for many
-                years. But in the last few I have had to return my money orders
-                for refunds. When purchasing them at the store they had no
-                problem taking my cash and....&nbsp;
-                <Link href={"/"} className="font-medium underline">
-                  full review
-                </Link>
-              </h6>
-            </div>
-          </div>
-          {/* <section className="card">
-            <div className="ring-1 ring-gray-200 p-4 rounded-3xl card">
-              <div className="flex justify-start items-center gap-4">
-                <p className="size-12 flex justify-center items-center bg-green-200 rounded-full">
-                  C
-                </p>
-                <div className="">
-                  <p>C leanne</p>
-                  <p className="text-xs">Oklahoma City, OK</p>
-                </div>
-              </div>
-              <div className="mt-2">
-                <div className="rvw__hdr-stat">
-                  <div className="rvw__rtg rvw__rtg--sm-dsk stars-sprt stars-sprt--p-1" />
-                </div>
-                <span className="text-xs">
-                  Reviewed{" "}
-                  <Link href={"/"} className="underline">
-                    Western Union
-                  </Link>{" "}
-                  on Aug. 1, 2024
-                </span>
-              </div>
-              <div className="mt-2">
-                <div className="rvw__top-text">
-                  <p className="line-clamp-3 text-sm font-normal">
-                    I have used Western Union to purchase money orders for many
-                    years. But in the last few I have had to return my money
-                    orders for refunds. When purchasing them at the store they
-                    had no problem taking my cash and...&nbsp;
-                    <Link href={"/"} className="font-medium underline">
-                      full review
-                    </Link>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-          <section className="card">
-            <div className="ring-1 ring-gray-200 p-4 rounded-3xl card">
-              <div className="flex justify-start items-center gap-4">
-                <p className="size-12 flex justify-center items-center bg-green-200 rounded-full">
-                  C
-                </p>
-                <div className="">
-                  <p>C leanne</p>
-                  <p className="text-xs">Oklahoma City, OK</p>
-                </div>
-              </div>
-              <div className="mt-2">
-                <div className="rvw__hdr-stat">
-                  <div className="rvw__rtg rvw__rtg--sm-dsk stars-sprt stars-sprt--p-1" />
-                </div>
-                <span className="text-xs">
-                  Reviewed{" "}
-                  <Link href={"/"} className="underline">
-                    Western Union
-                  </Link>{" "}
-                  on Aug. 1, 2024
-                </span>
-              </div>
-              <div className="mt-2">
-                <div className="rvw__top-text">
-                  <p className="line-clamp-3 text-sm font-normal">
-                    I have used Western Union to purchase money orders for many
-                    years. But in the last few I have had to return my money
-                    orders for refunds. When purchasing them at the store they
-                    had no problem taking my cash and...&nbsp;
-                    <Link href={"/"} className="font-medium underline">
-                      full review
-                    </Link>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-          <section className="card">
-            <div className="ring-1 ring-gray-200 p-4 rounded-3xl card">
-              <div className="flex justify-start items-center gap-4">
-                <p className="size-12 flex justify-center items-center bg-green-200 rounded-full">
-                  C
-                </p>
-                <div className="">
-                  <p>C leanne</p>
-                  <p className="text-xs">Oklahoma City, OK</p>
-                </div>
-              </div>
-              <div className="mt-2">
-                <div className="rvw__hdr-stat">
-                  <div className="rvw__rtg rvw__rtg--sm-dsk stars-sprt stars-sprt--p-1" />
-                </div>
-                <span className="text-xs">
-                  Reviewed{" "}
-                  <Link href={"/"} className="underline">
-                    Western Union
-                  </Link>{" "}
-                  on Aug. 1, 2024
-                </span>
-              </div>
-              <div className="mt-2">
-                <div className="rvw__top-text">
-                  <p className="line-clamp-3 text-sm font-normal">
-                    I have used Western Union to purchase money orders for many
-                    years. But in the last few I have had to return my money
-                    orders for refunds. When purchasing them at the store they
-                    had no problem taking my cash and...&nbsp;
-                    <Link href={"/"} className="font-medium underline">
-                      full review
-                    </Link>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-          <section className="card">
-            <div className="ring-1 ring-gray-200 p-4 rounded-3xl">
-              <div className="flex justify-start items-center gap-4">
-                <p className="size-12 flex justify-center items-center bg-green-200 rounded-full">
-                  C
-                </p>
-                <div className="">
-                  <p>C leanne</p>
-                  <p className="text-xs">Oklahoma City, OK</p>
-                </div>
-              </div>
-              <div className="mt-2">
-                <div className="rvw__hdr-stat">
-                  <div className="rvw__rtg rvw__rtg--sm-dsk stars-sprt stars-sprt--p-1" />
-                </div>
-                <span className="text-xs">
-                  Reviewed{" "}
-                  <Link href={"/"} className="underline">
-                    Western Union
-                  </Link>{" "}
-                  on Aug. 1, 2024
-                </span>
-              </div>
-              <div className="mt-2">
-                <div className="rvw__top-text">
-                  <p className="line-clamp-3 text-sm font-normal">
-                    I have used Western Union to purchase money orders for many
-                    years. But in the last few I have had to return my money
-                    orders for refunds. When purchasing them at the store they
-                    had no problem taking my cash and...&nbsp;
-                    <Link href={"/"} className="font-medium underline">
-                      full review
-                    </Link>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section> */}
+          <Suspense fallback={<></>}>{recentReviews()}</Suspense>
         </InfiniteCarousel>
       </div>
     </div>

@@ -43,7 +43,7 @@ export const getCompanyDetails = async (domain: string, user: any) => {
           slug: domain,
           claim: false,
           status: true,
-          logo: "logo.png",
+          logo: null,
           date: Date(),
         },
         include: {

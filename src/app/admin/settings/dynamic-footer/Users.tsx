@@ -39,10 +39,27 @@ const Users = async (props: Props) => {
     },
   });
 
-  const totalRecord = await prisma.categoryFooter.count();
+  const totalRecord = await prisma.categoryFooter.count({
+    where: {
+      OR: [
+        {
+          content: {
+            contains: props.search,
+          },
+        },
+        {
+          category: {
+            category_name: {
+              contains: props.search,
+            },
+          },
+        },
+      ],
+    },
+  });
 
   // console.log(data, "data", session?.user.id);
-  return <FooterGrid data={data} totalRecord={totalRecord} />;
+  return <FooterGrid data={data} totalRecord={totalRecord} page={props.page} />;
 };
 
 export default Users;

@@ -1,11 +1,10 @@
 import { auth } from "@/auth";
 import AdminAuthLayout from "@/components/Layouts/adminLayout/AdminAuthLayout";
 import { redirect } from "next/navigation";
-import React, { Suspense } from "react";
+import React from "react";
 import AddBusinessForm from "./AddBusinessForm";
 import type { Metadata } from "next";
 import { getPageMeta } from "@/app/lib/meta";
-import Users from "./Users";
 import { prisma } from "../../../../../prisma/prisma";
 
 type Props = {
@@ -21,8 +20,6 @@ type Props = {
 
 export async function generateMetadata({ params }: any): Promise<Metadata> {
   const meta = await getPageMeta(params.slug);
-
-  // Fallback metadata if the page is not found or meta is null
   if (!meta) {
     return {
       title: "Add Business | Admin",
@@ -86,7 +83,34 @@ const page = async ({ params, searchParams }: Props) => {
     },
   });
 
-  const totalRecord = await prisma.inner_seo.count();
+  const totalRecord = await prisma.inner_seo.count({
+    where: {
+      OR: [
+        {
+          title: {
+            contains: search,
+          },
+        },
+        {
+          keywords: {
+            contains: search,
+          },
+        },
+        {
+          description: {
+            contains: search,
+          },
+        },
+        {
+          page: {
+            pageName: {
+              contains: search,
+            },
+          },
+        },
+      ],
+    },
+  });
 
   return (
     <>
@@ -104,9 +128,6 @@ const page = async ({ params, searchParams }: Props) => {
             totalRecord={totalRecord}
           />
         </div>
-        {/* <div className="mt-4">
-          <Users page={page} pageSize={pageSize} search={search} />
-        </div> */}
       </AdminAuthLayout>
     </>
   );

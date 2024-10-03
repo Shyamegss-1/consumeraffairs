@@ -2,6 +2,7 @@
 import React, { ReactNode } from "react";
 import Navbar from "../../Navbar/Navbar";
 import { useRouter } from "next/router";
+import Footer from "@/components/Footer/Footer";
 
 const UserLayout = ({ children }: { children: ReactNode }) => {
   // const router =  useRouter();
@@ -12,7 +13,7 @@ const UserLayout = ({ children }: { children: ReactNode }) => {
       {/* <Navmenu /> */}
       <Navbar />
       {children}
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };

@@ -18,8 +18,8 @@ const page = ({ params }: { params: { company: string } }) => {
     <>
       <Suspense fallback={<LoadingUi />}>
         <CompanyDetails company={params.company} />
+        <CompanyFooter />
       </Suspense>
-      <CompanyFooter />
     </>
   );
 };

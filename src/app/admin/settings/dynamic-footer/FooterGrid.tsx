@@ -10,10 +10,9 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 
 import CategoryModal from "./CategoryModal";
 import { handleDelete, handleStatusUpdate } from "@/server-actions/Admin/DynamicFooter";
+import CustomPagination from "@/components/pagination/Pagination";
 
-const FooterGrid = ({ data, totalRecord }: any) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [statusFilter, setStatusFilter] = useState<string>("");
+const FooterGrid = ({ data, totalRecord,page }: any) => {
   const [pageSize, setPageSize] = useState<number>(10);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const router = useRouter();
@@ -31,26 +30,15 @@ const FooterGrid = ({ data, totalRecord }: any) => {
     () => searchParams?.get("search") || ""
   );
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
 
-  // console.log(totalRecord, totalPages, pageSize, "totalRecord");
-
-  // const handlePageSizeChange = (event: any) => {
-  //   setPageSize(parseInt(event.target.value));
-  //   setCurrentPage(1); // Reset to first page when page size changes
-  // };
 
   console.log(activeRowData, "activerow dat");
 
-  const startIndex = (currentPage - 1) * pageSize;
+  const startIndex = (page - 1) * pageSize;
   const currentData: any[] = data.slice(startIndex, startIndex + pageSize);
 
   const searchQueryValue: string = useDebounce(searchQuery, 500);
-  // console.log(searchQueryValue, "searchQueryValue");
 
-  console.log(statusFilter);
 
   useEffect(() => {
     let params = new URLSearchParams(searchParams);
@@ -243,17 +231,16 @@ const FooterGrid = ({ data, totalRecord }: any) => {
             onOpen={onOpen}
             onOpenChange={onOpenChange}
             data={activeRowData}
-            // setActiveRowData={setActiveRowData}
           />
           {/* Pagination */}
         </div>
-        {/* <Pagination
-          currentPage={currentPage}
+        <CustomPagination
+          currentPage={page}
           pageSize={pageSize}
           startIndex={startIndex}
-          totalCount={data.length}
+          totalCount={totalRecord}
           totalPages={totalPages}
-        /> */}
+        />
       </div>
     </>
   );

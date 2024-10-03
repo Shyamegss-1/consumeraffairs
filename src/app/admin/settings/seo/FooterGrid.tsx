@@ -1,5 +1,6 @@
 "use client";
 import ActionDropdowns from "@/components/dropdown/ActionDropdowns";
+import CustomPagination from "@/components/pagination/Pagination";
 import Pagination from "@/components/pagination/Pagination";
 import useDebounce from "@/lib/client-hooks/useDebounce";
 import { handleDelete, handleStatusUpdate } from "@/server-actions/Admin/Seo";
@@ -9,9 +10,8 @@ import React, { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 
-const FooterGrid = ({ data, totalRecord, setFormData }: any) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [statusFilter, setStatusFilter] = useState<string>("");
+const FooterGrid = ({ data, totalRecord, setFormData,page }: any) => {
+
   const [pageSize, setPageSize] = useState<number>(10);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const router = useRouter();
@@ -24,25 +24,14 @@ const FooterGrid = ({ data, totalRecord, setFormData }: any) => {
     () => searchParams?.get("search") || ""
   );
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
+  const startIndex = (page - 1) * pageSize;
 
-  // console.log(totalRecord, totalPages, pageSize, "totalRecord");
+  console.log(startIndex,page,pageSize);
+  
 
-  // const handlePageSizeChange = (event: any) => {
-  //   setPageSize(parseInt(event.target.value));
-  //   setCurrentPage(1); // Reset to first page when page size changes
-  // };
-
-
-  const startIndex = (currentPage - 1) * pageSize;
-  const currentData: any[] = data?.slice(startIndex, startIndex + pageSize);
+  const currentData: any[] = data
 
   const searchQueryValue: string = useDebounce(searchQuery, 500);
-  // console.log(searchQueryValue, "searchQueryValue");
-
-  console.log(statusFilter);
 
   useEffect(() => {
     let params = new URLSearchParams(searchParams);
@@ -252,13 +241,13 @@ const FooterGrid = ({ data, totalRecord, setFormData }: any) => {
           /> */}
           {/* Pagination */}
         </div>
-        {/* <Pagination
-          currentPage={currentPage}
+        <CustomPagination
+          currentPage={page}
           pageSize={pageSize}
           startIndex={startIndex}
-          totalCount={data.length}
+          totalCount={totalRecord}
           totalPages={totalPages}
-        /> */}
+        />
       </div>
     </>
   );

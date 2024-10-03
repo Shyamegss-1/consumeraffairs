@@ -1,30 +1,26 @@
 import { getCategories } from "@/server-actions/getPopularCategories";
+import ReadOrWriteReviewSection from "../ReadOrWriteReviewSection";
+import CategorySection from "../PopularCategorySection";
+import AllCategories from "../AllCategories";
+import "../Module.css";
+type Props = {
+  params: {
+    filter: string;
+  };
+};
 
-export default async function Page({
-  params: { filter },
-}: {
-  params: { filter: string };
-}) {
-  // Get artist information
-  // const artist = await getCategories();
-
+const page = (props: Props) => {
   return (
     <>
-      <h1>{filter}</h1>
-      {/* Pass the artist ID to the Playlists component */}
+      <ReadOrWriteReviewSection />
+      <div className="bg-gradient-to-r from-primary_light  to-primary_dark py-14 mt-10">
+        <CategorySection />
+      </div>
+      <div className="py-14 mt-10">
+        <AllCategories params={props.params} />
+      </div>
     </>
   );
-}
+};
 
-// async function Playlists({ artistID }: { artistID: string }) {
-//   // Use the artist ID to fetch playlists
-//   const playlists = await getArtistPlaylists(artistID)
-
-//   return (
-//     <ul>
-//       {playlists.map((playlist) => (
-//         <li key={playlist.id}>{playlist.name}</li>
-//       ))}
-//     </ul>
-//   )
-// }
+export default page;

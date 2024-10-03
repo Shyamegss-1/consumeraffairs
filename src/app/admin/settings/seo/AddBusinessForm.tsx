@@ -1,22 +1,10 @@
 "use client";
-import Image from "next/image";
-import React, { Suspense, useEffect, useState } from "react";
-
+import React, {useEffect, useState } from "react";
 import { toast } from "sonner";
-import { convertToBase64 } from "@/lib/Hooks";
-import Swal from "sweetalert2";
-import {
-  addListingByAdmin,
-  addListingByBusinessOwner,
-} from "@/server-actions/addListingByBusinessUser";
 import LoadingScreen from "@/components/ui/LoadingScreen";
-import { CategoryOptions } from "@/app/business/add-business/CategoryOptions";
-import PhoneNumber from "@/app/business/add-business/PhoneNumber";
 import { Input, Select, SelectItem, Switch, Textarea } from "@nextui-org/react";
-import EditorComponent from "@/components/rich-text-editor/CKEEditor";
 import { handleSeo } from "@/server-actions/Admin/Footer";
 import FooterGrid from "./FooterGrid";
-import Users from "./Users";
 
 //
 interface formData {
@@ -197,6 +185,7 @@ const AddBusinessForm = ({
           data={data}
           totalRecord={totalRecord}
           setFormData={setFormData}
+          page={page}
         />
       </div>
       {/* <div className="mt-4">

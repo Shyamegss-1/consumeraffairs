@@ -1,23 +1,20 @@
 "use client";
 import ActionDropdowns from "@/components/dropdown/ActionDropdowns";
-import Pagination from "@/components/pagination/Pagination";
+import CustomPagination from "@/components/pagination/Pagination";
 import useDebounce from "@/lib/client-hooks/useDebounce";
 import {
   handleDelete,
   handleStatusUpdate,
 } from "@/server-actions/Admin/Business";
 
-import { DropdownItem, useDisclosure } from "@nextui-org/react";
+import { DropdownItem} from "@nextui-org/react";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
-const UserGrid = ({ data, totalRecord }: any) => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [statusFilter, setStatusFilter] = useState<string>("");
+const UserGrid = ({ data, totalRecord,page }: any) => {
   const [pageSize, setPageSize] = useState<number>(10);
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams: any = useSearchParams();
@@ -27,24 +24,11 @@ const UserGrid = ({ data, totalRecord }: any) => {
     () => searchParams?.get("search") || ""
   );
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
-  console.log(totalRecord, totalPages, pageSize, "totalRecord");
-
-  // const handlePageSizeChange = (event: any) => {
-  //   setPageSize(parseInt(event.target.value));
-  //   setCurrentPage(1); // Reset to first page when page size changes
-  // };
-
-  const startIndex = (currentPage - 1) * pageSize;
-  const currentData: any[] = data.slice(startIndex, startIndex + pageSize);
+  const startIndex = (page - 1) * pageSize;
+  const currentData: any[] = data
 
   const searchQueryValue: string = useDebounce(searchQuery, 500);
-  // console.log(searchQueryValue, "searchQueryValue");
 
-  console.log(statusFilter);
 
   useEffect(() => {
     let params = new URLSearchParams(searchParams);
@@ -83,34 +67,6 @@ const UserGrid = ({ data, totalRecord }: any) => {
             <span className="ml-2">entries</span>
           </div>
           <div className="mt-4 lg:mt-0 flex gap-4">
-            {/* <div className="">
-              <Dropdown>
-                <DropdownTrigger className="hidden sm:flex">
-                  <Button
-                    endContent={
-                      <IoChevronDownCircleOutline className="text-small" />
-                    }
-                    variant="flat"
-                  >
-                    Status
-                  </Button>
-                </DropdownTrigger>
-                <DropdownMenu
-                  aria-label="Table Columns"
-                  closeOnSelect={false}
-                  selectedKeys={statusFilter}
-                  onSelectionChange={(e)=>{
-                    console.log(e);
-                  }}
-                >
-                  {["Claimed", "Unclaimed"].map((status, i) => (
-                    <DropdownItem key={i} value={status} className="capitalize">
-                      {capitalize(status)}
-                    </DropdownItem>
-                  ))}
-                </DropdownMenu>
-              </Dropdown>
-            </div> */}
             <input
               type="search"
               className="form-control"
@@ -328,13 +284,13 @@ const UserGrid = ({ data, totalRecord }: any) => {
           </table>
           {/* Pagination */}
         </div>
-        {/* <Pagination
-          currentPage={currentPage}
+        <CustomPagination
+          currentPage={page}
           pageSize={pageSize}
           startIndex={startIndex}
-          totalCount={data.length}
+          totalCount={totalRecord}
           totalPages={totalPages}
-        /> */}
+        />
       </div>
     </>
   );

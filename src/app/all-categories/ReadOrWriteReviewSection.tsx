@@ -1,3 +1,4 @@
+import DomainForm from "@/pages/Home/DomainForm";
 import Image from "next/image";
 import React from "react";
 
@@ -14,13 +15,8 @@ const ReadOrWriteReviewSection = (props: Props) => {
               <span className="me-2 inline-flex">
                 <Image
                   sizes="100vw"
-                  // style={{
-                  //   // width: "100%",
-                  //   height: "auto",
-                  // }}
                   width={50}
                   height={30}
-                  // style={{ objectFit: "cover" }}
                   alt=""
                   src="/star.png"
                 />
@@ -29,21 +25,17 @@ const ReadOrWriteReviewSection = (props: Props) => {
               <span className="ms-2 inline-flex">
                 <Image
                   sizes="100vw"
-                  // style={{
-                  //   // width: "100%",
-                  //   height: "auto",
-                  // }}
                   width={50}
                   height={30}
-                  // style={{ objectFit: "contain" }}
                   alt=""
                   src="/star.png"
                 />
               </span>
             </h1>
-            <form
-              action="/search"
-              method="get"
+            <div className="mt-4 mb-8 relative w-full min-h-[80vh]">
+              <DomainForm />
+            </div>
+            {/* <form
               name="searchForm "
               className="my-4 mt-10 w-full"
               id="searchForm"
@@ -64,16 +56,11 @@ const ReadOrWriteReviewSection = (props: Props) => {
                   review about
                 </div>
               </div>
-            </form>
+            </form> */}
             <div className="data2" id="data_12">
               <ul id="" className="result2"></ul>
             </div>
           </div>
-          {/*<div class="col-lg-5">*/}
-          {/*    <div class="search-right0img">*/}
-          {/*        <Image width={60} height={60} alt="" src="https://rating-scale.com/assets/Image/home-banner-main.png" class="Image-fluid w-100" alt="">*/}
-          {/*    </div>*/}
-          {/*</div>*/}
         </div>
       </div>
     </div>

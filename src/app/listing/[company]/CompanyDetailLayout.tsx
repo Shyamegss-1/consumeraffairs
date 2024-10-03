@@ -94,7 +94,7 @@ const CompanyDetailLayout = ({ children, websiteName, claimStatus }: Props) => {
       </div>
       <div className="grid grid-cols-12 gap-4">
         {children}
-        {/* <TopCategoriesCard /> */}
+        <TopCategoriesCard />
       </div>
     </div>
   );

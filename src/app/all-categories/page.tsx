@@ -14,7 +14,7 @@ const page = (props: Props) => {
         <CategorySection />
       </div>
       <div className="py-14 mt-10">
-        <AllCategories />
+        <AllCategories params={null}/>
       </div>
     </>
   );

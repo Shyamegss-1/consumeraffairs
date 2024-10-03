@@ -1,6 +1,5 @@
 "use client";
 import ActionDropdowns from "@/components/dropdown/ActionDropdowns";
-import Pagination from "@/components/pagination/Pagination";
 import useDebounce from "@/lib/client-hooks/useDebounce";
 import {
   handleDelete,
@@ -12,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaStar } from "react-icons/fa";
 import ReviewDetailModal from "./ReviewDetailModal";
+import CustomPagination from "@/components/pagination/Pagination";
 
 const UserGrid = ({ data, totalRecord }: any) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -259,7 +259,7 @@ const UserGrid = ({ data, totalRecord }: any) => {
           />
           {/* Pagination */}
         </div>
-        <Pagination
+        <CustomPagination
           currentPage={currentPage}
           pageSize={pageSize}
           startIndex={startIndex}

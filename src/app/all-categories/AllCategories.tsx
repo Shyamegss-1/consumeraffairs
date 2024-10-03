@@ -5,7 +5,7 @@ import { categories } from "./PopularCategorySection";
 import { getCategories } from "@/server-actions/getPopularCategories";
 import Link from "next/link";
 
-const AllCategories = () => {
+const AllCategories = ({ params }: { params: null | { filter: string } }) => {
   const [categories, setCategories] = React.useState<categories[]>([]);
   const [loading, setLoading] = React.useState(true);
   const [filter, setFilter] = useState("");
@@ -35,148 +35,148 @@ const AllCategories = () => {
           >
             <ul className="pagination m-0 flex justify-between items-center gap-1 flex-nowrap">
               <li className="page-item page1" data-parent="A">
-                <a className="page-link " href="/all-categories/A">
+                <Link scroll={false} className="page-link " href="/all-categories/A">
                   A
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="B">
-                <a className="page-link " href="/all-categories/B">
+                <Link scroll={false} className="page-link " href="/all-categories/B">
                   B
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="C">
-                <a className="page-link " href="/all-categories/C">
+                <Link scroll={false} className="page-link " href="/all-categories/C">
                   C
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="D">
-                <a className="page-link " href="/all-categories/D">
+                <Link scroll={false} className="page-link " href="/all-categories/D">
                   D
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="E">
-                <a className="page-link " href="/all-categories/E">
+                <Link scroll={false} className="page-link " href="/all-categories/E">
                   E
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="F">
-                <a className="page-link " href="/all-categories/F">
+                <Link scroll={false} className="page-link " href="/all-categories/F">
                   F
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="G">
-                <a className="page-link " href="/all-categories/G">
+                <Link scroll={false} className="page-link " href="/all-categories/G">
                   G
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="H">
-                <a className="page-link " href="/all-categories/H">
+                <Link scroll={false} className="page-link " href="/all-categories/H">
                   H
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="I">
-                <a className="page-link " href="/all-categories/I">
+                <Link scroll={false} className="page-link " href="/all-categories/I">
                   I
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="J">
-                <a className="page-link " href="/all-categories/J">
+                <Link scroll={false} className="page-link " href="/all-categories/J">
                   J
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="K">
-                <a className="page-link " href="/all-categories/K">
+                <Link scroll={false} className="page-link " href="/all-categories/K">
                   K
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="L">
-                <a className="page-link " href="/all-categories/L">
+                <Link scroll={false} className="page-link " href="/all-categories/L">
                   L
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="M">
-                <a className="page-link " href="/all-categories/M">
+                <Link scroll={false} className="page-link " href="/all-categories/M">
                   M
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="N">
-                <a className="page-link " href="/all-categories/N">
+                <Link scroll={false} className="page-link " href="/all-categories/N">
                   N
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="O">
-                <a className="page-link " href="/all-categories/O">
+                <Link scroll={false} className="page-link " href="/all-categories/O">
                   O
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="P">
-                <a className="page-link " href="/all-categories/P">
+                <Link scroll={false} className="page-link " href="/all-categories/P">
                   P
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="Q">
-                <a className="page-link " href="/all-categories/Q">
+                <Link scroll={false} className="page-link " href="/all-categories/Q">
                   Q
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="R">
-                <a className="page-link " href="/all-categories/R">
+                <Link scroll={false} className="page-link " href="/all-categories/R">
                   R
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="S">
-                <a className="page-link " href="/all-categories/S">
+                <Link scroll={false} className="page-link " href="/all-categories/S">
                   S
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="T">
-                <a className="page-link " href="/all-categories/T">
+                <Link scroll={false} className="page-link " href="/all-categories/T">
                   T
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="U">
-                <a className="page-link " href="/all-categories/U">
+                <Link scroll={false} className="page-link " href="/all-categories/U">
                   U
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="V">
-                <a className="page-link " href="/all-categories/V">
+                <Link scroll={false} className="page-link " href="/all-categories/V">
                   V
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="W">
-                <a className="page-link " href="/all-categories/W">
+                <Link scroll={false} className="page-link " href="/all-categories/W">
                   W
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="X">
-                <a className="page-link " href="/all-categories/X">
+                <Link scroll={false} className="page-link " href="/all-categories/X">
                   X
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="Y">
-                <a className="page-link " href="/all-categories/Y">
+                <Link scroll={false} className="page-link " href="/all-categories/Y">
                   Y
-                </a>
+                </Link>
               </li>
               <li className="page-item page1 py-1" data-parent="Z">
-                <a className="page-link " href="/all-categories/Z">
+                <Link scroll={false} className="page-link " href="/all-categories/Z">
                   Z
-                </a>
+                </Link>
               </li>
             </ul>
             <ul className="pagination m-0">
               <li className="page-item">
-                <a
+                <Link scroll={false}
                   className="page-link rounded-pill theme-btn1"
                   href="/all-categories "
                 >
                   Reset Filter
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>
-          <div className="grid grid-cols-4 gap-x-4 mt-10">
+          <div className="grid grid-cols-4 gap-4 mt-10">
             {loading
               ? [...Array(8)].map((itm, index) => (
                   <li
@@ -187,29 +187,39 @@ const AllCategories = () => {
                     <p className="min-h-8 animate-pulse rounded-md w-full bg-gray-200"></p>
                   </li>
                 ))
-              : categories?.slice(0, 24)?.map(
-                  (category: categories, i) =>
-                    i !== 7 && (
-                      <div
-                        key={category.category_slug}
-                        className="col-xl-3 col-lg-4 col-md-6 mb-4"
-                      >
-                        <a href={`/category/${category.category_slug}`}>
-                          <div className="singe-category">
-                            <Image
-                              width={60}
-                              alt={""}
-                              height={60}
-                              src={`/${category.category_icon}`}
-                            />
-                            <h5 className="ps-3">{category.category_name} </h5>
-                          </div>
-                        </a>
-                      </div>
+              : categories
+                  .filter((item) =>
+                    item.category_name.startsWith(
+                      params?.filter ? params?.filter : "",
+                      0
                     )
-                )}
+                  )
+                  ?.slice(0, 24)
+                  ?.map(
+                    (category: categories, i) =>
+                      i !== 7 && (
+                        <div
+                          key={category.category_slug}
+                          className="col-xl-3 col-lg-4 col-md-6 mb-4"
+                        >
+                          <Link scroll={false} href={`/category/${category.category_slug}`}>
+                            <div className="singe-category">
+                              <Image
+                                width={60}
+                                alt={""}
+                                height={60}
+                                src={`/${category.category_icon}`}
+                              />
+                              <h5 className="ps-3">
+                                {category.category_name}{" "}
+                              </h5>
+                            </div>
+                          </Link>
+                        </div>
+                      )
+                  )}
             <div className="col-xl-3 col-lg-4 col-md-6 mb-4">
-              <a href="/other_categories">
+              <Link scroll={false} href="/other_categories">
                 <div className="singe-category">
                   <Image
                     alt=""
@@ -219,7 +229,7 @@ const AllCategories = () => {
                   />
                   <h5 className="ps-3">Others</h5>
                 </div>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

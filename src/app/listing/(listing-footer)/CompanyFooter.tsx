@@ -15,7 +15,7 @@ const CompanyFooter = async ({}: Props) => {
   });
 
   return (
-    <div className="w-full border-t border-gray-200 bg-gray-100">
+    <div className="w-full border-t border-gray-200 bg-gray-100 mt-10">
       <div className="max-w-7xl mx-auto py-10">
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-8">

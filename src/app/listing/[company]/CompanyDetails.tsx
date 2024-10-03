@@ -15,6 +15,8 @@ const CompanyDetails = async (props: Props) => {
   const user: any = session?.user;
   // const companyDetail = async () => {
   let companyDetail: any = await getCompanyDetails(props.company, user);
+  console.log(companyDetail.logo,"companyDetail.logo");
+  
   return (
     <div className="main-business-profile-section">
       <div className="banner-profile-box">
@@ -29,7 +31,7 @@ const CompanyDetails = async (props: Props) => {
         <div className="banner-profile-content">
           <div className="banner-profile-logo">
             <Image
-              src={`/${companyDetail.logo}`}
+              src={`${companyDetail.logo ? companyDetail.logo : "/logo.png"}`}
               alt=""
               width={40}
               height={40}

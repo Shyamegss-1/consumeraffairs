@@ -7,85 +7,85 @@ const ProductInfo = () => {
   const data = [
     {
       label: "Automotive",
-      url: "/automotive/automotive.htm",
+      url: "/category/automotive",
       imgSrc:
         "/homepage/automotive.png",
     },
     {
       label: "Business Services",
-      url: "/business-services/",
+      url: "/category/business-and-client-management",
       imgSrc:
         "/homepage/business-services.png",
     },
     {
       label: "Education",
-      url: "/education/",
+      url: "/category/education-management",
       imgSrc:
         "/homepage/educatiomn.png",
     },
     {
       label: "Elder Care",
-      url: "/elder-care-planning/",
+      url: "/category/elder-care",
       imgSrc:
         "/homepage/elder.png",
     },
     {
       label: "Electronics & Tech",
-      url: "/electronics.html",
+      url: "/category/electronics",
       imgSrc:
         "/homepage/electronics-and-tech.png",
     },
     {
       label: "Family & Parenting",
-      url: "/family/",
+      url: "/category/Family-&-Parenting",
       imgSrc:
         "/homepage/parenting.png",
     },
     {
       label: "Finance",
-      url: "/finance/financial_services.htm",
+      url: "/category/financial-services",
       imgSrc:
         "/homepage/finance.png",
     },
     {
       label: "Health & Fitness",
-      url: "/health/",
+      url: "/category/healthcare",
       imgSrc:
         "/homepage/health-and-fitness.png",
     },
     {
-      label: "Homeowners",
-      url: "/homeowners/",
+      label: "Home Improvement Company",
+      url: "/category/home-improvement-company",
       imgSrc:
         "/homepage/home-owner.png",
     },
     {
       label: "Insurance",
-      url: "/insurance/",
+      url: "/category/insurance",
       imgSrc:
         "/homepage/insurance.png",
     },
     {
-      label: "Moving",
-      url: "/moving-checklist/",
+      label: "Media",
+      url: "/category/media",
       imgSrc:
         "/homepage/moving.png",
     },
     {
       label: "Pets",
-      url: "/pets/",
+      url: "/category/pets",
       imgSrc:
         "/homepage/pet.png",
     },
     {
       label: "Travel",
-      url: "/travel/travel.htm",
+      url: "/category/transportation",
       imgSrc:
         "/homepage/travel.png",
     },
     {
       label: "View All",
-      url: "https://www.consumeraffairs.com/resources/",
+      url: "/all-categories",
       imgSrc:
         "https://media.consumeraffairs.com/static/img/home/topics/view-all.5b340f8ab4f4.webp",
     },

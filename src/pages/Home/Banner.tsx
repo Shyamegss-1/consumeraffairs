@@ -5,7 +5,7 @@ import InfiniteCarousel from "../../components/InfiniteCarousel/InfiniteCarousel
 
 const Banner = () => {
   return (
-    <div className="relative max-w-7xl mx-auto my-20 ">
+    <div className="relative max-w-7xl mx-auto py-20">
       <div className="w-full grid grid-cols-2  relative">
         <div className="col-span-1 bg-hover flex justify-center items-center  rounded-l-3xl">
           <div className="">

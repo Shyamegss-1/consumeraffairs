@@ -15,7 +15,7 @@ const Users = async (props: Props) => {
   const skip = (props.page - 1) * props.pageSize;
   const data = await prisma.listing.findMany({
     where: {
-      claim:false,
+      claim: false,
       OR: [
         {
           companyName: {
@@ -36,10 +36,26 @@ const Users = async (props: Props) => {
     },
   });
 
-  const totalRecord = await prisma.users.count();
+  const totalRecord = await prisma.listing.count({
+    where: {
+      claim: false,
+      OR: [
+        {
+          companyName: {
+            contains: props.search,
+          },
+        },
+        {
+          email: {
+            contains: props.search,
+          },
+        },
+      ],
+    },
+  });
 
   // console.log(data, "data", session?.user.id);
-  return <UserGrid data={data} totalRecord={totalRecord} />;
+  return <UserGrid data={data} totalRecord={totalRecord} page={props.page} />;
 };
 
 export default Users;

@@ -49,10 +49,39 @@ const Users = async (props: Props) => {
     },
   });
 
-  const totalRecord = await prisma.categoryFooter.count();
+  const totalRecord = await prisma.inner_seo.count({
+    where: {
+      OR: [
+        {
+          title: {
+            contains: props.search,
+          },
+        },
+        {
+          keywords: {
+            contains: props.search,
+          },
+        },
+        {
+          description: {
+            contains: props.search,
+          },
+        },
+        {
+          page: {
+            pageName: {
+              contains: props.search,
+            },
+          },
+        },
+      ],
+    },
+  });
 
   // console.log(data, "data", session?.user.id);
-  return <FooterGrid data={data} totalRecord={totalRecord} />;
+  return (
+    <FooterGrid data={data} totalRecord={totalRecord} page={props.page} />
+  );
 };
 
 export default Users;
