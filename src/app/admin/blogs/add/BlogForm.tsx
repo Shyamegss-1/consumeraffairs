@@ -33,6 +33,8 @@ interface selectBlogCategoryData {
 
 type Props = {
   blogData: any;
+  blogCategories: any;
+  businessCategories: any;
 };
 
 interface formData {
@@ -49,13 +51,13 @@ interface formData {
   metaDescription: string | null;
 }
 
-const BlogForm = ({ blogData }: Props) => {
-  const [blogCategories, setblogCategories] = useState<
-    selectBlogCategoryData[]
-  >([]);
-  const [businessCategories, setbusinessCategories] = useState<
-    selectBusinessCategoryData[]
-  >([]);
+const BlogForm = ({ blogData,businessCategories,blogCategories }: Props) => {
+  // const [blogCategories, setblogCategories] = useState<
+  //   selectBlogCategoryData[]
+  // >([]);
+  // const [businessCategories, setbusinessCategories] = useState<
+  //   selectBusinessCategoryData[]
+  // >([]);
   const [blogContent, setBlogContent] = useState<string>("");
 
   const [formData, setFormData] = useState<formData>({
@@ -140,30 +142,30 @@ const BlogForm = ({ blogData }: Props) => {
     }
   };
 
-  const getBusinessCategoryData = async () => {
-    const res = await axios.get("/api/business-category", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await res.data
-    console.log(data.data, "getBusinessCategoryData");
-    setbusinessCategories(data.data);
-  };
-  const getBlogCategoryData = async () => {
-    const res = await axios.get("/api/blog-category", {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await res.data
-    console.log(data.data, "getBlogCategoryData");
-    setblogCategories(data.data);
-  };
+  // const getBusinessCategoryData = async () => {
+  //   const res = await axios.get("/api/business-category", {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   const data = await res.data;
+  //   console.log(data.data, "getBusinessCategoryData");
+  //   setbusinessCategories(data.data);
+  // };
+  // const getBlogCategoryData = async () => {
+  //   const res = await axios.get("/api/blog-category", {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   });
+  //   const data = await res.data;
+  //   console.log(data.data, "getBlogCategoryData");
+  //   setblogCategories(data.data);
+  // };
 
   useEffect(() => {
-    getBusinessCategoryData();
-    getBlogCategoryData();
+    // getBusinessCategoryData();
+    // getBlogCategoryData();
     if (blogData) {
       setFormData({
         b_id: String(blogData.b_id),
@@ -224,7 +226,7 @@ const BlogForm = ({ blogData }: Props) => {
               labelPlacement="outside"
               className="max-w-xs"
             >
-              {businessCategories.map((animal) => {
+              {businessCategories.map((animal:any) => {
                 return (
                   <SelectItem
                     key={`${animal.cid}`}
@@ -252,7 +254,7 @@ const BlogForm = ({ blogData }: Props) => {
               labelPlacement="outside"
               className="max-w-xs"
             >
-              {blogCategories.map((animal) => {
+              {blogCategories.map((animal:any) => {
                 return (
                   <SelectItem
                     key={`${animal.b_c_id}`}
