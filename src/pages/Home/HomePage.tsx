@@ -9,6 +9,7 @@ import { redirect } from "next/navigation";
 import Swal from "sweetalert2";
 import { listingDomain } from "@/server-actions/listingDomain";
 import DomainForm from "./DomainForm";
+import LoadingUi from "@/app/listing/[company]/LoadingUi";
 
 const HomePage = ({ user }: any) => {
   const cardData = [

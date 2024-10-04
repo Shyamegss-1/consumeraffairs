@@ -1,7 +1,8 @@
-// app/components/RecentBlogs.tsx
+"use server"
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { prisma } from "../../../prisma/prisma";
 
 type Blog = {
   b_id: number;
@@ -12,11 +13,26 @@ type Blog = {
   b_status: boolean;
 };
 
-type Props = {
-  blogs: Blog[];
-};
 
-const RecentBlogs = ({ blogs }: Props) => {
+
+const RecentBlogs = async() => {
+  const blogs = await prisma.blog.findMany({
+    select: {
+      b_id: true,
+      b_title: true,
+      b_slug: true,
+      b_image: true,
+      createdAt: true,
+      b_status: true,
+    },
+    where: {
+      b_status: true,
+    },
+    orderBy: {
+      createdAt: "desc", 
+    },
+    take: 12,
+  });
   return (
     <div className="mt-10 grid grid-cols-12 gap-4 sm:gap-6">
       {blogs.map((item) => (
@@ -35,7 +51,7 @@ const RecentBlogs = ({ blogs }: Props) => {
               width={1920}
               height={1080}
               objectFit="cover"
-              className="aspect-video rounded-md"
+              className="aspect-video rounded-md w-full"
             />
             <h1 className="text-lg font-medium mt-4 line-clamp-2">
               {item.b_title}
