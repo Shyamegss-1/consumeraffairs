@@ -1,17 +1,9 @@
 import { Suspense } from "react";
-import { prisma } from "../../../prisma/prisma";
 import RecentBlogs from "./RecentBlogs";
 
-type Blog = {
-  b_id: number;
-  b_title: string;
-  b_slug: string;
-  b_image: string;
-  createdAt: Date;
-  b_status: boolean;
-};
+type Props = {};
 
-export default async function Page() {
+const page = (props: Props) => {
   return (
     <div className="w-full">
       <div className="max-w-7xl mx-auto mt-10">
@@ -25,9 +17,10 @@ export default async function Page() {
       </div>
     </div>
   );
-}
+};
+export default page;
 
-export const BlogsFallBackUi = () => {
+const BlogsFallBackUi = () => {
   return (
     <div className="mt-10 grid grid-cols-12 gap-4 sm:gap-6">
       {[...Array(9)].map((item, i) => (
