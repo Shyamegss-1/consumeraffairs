@@ -57,7 +57,7 @@ const DropdownUser = ({ user }: { user: User }) => {
         <div
           className={`absolute right-0 mt-4 flex w-62 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark`}
         >
-          <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7 dark:border-strokedark">
+          {/* <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7 dark:border-strokedark">
             <li>
               <Link
                 href="/profile"
@@ -129,7 +129,7 @@ const DropdownUser = ({ user }: { user: User }) => {
                 Account Settings
               </Link>
             </li>
-          </ul>
+          </ul> */}
           <button
             onClick={(e) => {
               e.preventDefault();

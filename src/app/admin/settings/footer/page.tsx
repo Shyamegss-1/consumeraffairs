@@ -56,7 +56,7 @@ const page = async ({ params, searchParams }: Props) => {
         <h3 className="rounded-xl border bg-white px-6 py-4 shadow-md mb-4 text-xl font-semibold">
           Add Footer Content
         </h3>
-        <div className="rounded-xl border bg-white px-6 py-4 shadow-md overflow-auto max-h-[79vh] custom-scroll flex justify-center items-center relative">
+        <div className="rounded-xl border bg-white px-6 py-4 shadow-md overflow-auto max-h-[79vh] custom-scroll relative">
           <AddBusinessForm userId={session?.user.id} footerData={footerData} />
         </div>
       </AdminAuthLayout>

@@ -5,11 +5,11 @@ type Props = {};
 
 const loading = (props: Props) => {
   return (
-    <UserLayout>
+    <div className="relative min-h-[80vh]">
       <div className="loading-container">
         <div className="spinner"></div>
       </div>
-    </UserLayout>
+    </div>
   );
 };
 
