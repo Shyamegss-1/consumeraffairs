@@ -146,7 +146,7 @@ const BlogForm = ({ blogData }: Props) => {
         "Content-Type": "application/json",
       },
     });
-    const data = await res.data.json();
+    const data = await res.data
     console.log(data.data, "getBusinessCategoryData");
     setbusinessCategories(data.data);
   };
@@ -156,7 +156,7 @@ const BlogForm = ({ blogData }: Props) => {
         "Content-Type": "application/json",
       },
     });
-    const data = await res.data.json();
+    const data = await res.data
     console.log(data.data, "getBlogCategoryData");
     setblogCategories(data.data);
   };

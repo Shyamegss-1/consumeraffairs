@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useRef } from 'react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import dynamic from 'next/dynamic';
