@@ -10,10 +10,11 @@ import { Logo } from "../icons/Icons";
 import SidebarItem from "./SidebarItem";
 import {
   MdOutlineDashboardCustomize,
+  MdOutlinePolicy,
   MdOutlineRateReview,
 } from "react-icons/md";
 
-import { TbLogs, TbSeo } from "react-icons/tb";
+import { TbHexagonalPrismPlus, TbLogs, TbSeo } from "react-icons/tb";
 import { PiNotepad } from "react-icons/pi";
 import { IoBusinessOutline } from "react-icons/io5";
 
@@ -168,6 +169,16 @@ const menuGroups = [
         icon: <TbSeo />,
         label: "Seo",
         route: "/admin/settings/seo",
+      },
+      {
+        icon: <MdOutlinePolicy />,
+        label: "Privacy Policy",
+        route: "/admin/settings/privacy-policy",
+      },
+      {
+        icon: <TbHexagonalPrismPlus />,
+        label: "Terms Of Use",
+        route: "/admin/settings/terms-&-conditions",
       },
     ],
   },

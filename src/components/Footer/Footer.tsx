@@ -1,12 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { FaAddressBook, FaMailBulk } from "react-icons/fa";
-import { LiaAddressCard, LiaAddressCardSolid } from "react-icons/lia";
+import { FaMailBulk } from "react-icons/fa";
+import { LiaAddressCardSolid } from "react-icons/lia";
 
 const Footer = () => {
   return (
-    <footer className="w-full relative">
+    <footer className="w-full relative mt-20">
       <div className="max-w-7xl mx-auto p-2">
         <div className="flex justify-center items-start flex-wrap sm:flex-nowrap gap-8">
           <div className="relative w-1/3">
@@ -61,7 +61,9 @@ const Footer = () => {
             <ul className="list-none">
               <li className="py-2 text-gray-600 inline-flex items-center gap-2">
                 <FaMailBulk />
-                <a className="" href="mailto:info@myreviews.com">info@myreviews.com</a>
+                <a className="" href="mailto:info@myreviews.com">
+                  info@myreviews.com
+                </a>
               </li>
               <li className="py-2 text-gray-600 inline-flex items-center gap-2">
                 <LiaAddressCardSolid className="size-5 p-0 m-0" />

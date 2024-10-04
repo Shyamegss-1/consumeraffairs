@@ -6,8 +6,6 @@ import Image from "next/image";
 import { convertToBase64 } from "@/lib/Hooks";
 import { AddBlog, updateBlog } from "@/server-actions/Admin/Blogs";
 import { toast } from "sonner";
-import { blog } from "@prisma/client";
-import { string } from "zod";
 
 interface data {
   title: string;
@@ -148,7 +146,7 @@ const BlogForm = ({ blogData }: Props) => {
       },
     });
     const data = await res.json();
-    // console.log(data.data);
+    console.log(data.data, "getBusinessCategoryData");
     setbusinessCategories(data.data);
   };
   const getBlogCategoryData = async () => {
@@ -158,10 +156,9 @@ const BlogForm = ({ blogData }: Props) => {
       },
     });
     const data = await res.json();
-    // console.log(data.data);
+    console.log(data.data, "getBlogCategoryData");
     setblogCategories(data.data);
   };
-  console.log(blogCategories);
 
   useEffect(() => {
     getBusinessCategoryData();
