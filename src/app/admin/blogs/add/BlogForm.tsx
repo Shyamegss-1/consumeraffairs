@@ -6,6 +6,7 @@ import Image from "next/image";
 import { convertToBase64 } from "@/lib/Hooks";
 import { AddBlog, updateBlog } from "@/server-actions/Admin/Blogs";
 import { toast } from "sonner";
+import axios from "axios";
 
 interface data {
   title: string;
@@ -140,24 +141,22 @@ const BlogForm = ({ blogData }: Props) => {
   };
 
   const getBusinessCategoryData = async () => {
-    const res = await fetch("/api/business-category", {
+    const res = await axios.get("/api/business-category", {
       headers: {
         "Content-Type": "application/json",
       },
-      cache: "no-store"
     });
-    const data = await res.json();
+    const data = await res.data.json();
     console.log(data.data, "getBusinessCategoryData");
     setbusinessCategories(data.data);
   };
   const getBlogCategoryData = async () => {
-    const res = await fetch("/api/blog-category", {
+    const res = await axios.get("/api/blog-category", {
       headers: {
         "Content-Type": "application/json",
       },
-      cache: "no-store"
     });
-    const data = await res.json();
+    const data = await res.data.json();
     console.log(data.data, "getBlogCategoryData");
     setblogCategories(data.data);
   };
