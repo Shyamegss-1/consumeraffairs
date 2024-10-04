@@ -3,8 +3,8 @@ import AdminAuthLayout from "@/components/Layouts/adminLayout/AdminAuthLayout";
 import { redirect } from "next/navigation";
 import React, { Suspense } from "react";
 import BlogForm from "./BlogForm";
-import { unstable_cache } from "next/cache";
-import { prisma } from "../../../../../prisma/prisma";
+import { getBusinessCategoryData } from "@/server-actions/Admin/BusinessCategory";
+import { getBlogCategoryData } from "@/server-actions/Admin/BlogsCategory";
 
 interface ItemsPageProps {
   params: {
@@ -16,43 +16,6 @@ interface ItemsPageProps {
     pageSize?: string;
   };
 }
-const getBusinessCategoryData = unstable_cache(
-  async () => {
-    return await prisma.category.findMany({
-      where: {
-        status: true,
-      },
-      select: {
-        cid: true,
-        category_name: true,
-      },
-      orderBy: {
-        category_name: "asc",
-      },
-    });
-  },
-  ["businessCategories"],
-  { revalidate: 3600, tags: ["businessCategories"] }
-);
-
-const getBlogCategoryData = unstable_cache(
-  async () => {
-    return await prisma.blog_category.findMany({
-      where: {
-        b__c_status: "Active",
-      },
-      select: {
-        b_c_id: true,
-        b_c_name: true,
-      },
-      orderBy: {
-        b_c_name: "asc",
-      },
-    });
-  },
-  ["blogCategories"],
-  { revalidate: 3600, tags: ["blogCategories"] }
-);
 
 const page = async ({ params, searchParams }: ItemsPageProps) => {
   const session = await auth();
@@ -81,8 +44,8 @@ const page = async ({ params, searchParams }: ItemsPageProps) => {
         >
           <BlogForm
             blogData={null}
-            businessCategories={businessCategories}
-            blogCategories={blogCategories}
+            businessCategories={businessCategories.businessCategories}
+            blogCategories={blogCategories.blogCategories}
           />
         </Suspense>
       </div>

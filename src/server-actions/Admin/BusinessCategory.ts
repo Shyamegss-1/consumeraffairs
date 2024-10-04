@@ -106,3 +106,31 @@ export const handleStatusUpdate = async (
     return { status: false, message: String(error.message) };
   }
 };
+
+export const getBusinessCategoryData = async () => {
+  try {
+    const businessCategories = await prisma.category.findMany({
+      where: {
+        status: true,
+      },
+      select: {
+        cid: true,
+        category_name: true,
+      },
+      orderBy: {
+        category_name: "asc",
+      },
+    });
+    if (!businessCategories) {
+      throw new Error("Something went wrong, Please try again");
+    }
+    return {
+      businessCategories,
+      status: true,
+      message: "Category status updated successfully",
+    };
+  } catch (error: any) {
+    console.log(error);
+    return { status: false, message: String(error.message) };
+  }
+};

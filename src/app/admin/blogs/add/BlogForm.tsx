@@ -6,7 +6,6 @@ import Image from "next/image";
 import { convertToBase64 } from "@/lib/Hooks";
 import { AddBlog, updateBlog } from "@/server-actions/Admin/Blogs";
 import { toast } from "sonner";
-import axios from "axios";
 
 interface data {
   title: string;
