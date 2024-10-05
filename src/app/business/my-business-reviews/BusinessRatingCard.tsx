@@ -1,12 +1,14 @@
 import React from "react";
 import { prisma } from "../../../../prisma/prisma";
 
-type Props = {};
+type Props = {
+  session: any;
+};
 
-const BusinessRatingCard = async ({}: Props) => {
+const BusinessRatingCard = async ({ session }: Props) => {
   const averageRatingData = await prisma.review.aggregate({
     where: {
-      company_id: 1,
+      company_id: Number(session.user.id),
       // review_status:"Active"
     },
     _avg: {
@@ -21,7 +23,7 @@ const BusinessRatingCard = async ({}: Props) => {
   const ratingCounts = await prisma.review.groupBy({
     by: ["review_rating"],
     where: {
-      company_id: 1, // Assuming `company_id` is the foreign key in the `reviews` model
+      company_id: Number(session.user.id), // Assuming `company_id` is the foreign key in the `reviews` model
       // review_status: "Active",
     },
     _count: {

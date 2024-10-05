@@ -20,7 +20,6 @@ type Props = {
 export async function generateMetadata({ params }: any): Promise<Metadata> {
   const meta = await getPageMeta(params.slug);
 
-  // Fallback metadata if the page is not found or meta is null
   if (!meta) {
     return {
       title: "Add Business | Admin",

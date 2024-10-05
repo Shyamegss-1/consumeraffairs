@@ -49,7 +49,7 @@ const Users = async (props: Props) => {
   const totalRecord = await prisma.review.count();
 
   // console.log(data, "data", session?.user.id);
-  return <UserGrid data={data} totalRecord={totalRecord} />;
+  return <UserGrid data={data} totalRecord={totalRecord} page={props.page}/>;
 };
 
 export default Users;

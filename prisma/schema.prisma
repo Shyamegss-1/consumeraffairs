@@ -163,6 +163,8 @@ model listing {
   user              users?        @relation(fields: [userid], references: [id])
   reviews           review[] // Cascading delete on related reviews
   social_links      social_links?
+  ads               ads[]
+  media             media[]
 
   @@index([category_id], map: "listing_category_id_fkey")
   @@index([userid], map: "listing_userid_fkey")
@@ -253,6 +255,8 @@ model users {
   listing           listing[]
   reviews           review[]
   role              roles?         @relation(fields: [role_id], references: [id])
+  ads               ads[]
+  media             media[]
 
   @@index([role_id], map: "users_role_id_fkey")
 }
@@ -312,6 +316,7 @@ model Footer {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
 model PrivacyPolicy {
   id        Int      @id @default(autoincrement())
   content   String   @db.LongText
@@ -319,9 +324,35 @@ model PrivacyPolicy {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
 model TermsAndConditions {
   id        Int      @id @default(autoincrement())
   content   String   @db.LongText
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ads {
+  id        Int      @id @default(autoincrement())
+  listingId Int?
+  listing   listing? @relation(fields: [listingId], references: [id])
+  userId    Int
+  user      users?   @relation(fields: [userId], references: [id])
+  image     String   @db.Text
+  adUrl     String   @db.Text
+  status    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model media {
+  id        Int      @id @default(autoincrement())
+  listingId Int?
+  listing   listing? @relation(fields: [listingId], references: [id])
+  userId    Int
+  user      users?   @relation(fields: [userId], references: [id])
+  image     String   @db.Text
   status    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

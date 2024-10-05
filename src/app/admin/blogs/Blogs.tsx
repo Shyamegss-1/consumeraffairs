@@ -40,10 +40,25 @@ const Blogs = async (props: Props) => {
     },
   });
 
-  const totalRecord = await prisma.blog.count();
+  const totalRecord = await prisma.blog.count({
+    where: {
+      OR: [
+        {
+          b_title: {
+            contains: props.search,
+          },
+        },
+        {
+          b_description: {
+            contains: props.search,
+          },
+        },
+      ],
+    },
+  });
 
   // console.log(data, "data", session?.user.id);
-  return <BlogGrid data={data} totalRecord={totalRecord} />;
+  return <BlogGrid data={data} totalRecord={totalRecord} page={props.page}/>;
 };
 
 export default Blogs;

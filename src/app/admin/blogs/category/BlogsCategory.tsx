@@ -35,10 +35,27 @@ const BlogsCategory = async (props: Props) => {
     },
   });
 
-  const totalRecord = await prisma.blog_category.count();
+  const totalRecord = await prisma.blog_category.count({
+    where: {
+      OR: [
+        {
+          b_c_name: {
+            contains: props.search,
+          },
+        },
+        {
+          b_c_name: {
+            contains: props.search,
+          },
+        },
+      ],
+    },
+  });
 
   // console.log(data, "data", session?.user.id);
-  return <BlogCategoryGrid data={data} totalRecord={totalRecord} />;
+  return (
+    <BlogCategoryGrid data={data} totalRecord={totalRecord} page={props.page} />
+  );
 };
 
 export default BlogsCategory;

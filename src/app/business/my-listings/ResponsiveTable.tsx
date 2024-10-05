@@ -1,12 +1,12 @@
 "use client";
+import CustomPagination from "@/components/pagination/Pagination";
 import Pagination from "@/components/pagination/Pagination";
 import useDebounce from "@/lib/client-hooks/useDebounce";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-const ResponsiveTable = ({ data }: any) => {
-  const [currentPage, setCurrentPage] = useState(1);
+const ResponsiveTable = ({ data, totalRecord, page }: any) => {
   const [pageSize, setPageSize] = useState(10);
 
   const router = useRouter();
@@ -18,19 +18,8 @@ const ResponsiveTable = ({ data }: any) => {
     () => searchParams?.get("search") || ""
   );
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
-  console.log(searchParams.get("pageSize"));
-
-  // const handlePageSizeChange = (event: any) => {
-  //   setPageSize(parseInt(event.target.value));
-  //   setCurrentPage(1); // Reset to first page when page size changes
-  // };
-
-  const startIndex = (currentPage - 1) * pageSize;
-  const currentData: any[] = data.slice(startIndex, startIndex + pageSize);
+  const startIndex = (page - 1) * pageSize;
+  const currentData: any[] = data;
 
   const searchQueryValue: string = useDebounce(searchQuery, 500);
   // console.log(searchQueryValue, "searchQueryValue");
@@ -192,11 +181,11 @@ const ResponsiveTable = ({ data }: any) => {
           </table>
           {/* Pagination */}
         </div>
-        <Pagination
-          currentPage={currentPage}
+        <CustomPagination
+          currentPage={page}
           pageSize={pageSize}
           startIndex={startIndex}
-          totalCount={data.length}
+          totalCount={totalRecord}
           totalPages={totalPages}
         />
       </div>

@@ -4,22 +4,16 @@ import React, { useEffect, useState } from "react";
 import GridHeader from "./GridHeader";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import CustomPagination from "@/components/pagination/Pagination";
 
-
-const MyReviewsGrid = ({ data }: any) => {
-  const [currentPage, setCurrentPage] = useState(1);
+const MyReviewsGrid = ({ data, totalRecord, page }: any) => {
   const [pageSize, setPageSize] = useState(10);
 
   const router = useRouter();
   const pathname = usePathname();
   const searchParams: any = useSearchParams();
   const totalPages = Math.ceil(data.length / pageSize);
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-  const startIndex = (currentPage - 1) * pageSize;
-  const currentData: any[] = data.slice(startIndex, startIndex + pageSize);
+  const startIndex = (page - 1) * pageSize;
   return (
     <div className="lg:col-span-3">
       <GridHeader searchParams={searchParams} />
@@ -80,11 +74,11 @@ const MyReviewsGrid = ({ data }: any) => {
           </tbody>
         </table>
       </div>
-      <Pagination
-        currentPage={currentPage}
+      <CustomPagination
+        currentPage={page}
         pageSize={pageSize}
         startIndex={startIndex}
-        totalCount={data.length}
+        totalCount={totalRecord}
         totalPages={totalPages}
       />
     </div>

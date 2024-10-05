@@ -1,20 +1,16 @@
 "use client";
 import ActionDropdowns from "@/components/dropdown/ActionDropdowns";
-import Pagination from "@/components/pagination/Pagination";
 import useDebounce from "@/lib/client-hooks/useDebounce";
 import { handleDelete, handleStatusUpdate } from "@/server-actions/addBlogCategory";
 import { DropdownItem, useDisclosure } from "@nextui-org/react";
-import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { FaStar } from "react-icons/fa";
 import CategoryModal from "./CategoryModal";
+import CustomPagination from "@/components/pagination/Pagination";
 
-const BlogCategoryGrid = ({ data, totalRecord }: any) => {
+const BlogCategoryGrid = ({ data, totalRecord,page }: any) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [loading, setLoading] = useState<Boolean>(false)
-  const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const [activeRowData, setActiveRowData] = useState({
     b_c_id: null,
@@ -31,23 +27,10 @@ const BlogCategoryGrid = ({ data, totalRecord }: any) => {
     () => searchParams?.get("search") || ""
   );
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
-  // console.log(totalRecord, totalPages, pageSize, "totalRecord");
-
-  // const handlePageSizeChange = (event: any) => {
-  //   setPageSize(parseInt(event.target.value));
-  //   setCurrentPage(1); // Reset to first page when page size changes
-  // };
-
-  const startIndex = (currentPage - 1) * pageSize;
-  const currentData: any[] = data.slice(startIndex, startIndex + pageSize);
+  const startIndex = (page - 1) * pageSize;
+  const currentData: any[] = data
 
   const searchQueryValue: string = useDebounce(searchQuery, 500);
-  // console.log(searchQueryValue, "searchQueryValue");
-  // console.log(data);
 
   useEffect(() => {
     let params = new URLSearchParams(searchParams);
@@ -99,8 +82,6 @@ const BlogCategoryGrid = ({ data, totalRecord }: any) => {
             />
           </div>
         </div>
-
-        {/* Table */}
         <div className="bg-white mt-4 p-4 border rounded-lg shadow-md overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -234,11 +215,11 @@ const BlogCategoryGrid = ({ data, totalRecord }: any) => {
             data={activeRowData}
           />
         </div>
-        <Pagination
-          currentPage={currentPage}
+        <CustomPagination
+          currentPage={page}
           pageSize={pageSize}
           startIndex={startIndex}
-          totalCount={data.length}
+          totalCount={totalRecord}
           totalPages={totalPages}
         />
       </div>
