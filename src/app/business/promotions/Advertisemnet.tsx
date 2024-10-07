@@ -1,10 +1,17 @@
 "use client";
 import { convertToBase64 } from "@/lib/Hooks";
-import { handleCreateUpdatePromotionsAds } from "@/server-actions/Business/promotions";
+import {
+  getPromotionAds,
+  handleCreateUpdatePromotionsAds,
+} from "@/server-actions/Business/promotions";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-type Props = {};
+type Props = {
+  listingId: number;
+  userId: number;
+  prevAds: any;
+};
 
 const Advertisemnet = (props: Props) => {
   const [ads, setAds] = useState<
@@ -27,13 +34,28 @@ const Advertisemnet = (props: Props) => {
     },
   ]);
 
-  const handleUpload = (item: {
-    id: number | null;
-    image: string;
-    adUrl: string;
-  }) => {
-      const res = handleCreateUpdatePromotionsAds()
+  console.log(props, "props");
+
+  const handleUpload = (
+    id: number,
+    item: {
+      adUrl: string;
+      image: string;
+      userId: number;
+      listingId: number;
+    }
+  ) => {
+    const res = handleCreateUpdatePromotionsAds(id, { ...item });
   };
+
+  useEffect(() => {
+    const res = props.prevAds.map((item:any) => ({
+      id: item.id,
+      image: item.image,
+      adUrl: item.adUrl,
+    }));
+    setAds([...res]);
+  }, [props.prevAds]);
 
   return (
     <div className="col-span-6 shadow-md rounded-lg p-8 bg-white border">
@@ -51,8 +73,7 @@ const Advertisemnet = (props: Props) => {
                 src={item.image !== "" ? item.image : "/aaaa.png"}
                 alt={`ad-${i + 1}`}
                 height={1080}
-                width={1080}
-                objectFit="cover"
+                width={1920}
                 className="rounded-xl object-cover"
               />
             </div>
@@ -92,9 +113,21 @@ const Advertisemnet = (props: Props) => {
                 id="adv-1-url"
                 className="form-control placeholder:text-sm placeholder:font-light"
                 placeholder="Adv. 1 URL"
+                value={item.adUrl}
+                onChange={(e) => {
+                  item.adUrl = String(e.target.value);
+                  setAds([...ads]);
+                }}
               />
               <button
-                onClick={(e) => handleUpload(item)}
+                onClick={(e) =>
+                  handleUpload(Number(item.id), {
+                    adUrl: item.adUrl,
+                    image: item.image,
+                    listingId: props.listingId,
+                    userId: props.userId,
+                  })
+                }
                 className="w-full bg-active_dark rounded-full py-2 px-6 text-white font-semibold"
               >
                 Upload

@@ -69,12 +69,37 @@ export const businessRegister = async (
             companyName: businessName,
           },
         },
+        listing: {
+          create: {
+            name: businessName,
+            email: email,
+            slug: website.replaceAll(".", "-"),
+            website_link: website,
+            claim: true,
+            about: "",
+            address: "",
+            verify_code: "0",
+            status: true,
+            logo: null,
+            date: Date(),
+          },
+        },
       },
     });
 
     if (!business) {
       throw new Error("Something went wrong, try again");
     }
+    // const listing = await prisma.listing.create({
+    //   data:{
+    //     about:"",
+    //     email:"",
+    //     name:"",
+    //     slug:"",
+    //     website_link:"",
+    //     claim:true
+    //   }
+    // })
 
     await SendVerification(business.id, claimUrl);
 
@@ -238,7 +263,7 @@ export const handleUpdateBusinessProfile = async (formData: any) => {
       return { status: false, message: "Business Profile updation failed!" };
     }
     return { status: true, message: "Business Profile updated successfully" };
-  } catch (error:any) {
+  } catch (error: any) {
     toast.error(String(error));
   }
 };
@@ -246,6 +271,3 @@ export const handleUpdateBusinessProfile = async (formData: any) => {
 export const uploadPromotions = (formData: FormData) => {
   console.log(formData);
 };
-
-
-
