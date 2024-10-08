@@ -91,7 +91,6 @@ const Advertisemnet = (props: Props) => {
                   onChange={async (e: any) => {
                     const file = await convertToBase64(e.target.files[0]);
                     console.log(file);
-
                     item.image = String(file);
                     setAds([...ads]);
                   }}

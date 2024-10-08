@@ -250,7 +250,7 @@ const MainDashboardLayout = async ({ user }: Props) => {
                   </Link>
                   <Link
                     className="ring-2 ring-primary_dark font-semibold w-full text-center py-2 rounded-lg text-primary_dark"
-                    href="/business/my-listing"
+                    href="/business/my-listings"
                   >
                     View All Business Listings
                   </Link>

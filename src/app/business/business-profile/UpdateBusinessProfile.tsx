@@ -14,13 +14,14 @@ type Props = {
 };
 
 const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
+  const [countryCode, setCountryCode] = useState<string | null>("us");
+  const [countryDialCode, setCountryDialCode] = useState<string | null>("1");
+  const [country, setCountry] = useState<string | null>("United States");
   const [options, setOptins] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleFileChange = async (event: any, key: string) => {
     if (event.target.files && event.target.files.length > 0) {
-      // console.log(convertToBase64(event.target.files[0]),"jhhhgjh");
-
       setFormData({
         ...formData,
         [key]: await convertToBase64(event.target.files[0]),
@@ -208,20 +209,26 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
             Company Number
           </label>
           <div className="relative">
-          {/* <PhoneNumber
-                value={{
-                  countryCode: formData.countryCode ? formData.countryCode : "us",
-                  countryDialCode: formData.countryDialCode ? formData.countryDialCode : "1",
-                }}
-                onchange={(val: any) => {
-                  setFormData(()=>{
-                    return {...formData, countryCode: val.countryCode, countryDialCode: val.countryDial}
-                  })
-                  setCountry(val.name);
-                  setCountryDialCode(val.dialCode);
-                  setCountryCode(val.iso2);
-                }}
-              /> */}
+            <PhoneNumber
+              value={{
+                countryCode: formData.countryCode ? formData.countryCode : "us",
+                countryDialCode: formData.countryDialCode
+                  ? formData.countryDialCode
+                  : "1",
+              }}
+              onchange={(val: any) => {
+                setFormData(() => {
+                  return {
+                    ...formData,
+                    countryCode: val.countryCode,
+                    countryDialCode: val.countryDial,
+                  };
+                });
+                setCountry(val.name);
+                setCountryDialCode(val.dialCode);
+                setCountryCode(val.iso2);
+              }}
+            />
             <input
               type="tel"
               placeholder="Company Number"
@@ -307,7 +314,7 @@ const UpdateBusinessProfile = ({ formData, setFormData }: Props) => {
             <div className="p-2 w-32 h-20">
               {formData.logo && (
                 <Image
-                  src={formData.banner || '/banner.png'}
+                  src={formData.banner || "/banner.png"}
                   alt="logo"
                   className="w-full h-16 object-cover"
                   width={200}
