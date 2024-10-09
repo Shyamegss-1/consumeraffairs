@@ -5,10 +5,10 @@ import InfiniteCarousel from "../../components/InfiniteCarousel/InfiniteCarousel
 
 const Banner = () => {
   return (
-    <div className="relative max-w-7xl mx-auto py-20">
-      <div className="w-full grid grid-cols-2  relative">
-        <div className="col-span-1 bg-hover flex justify-center items-center  rounded-l-3xl">
-          <div className="">
+    <div className="relative max-w-7xl mx-auto py-20 px-4">
+      <div className="w-full grid grid-cols-2 relative gap-6 sm:gap-0">
+        <div className="col-span-2 sm:col-span-1 bg-hover flex justify-center items-center rounded-l-3xl">
+          <div className="sm:flex flex-col sm:py-4">
             <h6 className="text-sm font-semibold text-gray-900 font-graphik uppercase tracking-widest mb-5">
               2024 Awards
             </h6>
@@ -27,7 +27,7 @@ const Banner = () => {
             </Link>
           </div>
         </div>
-        <div className="col-span-1 bg-primary_dark rounded-r-3xl py-10">
+        <div className="col-span-2 sm:col-span-1 bg-primary_dark rounded-3xl sm:rounded-r-3xl py-10">
           <div className="mx-auto flex justify-center items-center">
             <Image
               alt="banner"

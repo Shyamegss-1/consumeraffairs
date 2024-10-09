@@ -5,11 +5,7 @@ import ServiceSection from "./ServiceSection";
 import RecentReviews from "./RecentReviews";
 import ProductInfo from "./ProductInfo";
 import Banner from "./Banner";
-import { redirect } from "next/navigation";
-import Swal from "sweetalert2";
-import { listingDomain } from "@/server-actions/listingDomain";
 import DomainForm from "./DomainForm";
-import LoadingUi from "@/app/listing/[company]/LoadingUi";
 
 const HomePage = ({ user }: any) => {
   const cardData = [
@@ -50,7 +46,7 @@ const HomePage = ({ user }: any) => {
       <div className="relative rounded-b-[3rem] bg-gradient-to-r from-primary_light  to-primary_dark flex justify-center items-center pt-24">
         <div className="mx-auto relative pb-32">
           <div className="grid grid-cols-2 justify-between items-center gap-10">
-            <div className="mx-auto flex justify-end items-start">
+            <div className="mx-auto flex justify-end items-start col-span-2 sm:col-span-1 p-4">
               <div className="flex flex-col justify-center items-start">
                 <h4 className="text-heading-3 font-heading-3 text-white py-2">
                   2024 Buyer’s Choice Awards
@@ -70,7 +66,7 @@ const HomePage = ({ user }: any) => {
                 </div>
               </div>
             </div>
-            <div className="mx-auto flex justify-center items-center">
+            <div className="mx-auto sm:flex justify-center items-center hidden">
               <Image
                 alt="banner"
                 height={350}
@@ -83,11 +79,11 @@ const HomePage = ({ user }: any) => {
         </div>
       </div>
       <div className="relative -mt-10 flex justify-center">
-        <div className="flex flex-nowrap gap-5 px-10">
+        <div className="flex flex-wrap xl:flex-nowrap gap-5 px-10">
           {cardData.map((item) => (
             <article
               key={item.url}
-              className="ring-1 ring-gray-200 rounded-3xl bg-white hover:shadow-xl justify-stretch items-stretch"
+              className="ring-1 ring-gray-200 rounded-3xl bg-white hover:shadow-xl justify-stretch items-stretch flex-1"
             >
               <Link
                 href={item.url}
@@ -101,7 +97,7 @@ const HomePage = ({ user }: any) => {
                     src={item.icon}
                     priority
                   />
-                  <p className="text-heading-5 font-heading-4">{item.title}</p>
+                  <p className="text-heading-5 font-heading-4 text-center">{item.title}</p>
                 </div>
               </Link>
             </article>

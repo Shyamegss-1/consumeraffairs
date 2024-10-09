@@ -62,9 +62,9 @@ const RecentReviews = () => {
   };
   return (
     <div className="hmpg-rvws">
-      <div className="relative max-w-7xl mx-auto mt-20 ">
+      <div className="relative max-w-7xl mx-auto mt-20 p-4">
         <div className="grid grid-cols-2">
-          <div className="flex flex-col items-start justify-center">
+          <div className="flex flex-col items-start justify-center col-span-2 sm:col-span-2">
             <h6 className="text-heading-6 font-semibold text-gray-900 font-graphik">
               RECENT REVIEWS
             </h6>
@@ -72,7 +72,7 @@ const RecentReviews = () => {
               Unfiltered opinions from verified consumers
             </h2>
           </div>
-          <ul className="flex flex-col items-start justify-center gap-4">
+          <ul className="flex flex-col items-start justify-center gap-4 col-span-2 sm:col-span-2">
             <li className="flex gap-4 items-center justify-start">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

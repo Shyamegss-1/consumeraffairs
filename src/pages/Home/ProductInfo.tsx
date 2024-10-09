@@ -130,7 +130,7 @@ const ProductInfo = () => {
     };
   });
   return (
-    <div className="relative max-w-7xl mx-auto mt-20 ">
+    <div className="relative max-w-7xl mx-auto mt-20 p-4">
       <div className="flex flex-col items-start justify-center">
         <h6 className="text-heading-6 font-semibold text-gray-900 font-graphik uppercase">
           Buying Decisions Made Easy
@@ -140,7 +140,7 @@ const ProductInfo = () => {
         </h2>
       </div>
       <div className="grid grid-cols-2">
-        <ul className="grid grid-cols-2 list-none m-0 p-0">
+        <ul className="grid grid-cols-2 list-none m-0 p-0 col-span-2 sm:col-span-1">
           {data.map((item, i) => (
             <li key={i} className="tpcs__li li_fst">
               <a

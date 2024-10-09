@@ -2,7 +2,7 @@ import React from "react";
 
 const ServiceSection = () => {
   return (
-    <div className="relative max-w-7xl mx-auto  mt-20">
+    <div className="relative max-w-7xl mx-auto mt-20 p-4">
       <div className="flex flex-col items-start justify-center">
         <h6 className="text-heading-6 font-semibold text-gray-900 font-graphik">
           What we provide
@@ -11,7 +11,7 @@ const ServiceSection = () => {
           Hand-picked recommendations to save you time
         </h2>
       </div>
-      <div className="flex">
+      <div className="flex flex-col sm:flex-row gap-4">
         <div className="relative">
           <div className="gradient-border-left relative bg-white px-6 mr-6 py-2">
             <h4 className="text-[#060D17] font-medium text-heading-3 mb-2">

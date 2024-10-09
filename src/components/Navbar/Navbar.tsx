@@ -28,14 +28,14 @@ const Navbar = () => {
   return (
     <div className="sticky top-0 z-30 shadow-lg w-full bg-white">
       <TopNavNotification />
-      <div className="relative grid grid-cols-2 justify-between px-20 py-3 items-center">
+      <div className="relative grid grid-cols-12">
         <Link
           href={"/"}
-          className="w-full lg:size-[40%] mx-auto flex justify-center items-center"
+          className="mx-auto flex justify-center items-center col-span-4"
         >
           <Logo />
         </Link>
-        <div className="hidden md:flex justify-end items-center">
+        <div className="hidden md:flex justify-end items-center col-span-8 px-4">
           <Link
             href={"/all-categories"}
             className="hover:bg-hover px-4 py-3 rounded-lg font-normal"
@@ -56,6 +56,9 @@ const Navbar = () => {
           >
             For Business
           </Link>
+        </div>
+        <div className="sm:hidden">
+
         </div>
       </div>
     </div>
