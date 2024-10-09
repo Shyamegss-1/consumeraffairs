@@ -6,7 +6,6 @@ import React, { useEffect, useRef, useState } from "react";
 import Swal from "sweetalert2";
 import "./Module.css";
 import ClickOutside from "@/components/ClickOutside";
-import { getListing } from "@/server-actions/getListing";
 
 type Props = {};
 
@@ -91,6 +90,7 @@ const DomainForm = (props: Props) => {
         <input
           type="text"
           name="domain"
+          autoComplete="none"
           value={domain}
           onChange={async (e) => {
             setDomain(e.target.value);
@@ -123,7 +123,9 @@ const DomainForm = (props: Props) => {
             <ul className="absolute z-10 bg-white border border-gray-300 w-full max-h-60 overflow-y-auto mt-2 rounded-md shadow-lg">
               {listing.map((item, index) => (
                 <li
-                  ref={(el) => (itemRefs.current[index] = el)}
+                  ref={(el) => {
+                    itemRefs.current[index] = el;
+                  }}
                   key={index}
                   onClick={() => handleSuggestionClick(item.website_link)}
                   className={`px-4 py-2 cursor-pointer hover:bg-gray-100 ${
