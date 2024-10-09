@@ -1,11 +1,12 @@
 "use client";
-import { getListing, listingDomain } from "@/server-actions/listingDomain";
+import { listingDomain } from "@/server-actions/listingDomain";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import "./Module.css";
 import ClickOutside from "@/components/ClickOutside";
+import { getListing } from "@/server-actions/getListing";
 
 type Props = {};
 
@@ -20,6 +21,22 @@ const DomainForm = (props: Props) => {
   const handleSuggestionClick = (website_link: string) => {
     setDomain(website_link);
     setShowSuggestions(false); // Close the suggestions list
+  };
+
+  // Function to fetch listings from the API
+  const fetchListings = async (domain: string) => {
+    try {
+      if (domain === "") {
+        return;
+      }
+      const res = await fetch(`/api/listing?domain=${domain}`);
+      const data = await res.json();
+      console.log(data, "data");
+
+      setListing(data.listing || []);
+    } catch (error) {
+      console.error("Error fetching listings", error);
+    }
   };
 
   return (
@@ -48,15 +65,14 @@ const DomainForm = (props: Props) => {
           onChange={async (e) => {
             setDomain(e.target.value);
             if (e.target.value) {
-              const res = await getListing(e.target.value);
-              setListing(res.listing ? res.listing : []);
               setShowSuggestions(true); // Show suggestions when user types
+              await fetchListings(e.target.value); // Fetch listing suggestions
             } else {
               setShowSuggestions(false); // Hide if input is cleared
             }
           }}
           onFocus={() => setShowSuggestions(true)}
-          placeholder="Kindly enter your domain name Eg. consumeraffairs.com"
+          placeholder="Kindly enter your domain name"
           className="py-3 pl-3 rounded-md pr-14 text-xl w-full focus:ring-2 focus:outline-none placeholder:text-base ring-2 ring-gray-200 focus:ring-blue-700"
         />
         <button type="submit">
