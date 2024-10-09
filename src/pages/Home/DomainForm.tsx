@@ -90,7 +90,7 @@ const DomainForm = (props: Props) => {
         <input
           type="text"
           name="domain"
-          autoComplete="none"
+          autoComplete="off"
           value={domain}
           onChange={async (e) => {
             setDomain(e.target.value);

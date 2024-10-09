@@ -5,11 +5,11 @@ type Props = {};
 
 const loading = (props: Props) => {
   return (
-    <UserLayout>
+    <div className="w-full min-h-[90vh] flex justify-center items-center">
       <div className="loading-container">
         <div className="spinner"></div>
       </div>
-    </UserLayout>
+    </div>
   );
 };
 
